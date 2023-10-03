@@ -101,7 +101,7 @@
 @endsection
 @section('script')
 <script>
-    // animation---------------------------------------------------
+
     document.addEventListener("DOMContentLoaded", function() {
         const productCards = document.querySelectorAll(".product-card");
     
@@ -140,7 +140,8 @@
     });
     
     
-    // Modal -------------------------------------------
+    // Modal 
+    
     function targett(ev){
         // get data from product target
         let name=ev.getAttribute('data-name');
@@ -156,7 +157,7 @@
         
     }
     
-    // delete product..-----------------------------------
+    // delete product..
     $(document).on('click', '.delete_btn', function (e) {
                 e.preventDefault();
     
@@ -183,57 +184,13 @@
     
                     }
                 });
-    });
+            });
     
-    // get new data after select filter type---------------------
+    // submetting when select
     $(document).ready(function() {
-    $('#filter').on('change', function(e) {
-        e.preventDefault();
-        var selectedOption = $(this).val();
-        $.ajax({
-                    type: 'get',
-                    url:"{{ route('product.filter') }}" ,
-                    dataType: 'json', // Expect JSON response
-                    data: {
-                        filter: selectedOption ,
-                    },
-                    success: function (data) {
-                        console.log(data);
-                         // Clear the existing data and replace it with new data
-                            $('#productList').empty();
-
-                        // Loop through the new data and append it to the container
-                        if (Array.isArray(data)) {
-                            for(let product of data){
-                                var productCard  = `<x-productCard 
-                                    name="${product.name}"
-                                    profile="${product.profileImage}"
-                                    id="${product.id}"
-                                    category="${product.category}"
-                                    sold="${product.sold}"
-                                    quantity="${product.quantity}"
-                                    price="${product.price}"
-                                    rating="${product.rating}"
-                                />`;
-              
-                                                
-                                                
-                                // getPhotoAttribute($product->profileImage)"
-
-                                $('#productList').append(productCard);    
-                            }
-                        }                    
-                        else {
-                            console.error("Invalid data structure received:", data);
-                        }
-
-                    }, error: function (reject) {
-                        console.error("AJAX request error:", reject);
-                    }
-        });
+    $('#filter').on('change', function() {
+        $('#filterForm').submit();
     });
-    });
-
-
+});
     </script>
 @endsection
