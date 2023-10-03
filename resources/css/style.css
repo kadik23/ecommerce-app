@@ -1,0 +1,50 @@
+    
+.hover-box {
+    position: relative;
+    overflow: hidden;
+    &:hover {
+      img {
+        opacity: .2;
+      }
+   
+    }
+    img {
+      transition: .4s;
+    }
+  
+  }
+.product:hover{
+    /* transform: matrix(0,1,1,0,0); */
+    transform: scale(1.05);
+    transition: transform .5s;
+}
+/* select option:hover{
+    background-color:#b17b4f;
+} */
+
+/* option:nth-child(n):hover{
+    background: rgb(144, 144, 144);
+    padding: 10px;
+} */
+select#category option:nth-child(n):hover {
+    width: 100px;
+    height: 50px;
+    padding: 10px 50px !important;
+    border: none;
+    background-color: aqua !important;
+}
+
+.owl-item {
+    animation-delay: 0.2s;
+    transition:all .5s;
+    -webkit-animation: 1s ease 1s normal both 1 running fadeInUp;
+    animation: 1s ease 1s normal both 1 running fadeInUp;   
+}
+
+.product-card {
+    opacity: 0; /* Initially hide the product cards */
+    transform: translateY(20px); /* Move them down */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Define animation properties */
+}
+
+
