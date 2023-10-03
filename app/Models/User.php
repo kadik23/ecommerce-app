@@ -26,7 +26,7 @@ class User extends Authenticatable  implements MustVerifyEmail,LaratrustUser
         'username',
         'email',
         'password',
-        
+        'phone'
     ];
 
     /**
