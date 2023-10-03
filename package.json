@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
-        "@vitejs/plugin-vue": "^4.0.0",
+        "@vitejs/plugin-vue": "^4.4.0",
         "autoprefixer": "^10.4.15",
         "axios": "^1.1.2",
         "bootstrap": "^5.2.3",

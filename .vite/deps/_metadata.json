@@ -1,0 +1,53 @@
+{
+  "hash": "a336fc02",
+  "browserHash": "bf0f783a",
+  "optimized": {
+    "vue": {
+      "src": "../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "35b2d7a7",
+      "needsInterop": false
+    },
+    "flowbite": {
+      "src": "../../node_modules/flowbite/lib/esm/index.js",
+      "file": "flowbite.js",
+      "fileHash": "90a58b3f",
+      "needsInterop": false
+    },
+    "tw-elements": {
+      "src": "../../node_modules/tw-elements/dist/js/tw-elements.es.min.js",
+      "file": "tw-elements.js",
+      "fileHash": "b2d1c920",
+      "needsInterop": false
+    },
+    "bootstrap": {
+      "src": "../../node_modules/bootstrap/dist/js/bootstrap.esm.js",
+      "file": "bootstrap.js",
+      "fileHash": "84847f73",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "d4a22b30",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-UBNXQJBG": {
+      "file": "chunk-UBNXQJBG.js"
+    },
+    "chart.es-RFGB5FWW": {
+      "file": "chart__es-RFGB5FWW.js"
+    },
+    "chartjs-plugin-datalabels.es-JRYRUKLW": {
+      "file": "chartjs-plugin-datalabels__es-JRYRUKLW.js"
+    },
+    "chunk-V6QTV3EI": {
+      "file": "chunk-V6QTV3EI.js"
+    },
+    "chunk-SSYGV25P": {
+      "file": "chunk-SSYGV25P.js"
+    }
+  }
+}
