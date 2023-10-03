@@ -193,8 +193,12 @@ class ProductsController extends Controller
         }elseif($filter=="HighToLow"){
             $products= Product::orderBy('price', 'desc')->get();
         }
-        return response()->json($products);
-
+        return view('admin.products',[
+            'productsController' => $products,
+            'Categories'=>Category::all(),
+            'Products' => Product::all(),
+            'filter' => $filter,
+        ]);
 
     }
 }
