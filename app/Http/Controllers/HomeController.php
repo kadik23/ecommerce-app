@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
 
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     
@@ -32,5 +32,10 @@ class HomeController extends Controller
             return redirect('/user'); // Replace '/user' with your user route
         }
         return view('home');
+    }
+
+    public function welcome(){
+        return view('welcome',['productsController' => Product::all(),'categories'=>Category::all()]);   
+ 
     }
 }

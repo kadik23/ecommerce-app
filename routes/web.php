@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class,'welcome'])->name('welcome');
+
 
 // Route::get('/dashboard', function () {
 //     return view('layouts.dashboard');
@@ -18,10 +18,13 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('verified');
 Route::get('/dashboard', 'App\Http\Controllers\AdminController@index')->name('admin')->middleware('verified');
 
-Route::get('/dashboard/myprofile', 'App\Http\Controllers\ProfileController@index')->name('dash.myprofile');
-Route::put('/dashboard/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit')->name('dash.profileEdit');
-Route::put('/dashboard/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit');
+Route::group(['prefix'=>'dashboard'], function() { 
+    // Route::get('/user/myprofile', 'App\Http\Controllers\UserController@myprofile')->name('user.myprofile');
 
+Route::get('/myprofile', 'App\Http\Controllers\ProfileController@index')->name('dash.myprofile');
+Route::put('/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit')->name('dash.profileEdit');
+Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit');
+});
 
 // for users
 Route::group(['middleware' => ['auth', 'role:user']], function() { 

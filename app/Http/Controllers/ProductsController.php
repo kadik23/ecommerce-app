@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {   
-    /**
-     * Display a listing of the resource.
-     */
     use photos;
     use orderBy;
     public function index()

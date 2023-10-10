@@ -1,6 +1,6 @@
 
 
-<div data-theme="dark"  class="navbar fixed z-40 bg-[#FBFBFB] bg-base-100  justify-between py-0 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10">
+<div data-theme="dark"  class="navbar fixed z-40 bg-[#FBFBFB]   justify-between py-0 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10">
     <!-- left elements -->
     <div class="flex flex-wrap items-center  justify-start px-3">
       <!-- Toggler -->
@@ -25,7 +25,7 @@
             src="{{asset('assets/images/logo.png')}}"
             style="height: 35px"
             alt="TE Logo"
-            class=" rounded-full"
+            class=" rounded-full hover:scale-105 "
             />
       </a>
   
