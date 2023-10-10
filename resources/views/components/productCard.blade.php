@@ -1,5 +1,9 @@
 {{-- Product card --}}
+@if(Auth::check())
 <div class="product{{$id}} max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="height:{{Auth::user()->hasRole('admin') ? '450': '400'}}px; width:300px;">
+@else
+<div class="product{{$id}} max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="height:400px; width:300px;">
+ @endif
     <div class="overflow-hidden h-3/5">
         <img class="product overflow-hidden rounded-t-lg w-full h-full object-cover" src="{{$profile}}" alt="product image" />
     </div>
@@ -29,15 +33,16 @@
             </span>
         </div>
         <div class="flex flex-col">
+            @if(Auth::check())
             @if(Auth::user()->hasRole('admin')) 
             <span class="text-green-500 font-bold">Available : {{$quantity}}</span>
             <span class="text-blue-600 font-bold">Sold : {{$sold}}%</span>
-            @endif
+            @endif @endif
         </div>
         <div class="flex items-center justify-between">
             <span class="text-xl font-bold text-gray-900 dark:text-white">${{$price}}</span>
             <div class="flex items-center ">
-                @if(Auth::user()->hasRole('user')) 
+                @if( !(Auth::check()) || (Auth::user()->hasRole('user')) )
                 <a href="#" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Add to cart</a>
                 @elseif(Auth::user()->hasRole('admin')) 
                 <a  data-name="{{$name}}"
@@ -61,7 +66,7 @@
 </div>
 
 
-
+@if( (Auth::check()) && (Auth::user()->hasRole('admin')) )
   {{-- Model --}}
   <!-- Main modal -->
 <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -112,4 +117,4 @@
         </div>
     </div>
 </div> 
-  
+@endif 

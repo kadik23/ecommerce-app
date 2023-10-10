@@ -1,43 +1,148 @@
 @extends('layouts.app')
 
 @section('content')
-<input type="file" class="file-input file-input-bordered w-full max-w-xs" />
-        <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-              <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-              <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
-            </div>
-          
-            <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form class="space-y-6" action="#" method="POST">
-                <div>
-                  <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                  <div class="mt-2">
-                    <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-          
-                <div>
-                  <div class="flex items-center justify-between">
-                    <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                    <div class="text-sm">
-                      <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-                    </div>
-                  </div>
-                  <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-          
-                <div>
-                  <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-                </div>
-              </form>
-          
-              <p class="mt-10 text-center text-sm text-gray-500">
-                Not a member?
-                <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>
-              </p>
-            </div>
-          </div>
-   @endsection
+<x-users.carousel />  <!-- Slider.. -->
+<!-- Begin of Product card -->
+<div class="container">
+  <h1 class=" text-3xl text-center font-bold my-10">Top Products</h1>
+  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+    @if($productsController!==[])
+            @foreach ($productsController as $product)
+            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            @endforeach
+    @endif
+  </div>
+</div>
+<!-- End of Product card  -->
+<!-- Begin of Intro -->
+<section id="intro" class="h-96 intro flex items-center">
+  <div>
+    <div class="w-1/3 ml-10 rounded-md bg-white text-center flex flex-col items-center justify-start ">
+      <img src="{{asset('assets/images/logo.png')}}" class="w-40 h-36 " alt="">
+      <p class="font-md text-lg ">Welcome to Stanissk Store, where shopping meets convenience and quality. With a wide range of products to choose from, we're your one-stop destination for all your shopping needs.</p>
+      <button class="bg-regal-brown my-5 py-2 px-3 text-white rounded-3xl">SHOP NOW</button>
+    </div>
+  </div>
+</section>
+<!-- End of Intro -->
+<div class="container">
+  <h1 class=" text-3xl text-center font-bold my-10">Latest</h1>
+  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+    @if($productsController!==[])
+            @foreach ($productsController as $product)
+            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            @endforeach
+    @endif
+  </div>
+</div>
+<!-- Begin of Category Card -->
+<h1 class="text-3xl text-center font-bold my-10">SHOP BY BRAND</h1>
+<div class="flex justify-around m-10">
+  <x-users.categoryCard category="Phones" image="hal-gatewood-WcYeiHMexR0-unsplash.jpg" />
+  <x-users.categoryCard category="Accesories" image="marissa-grootes-D4jRahaUaIc-unsplash.jpg" />
+  <x-users.categoryCard category="Electronics" image="umberto-jXd2FSvcRr8-unsplash.jpg" />
+</div>
+{{-- End of Category Card --}}
+<div class="container">
+  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PC </h1>
+  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+    @if($productsController!==[])
+            @foreach ($productsController as $product)
+            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            @endforeach
+    @endif
+  </div>
+</div>
+<div class="container">
+  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
+  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+    @if($productsController!==[])
+            @foreach ($productsController as $product)
+            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            @endforeach
+    @endif
+  </div>
+</div>
+<div class="container">
+  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
+  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+    @if($productsController!==[])
+            @foreach ($productsController as $product)
+            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            @endforeach
+    @endif
+  </div>
+</div>
+{{-- Begin our partners --}}
+<div class="p-16 w-full flex flex-col justify-around bg-slate-100 opacity-70">
+  <h1 class="text-2xl font-bold opacity-90  text-center m-5">OUR PARTNERS</h1>
+  <div class="flex justify-around">
+    <div class="w-36 p-2 flex items-center bg-white h-20">
+      <img src="{{asset('assets/images/partners/images.png')}}" class="w-full" alt="">
+    </div>
+    <div class="w-36 p-2 flex items-center bg-white h-20">
+      <img src="{{asset('assets/images/partners/images (1).png')}}" class="w-full" alt="">
+
+    </div>  
+    <div class="w-36 p-2 flex items-center bg-white h-20">
+      <img src="{{asset('assets/images/partners/images (2).png')}}" class="w-full" alt="">
+
+    </div>  
+    <div class="w-36 p-2 flex items-center bg-white h-20">
+      <img src="{{asset('assets/images/partners/download.png')}}" class="w-full" alt="">
+    </div>
+  </div>
+  
+</div>
+{{-- End our partners --}}
+
+<script>
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      // When the card enters the viewport, remove the "product-card" class and add the "visible-card" class
+      entry.target.classList.remove("product-card");
+      entry.target.classList.add("visible-card");
+      observer.unobserve(entry.target); // Stop observing once animation is applied
+    }
+  });
+});
+
+// Select all elements with the "product-card" class and observe them
+const hiddenCards = document.querySelectorAll(".product-card");
+hiddenCards.forEach((card) => {
+  observer.observe(card);
+});
+
+  // hover category cards
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".cardCat");
+
+    cards.forEach(card => {
+        const square1 = card.querySelector(".square1");
+        const square2 = card.querySelector(".square2");
+
+        card.addEventListener("mouseover", function () {
+            // Get the dimensions of the current card
+            const cardRect = card.getBoundingClientRect();
+
+            // Apply the dimensions to square1
+            square1.style.width = cardRect.width + "px";
+            square1.style.height = cardRect.height + "px";
+
+            // Apply the dimensions to square2
+            square2.style.width = cardRect.width + "px";
+            square2.style.height = cardRect.height + "px";
+        });
+
+        card.addEventListener("mouseout", function () {
+            // Reset the dimensions of square1 and square2 to 0
+            square1.style.width = "0";
+            square1.style.height = "0";
+            square2.style.width = "0";
+            square2.style.height = "0";
+        });
+    });
+});
+</script>
+@endsection

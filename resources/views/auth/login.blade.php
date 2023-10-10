@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class=" w-full  h-full flex flex-row">
+<div class=" w-full  h-screen flex flex-row">
     <div class="flex h-full w-1/2 flex-1 flex-col justify-center lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img class="mx-auto h-24 rounded-full  w-24" src="{{ asset('assets/images/logo.png') }}" alt="Your Company" />
@@ -44,6 +44,7 @@
                 </div>
                 </div>
                 <div>
+                    <h2 class="text-center">Or</h2>
                     <img src="{{ asset('assets/images/icons8-google-48.png') }}" class="h-8 mx-auto mb-4 cursor-pointer" alt="">
                     <button type="submit" class="flex w-full justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >{{ __('Login') }}</button>
                 </div>
@@ -59,7 +60,6 @@
             <h3 class="m-1 "> Sign up and discover a great amount of new opportunities!</h3>
             <br>
             @if (Route::has('register'))
-                <a class="nav-link" >{{ __('Register') }}</a>
                 <a href="{{ route('register') }}" class="flex w-1/6 mx-auto justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >{{ __('Sign up') }}</a>
             @endif
         </div>

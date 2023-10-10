@@ -1,4 +1,3 @@
-    
 .hover-box {
     position: relative;
     overflow: hidden;
@@ -43,8 +42,24 @@ select#category option:nth-child(n):hover {
 
 .product-card {
     opacity: 0; /* Initially hide the product cards */
-    transform: translateY(20px); /* Move them down */
+    transform: translateY(50px); /* Move them down */
     transition: opacity 0.5s ease, transform 0.5s ease; /* Define animation properties */
 }
+.visible-card {
+  opacity: 1;
+  transform: translate(0px);
+  transition: all 0.5s ease;
+}
 
+.intro {
+  background:  -moz-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url(../../public/assets/images/c-d-x-PDX_a_82obo-unsplash.jpg);
+  background:  -webkit-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url(../../public/assets/images/c-d-x-PDX_a_82obo-unsplash.jpg);
+  background:  -ms-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url(../../public/assets/images/c-d-x-PDX_a_82obo-unsplash.jpg);
+  background:  linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url(../../public/assets/images/c-d-x-PDX_a_82obo-unsplash.jpg);
+  position: relative;
+  z-index: 1;
+  background-position: bottom center;
+  background-size: cover;
+  background-attachment: fixed;
+}
 

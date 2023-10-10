@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class=" w-full h-full flex flex-row">
+<div class=" w-full h-screen flex flex-row">
     <div class="flex h-full w-1/2 flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <!-- <img class="mx-auto h-24 rounded-full  w-24" src="../assets/logo.png" alt="Your Company" /> -->
@@ -9,7 +9,7 @@
         </div>
 
         <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="{{ route('register') }}" method="POST">
+        <form class="space-y-3" action="{{ route('register') }}" method="POST">
             @csrf
             <div>
                 <label for="username" class="block text-sm font-medium leading-6 float-left" >{{ __('Username') }}</label>
@@ -58,7 +58,7 @@
             <div>
                 <p class="text-center">Or</p>
             <img src="{{asset('assets/images/icons8-google-48.png')}}" class="h-8 mx-auto mb-4 cursor-pointer" alt="">
-            <button type="submit" class="flex w-full justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >Sign in</button>
+            <button type="submit" class="flex w-full justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >Register</button>
             </div>
             
         </form>
@@ -70,7 +70,7 @@
             <h1 class=" text-2xl font-bold" style="margin: 0.4rem;"> Already have an account ?</h1>
             <h3 class="m-1 "> Sign in and discover a great amount of new opportunities!</h3>
             <br>
-            <button type="submit" class="flex w-1/6 mx-auto justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >Sign in</button>
+            <a href="{{route('login')}}" class="flex w-1/6 mx-auto justify-center rounded-md bg-regal-brown  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  " >Sign in</a>
         </div>
     </div>
 </div>
