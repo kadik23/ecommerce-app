@@ -5,11 +5,13 @@
  */
 import columnChart from './components/columnChart.js';
 import incrementCounter from './components/incrementCounter.js'
-import './bootstrap';
-import { createApp } from 'vue';
+import cardAnimation from './components/cardAnimation.js'
+import pusherNotification from './pusherNotification.js'
+// import './bootstrap';
+// import { createApp } from 'vue';
 import 'flowbite';
-import { Datepicker, Input, initTE } from "tw-elements";
-initTE({ Datepicker, Input });
+// import { Datepicker, Input, initTE } from "tw-elements";
+// initTE({ Datepicker, Input });
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready

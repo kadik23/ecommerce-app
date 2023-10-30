@@ -43,14 +43,16 @@ export default {
     extend: {
       colors: {
         'regal-brown': '#b17b4f',
-      },},
+      },
+    },
   },
   darkMode: "class",
 
   plugins: [require('@tailwindcss/forms'), 
             require('flowbite/plugin')({
               charts: true,}),
-            require("daisyui"),require("tw-elements/dist/plugin.cjs")
+            require("daisyui"),
+            require("tw-elements/dist/plugin.cjs")
           ],
 }
 

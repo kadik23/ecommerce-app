@@ -27,15 +27,13 @@ class HomeController extends Controller
     public function index()
     {   
         if (Auth::user()->hasRole('admin')) {
-            return redirect('/dashboard'); // Replace '/admin' with your admin route
-        } elseif (Auth::user()->hasRole('user')) {
-            return redirect('/user'); // Replace '/user' with your user route
+            return redirect()->route('admin.index');
         }
-        return view('home');
+        return $this->welcome();
     }
 
     public function welcome(){
-        return view('welcome',['productsController' => Product::all(),'categories'=>Category::all()]);   
+        return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all()]);   
  
     }
 }

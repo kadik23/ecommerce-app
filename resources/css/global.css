@@ -1,4 +1,4 @@
-.hover-box {
+/* .hover-box {
     position: relative;
     overflow: hidden;
     &:hover {
@@ -11,7 +11,7 @@
       transition: .4s;
     }
   
-  }
+  } */
 .product:hover{
     /* transform: matrix(0,1,1,0,0); */
     transform: scale(1.05);
@@ -63,3 +63,26 @@ select#category option:nth-child(n):hover {
   background-attachment: fixed;
 }
 
+.fill{
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.nav_animation{
+ transform: translateY(-40px);
+}
+
+/* @keyframes sta {
+  0%{
+  }
+  100%{
+    transform: translateY(0);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+  }
+} */

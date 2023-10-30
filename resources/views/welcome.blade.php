@@ -44,31 +44,37 @@
 </div>
 {{-- End of Category Card --}}
 <div class="container">
-  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PC </h1>
+  <h1 id="electronics" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
-            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @if($product->category=="Electronics")
+              <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @endif
             @endforeach
     @endif
   </div>
 </div>
 <div class="container">
-  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
+  <h1 id="phones" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
-            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @if($product->category=="Phones")
+              <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @endif
             @endforeach
     @endif
   </div>
 </div>
 <div class="container">
-  <h1 class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
+  <h1 id="accessories" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
-            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @if($product->category=="Accessories")
+              <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+              @endif
             @endforeach
     @endif
   </div>
@@ -95,25 +101,9 @@
   
 </div>
 {{-- End our partners --}}
-
+@endsection
+@section('script')
 <script>
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      // When the card enters the viewport, remove the "product-card" class and add the "visible-card" class
-      entry.target.classList.remove("product-card");
-      entry.target.classList.add("visible-card");
-      observer.unobserve(entry.target); // Stop observing once animation is applied
-    }
-  });
-});
-
-// Select all elements with the "product-card" class and observe them
-const hiddenCards = document.querySelectorAll(".product-card");
-hiddenCards.forEach((card) => {
-  observer.observe(card);
-});
-
   // hover category cards
   document.addEventListener("DOMContentLoaded", function () {
     const cards = document.querySelectorAll(".cardCat");
@@ -144,5 +134,57 @@ hiddenCards.forEach((card) => {
         });
     });
 });
+
+// Select all elements with the class "favorite"
+var favoriteElements = document.querySelectorAll('.favorite');
+// Add a click event listener to each "favorite" element
+favoriteElements.forEach(function(element) {
+  element.addEventListener('click', function (event) {
+    var clickedCard = event.target;
+    // Add fill class to fill favorite icon or remove it
+    clickedCard.classList.toggle('fill');
+  });
+});
+
+// Scroll into view you want 
+var categoryElements = document.querySelectorAll('.category');
+categoryElements.forEach(function(el){
+  el.addEventListener('click',function scrollToView(ev){
+    const targetElement= ev.target
+    let id = targetElement.getAttribute("id")
+    let scrollToSection2Button;
+    // Get a reference to the button and the section you want to scroll to
+    if(id=='phone_btn'){
+      const scrollToSection2Button = document.getElementById(id);
+      const section = document.getElementById('phones');
+      section.scrollIntoView({ behavior: 'smooth' });
+    }else if(id=='electronic_btn'){
+        const scrollToSection2Button = document.getElementById(id);
+        const section = document.getElementById('electronics');
+        section.scrollIntoView({ behavior: 'smooth' });
+    }else if(id=='accessory_btn'){
+        const scrollToSection2Button = document.getElementById(id);
+        const section = document.getElementById('accessories');
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+  })
+})
+
+// add to cart with ajax 
+    $(document).on('click', '.addToCart', function (e) {
+                e.preventDefault();
+                  var id =  $(this).attr('product_id');   
+                $.ajax({
+                    type: 'post',
+                     url:"{{ route('addCart') }}",
+                    data: {
+                        '_token': "{{csrf_token()}}",
+                        'id' :id,
+                    },
+                    success: function (data) {
+                    }, error: function (reject) {
+                    }
+                });
+    });
 </script>
 @endsection
