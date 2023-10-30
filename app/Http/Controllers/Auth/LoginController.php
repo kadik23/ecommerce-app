@@ -32,7 +32,7 @@ class LoginController extends Controller
         if( $user->hasRole('admin'))
             return redirect('/dashboard');
         if( $user->hasRole('user'))
-            return redirect('/user');
+            return redirect('/');
     }
     /**
      * Create a new controller instance.

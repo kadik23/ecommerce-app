@@ -1,10 +1,12 @@
 <?php
 
-use App\Models\Category;
 use App\Models\User;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 return new class extends Migration
 {
@@ -39,5 +41,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('products');
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_user', 'user_id', 'product_id');
     }
 };

@@ -173,8 +173,72 @@ class ProductsController extends Controller
     }
 
     public function byCategory(Request $request){
-        return null;
+            $productSearch=$request->input('search');
+            $categorySelected=$request->input('category');
+            $category=$categorySelected;
+            if($productSearch!==''){
+                $products = Product::where('name', 'like', "%{$productSearch}%")->get();
+                if($categorySelected=='All categories'){
+                    if($products->isEmpty()){
+                        return view('user.productsByCategory', [
+                            'product' => $productSearch,
+                            'productsController'=>[], 
+                            'Categories' => Category::all(),
+                            'Products' => Product::all(),
+                            'categoryS'=>$categorySelected,
+                        ]);  
+                    } 
+                    return view('user.productsByCategory', [
+                        'productsController' => $products, 
+                        'Categories' => Category::all(),
+                        'Products' => Product::all(),
+                        'categoryS'=>$categorySelected
+                    ]);
+                }
+                $filteredProducts = $products->filter(function ($product) use ($categorySelected) {
+                    return $product->category === $categorySelected;
+                });  
+                if($filteredProducts->isEmpty()){
+                    return view('user.productsByCategory', [
+                        'product' => $productSearch,
+                        'productsController'=>[], 
+                        'Categories' => Category::all(),
+                        'Products' => Product::all(),
+                        'categoryS'=>$categorySelected,
+                    ]);  
+                } 
+                return view('user.productsByCategory', [
+                    'productsController' => $filteredProducts,
+                    'cat'=>$categorySelected, 
+                    'Categories' => Category::all(),
+                    'Products' => Product::all(),
+                    'categoryS'=>$categorySelected
+                ]);
+            }else{
+                $products =Product::where('category', $category)->with('category')->get();
+                return view('user.productsByCategory',[
+                    'productsController' => $products,
+                    'Categories'=>Category::all(),
+                    'Products' => Product::all(),
+                    'categoryS'=>$categorySelected,
+                ]);
+            }
+        // }else{
+        //     $category=$request->input('category');
+        //     $products=Product::where('category','=',$category);
+        //     return view('user.productsByCategory',[
+        //         'productsController' => $products,
+        //         'Categories'=>Category::all(),
+        //         'Products' => Product::all(),
+        //         'categoryS'=>$category,
+        //     ]);
+        // }
+    }
+    
+    public function product_show(Request $request ,string $category){
+        // return view('user.productsByCategory');
 
+       
     }
 
     public function filter(Request $request){

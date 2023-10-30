@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.accounts')
 
 @section('content')
 <div class=" w-full  h-screen flex flex-row">
@@ -24,24 +24,24 @@
                 </div>
 
                 <div>
-                <div class="flex items-center justify-between">
-                    <label for="password" class="block text-sm font-medium leading-6 ">{{ __('Password') }}</label>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                    <div class="text-sm">
-                        @if (Route::has('password.request'))
-                            <a class="font-semibold text-regal-brown hover:text-amber-700" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
-                            </a>
-                        @endif
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="block text-sm font-medium leading-6 ">{{ __('Password') }}</label>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <div class="text-sm">
+                            @if (Route::has('password.request'))
+                                <a class="font-semibold text-regal-brown hover:text-amber-700" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required="" class="block pl-2  w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300  outline-regal-brown sm:text-sm sm:leading-6" />
-                </div>
+                    <div class="mt-2">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required="" class="block pl-2  w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300  outline-regal-brown sm:text-sm sm:leading-6" />
+                    </div>
                 </div>
                 <div>
                     <h2 class="text-center">Or</h2>

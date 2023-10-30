@@ -1,18 +1,8 @@
-
-<nav class="bg-white border-gray-200 dark:bg-gray-900 ">
+<nav  class="bg-white  border-gray-200 tr dark:bg-gray-900 ">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4 ">
         <div class="flex items-center">
-
             <p class="mr-6  text-sm flex items-center text-gray-500 dark:text-white">
-                <span   class="material-symbols-outlined text-regal-brown" 
-                        style="
-                            font-variation-settings:
-                            'FILL' 1,
-                            'wght' 400,
-                            'GRAD' 0,
-                            'opsz' 20"
-                >call
-                </span>
+                <span   class="material-symbols-outlined text-regal-brown" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">call</span>
                 <span>Free Support</span> (213) 0798816073
             </p>
         </div>
@@ -20,14 +10,31 @@
             @php
                 $items=['Login','Register'];
                 $items2=['English','Arabic'];
+                $items3=['Profile','Logout'];
+                $links=['login','register'];
+                $links2=['english','arabic'];
+                $links3=['dash.myprofile','logout']
             @endphp
-            <x-dropdown :items="$items" label="My account" />
-            <x-dropdown :items="$items2" label="Languages" />
+            @Auth
+            <x-dropdown :items="$items3" label="My account"  :links="$links3"/>
+            @else
+            <x-dropdown :items="$items" label="My account"  :links="$links"/>
+            @endauth
+            {{-- <x-dropdown :items="$items2" label="Languages" :links="$links2"/> --}}
+            <div class="dropdown" style="background-color: transparent">
+                <label tabindex="0" class="btn hover:text-regal-brown py-0 font-normal m-1" style="background-color: transparent; border:none;" >
+                    Languages<span class="material-symbols-outlined">arrow_drop_down</span>
+                </label>
+                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="#">english</a></li>
+                        <li><a href="#">arabic</a></li>
+                </ul>
+            </div>
             <a href="#" class="text-md mx-2 hover:text-regal-brown transition-all duration-500 py-0">Contact Us</a>
         </div>
     </div>
 </nav>
-<nav class="bg-gray-50 dark:bg-gray-700">
+<nav id="menu" class="bg-gray-50 transition-all duration-1000 dark:bg-gray-700">
     <div class="max-w-screen-xl flex justify-between px-4 py-7 mx-auto" id="navBottom">
         <a href="{{route('welcome')}}" class="flex items-center">
             <img src="{{asset('assets/images/logo.png')}}" class="h-8 mr-3 hover:scale-150 transition-all duration-500  rounded-full" alt="Flowbite Logo" />
@@ -36,16 +43,16 @@
         <div class="flex items-center" id="categories" >
             <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm" >
                 <li>
-                    <a href="#" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500" aria-current="page">Home</a>
+                    <a href="{{route('home')}}" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category" aria-current="page">Home</a>
                 </li>
                 <li>
-                    <a href="#" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500">Phones</a>
+                    <button  id="phone_btn" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Phones</button>
                 </li>
                 <li>
-                    <a href="#" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500">Accesoires</a>
+                    <button id="accessory_btn" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Accesoires</button>
                 </li>
                 <li>
-                    <a href="#" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500">Electronics</a>
+                    <button id="electronic_btn"  class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Electronics</button>
                 </li>
             </ul>
         </div>
@@ -65,6 +72,7 @@
                         </span> 
                     </button>                   
                 </li>
+                @Auth
                 <li>         
                     <div class="dropdown dropdown-end" style="background-color: transparent">
                         
@@ -200,10 +208,10 @@
                  
                 </li>
                 <li>         
-                    <div class="dropdown  dropdown-bottom dropdown-left" style="background-color: transparent">
+                    <div class="dropdown dropdown-notifications dropdown-bottom dropdown-left" style="background-color: transparent">
                         
-                            <div tabindex="0" class="relative  inline-block" style="background-color: transparent; border:none;" >
-                                <div class="w-4 h-4 cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
+                            <div tabindex="0"  onclick="resetToZero()" data-toggle="collapse" class="relative   inline-block" style="background-color: transparent; border:none;" >
+                                <div data-count="0"  class="w-4 h-4 notif-count cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
                                     0 
                                 </div>
                                 <span class="material-symbols-outlined cursor-pointer hover:text-regal-brown transition-all duration-500" style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">
@@ -212,7 +220,7 @@
                             </div> 
 
 
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80">
+                        <ul tabindex="0" id="scrollable-container" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80">
                             <div class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
                                 Cart
                             </div>
@@ -230,20 +238,7 @@
                                 </a>
                             </li> 
                             <hr class="opacity-70 p-0">
-                            <li>
-                                <a href="#" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <div class="w-32 overflow-hidden">
-                                        <img class="object-cover h-20" src="{{asset('assets/images/products/1695233140.jpg')}}" alt="Bonnie image">
-
-                                    </div>
-                                    <div class="w-full pl-3">
-                                        <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">Samsung A14</div>
-                                            <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">admin</div>
-                                        <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">300$</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                            <a href="{{route('carts')}}" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
                                 <div class="inline-flex items-center ">
                                     <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
                                         <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
@@ -252,15 +247,15 @@
                                 </div>
                             </a>
                         </ul>
-                      </div>
-
-                 
+                      </div>    
                 </li>
+                @endauth
             </ul>
         </div>
     </div>
 </nav>
 <script>
+    // when click search botton appear search bar and reverse
     navBottom = document.getElementById('navBottom')
     document.getElementById('searchbtn').addEventListener("click",()=>{
         document.getElementById('searchBar').classList.add("flex")
@@ -279,4 +274,36 @@
         navBottom.classList.remove("py-6")
     })
 
+    
+    // fixe menu navbar when i scroll bottom
+    window.addEventListener('scroll', () => {
+    const menu = document.getElementById('menu');
+    const scrollThreshold = 200; // Adjust this threshold as needed
+    if (window.scrollY >= scrollThreshold) {
+        console.log(window.scrollY)
+        // Add a CSS class to fix the menu
+        if (window.scrollY == scrollThreshold) 
+        menu.classList.add('nav_animation');
+        setTimeout(() => {
+            menu.classList.add('transform');
+            menu.classList.add('translate-y-0');
+            menu.classList.add('top-0');
+            menu.classList.add('z-50');
+            menu.classList.add('fixed');
+            menu.classList.add('w-full');
+            menu.classList.add('bg-black');
+            menu.classList.remove('nav_animation');
+        }, 500);
+    } else {
+        // Remove the class when scrolling back up
+        menu.classList.remove('nav_animation');
+        menu.classList.remove('translate-y-0');
+        menu.classList.remove('top-0');
+        menu.classList.remove('z-50');
+        menu.classList.remove('fixed');
+        menu.classList.remove('w-full');
+        menu.classList.remove('transform');
+        menu.classList.remove('bg-black');
+    }
+});
 </script>

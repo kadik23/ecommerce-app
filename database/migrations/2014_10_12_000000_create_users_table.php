@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -37,5 +38,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id');
     }
 };

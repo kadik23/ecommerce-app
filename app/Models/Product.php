@@ -12,4 +12,8 @@ class Product extends Model
     public function getPhotoAttribute($val){
         return ($val !== null) ? asset('assets/images/products/'.$val) : "";
     }
+
+    public function users(){
+        return $this->hasMany('App\Models\User','updatedBy','id');
+    }
 }

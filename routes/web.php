@@ -5,34 +5,33 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 
-Route::get('/', [App\Http\Controllers\HomeController::class,'welcome'])->name('welcome');
-
-
-// Route::get('/dashboard', function () {
-//     return view('layouts.dashboard');
-// });
 
 Auth::routes(['verify'=>true]);
 
+Route::get('/', [App\Http\Controllers\HomeController::class,'welcome'])->name('welcome');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('verified');
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('verified');
-Route::get('/dashboard', 'App\Http\Controllers\AdminController@index')->name('admin')->middleware('verified');
 
+// for profiles--------------
 Route::group(['prefix'=>'dashboard'], function() { 
-    // Route::get('/user/myprofile', 'App\Http\Controllers\UserController@myprofile')->name('user.myprofile');
-
 Route::get('/myprofile', 'App\Http\Controllers\ProfileController@index')->name('dash.myprofile');
 Route::put('/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit')->name('dash.profileEdit');
 Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit');
 });
 
-// for users
-Route::group(['middleware' => ['auth', 'role:user']], function() { 
-    // Route::get('/user/myprofile', 'App\Http\Controllers\UserController@myprofile')->name('user.myprofile');
+// for users---------------
+Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'dashboard'], function() { 
+    Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders');
+    Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod');
+    Route::post('/addCart', 'App\Http\Controllers\UserController@addCart')->name('addCart');
+    Route::get('/carts', 'App\Http\Controllers\UserController@carts')->name('carts');
 });
+Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 
-// for admin
+
+// for admin--------------
 Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], function() { 
+    Route::get('/', 'App\Http\Controllers\AdminController@index')->name('admin')->middleware('verified');
     Route::get('/products', 'App\Http\Controllers\AdminController@products')->name('dashboard.products');
     Route::get('/orders', 'App\Http\Controllers\AdminController@orders')->name('dashboard.orders');
     Route::get('/customers', 'App\Http\Controllers\AdminController@customers')->name('dashboard.Customers');

@@ -1,4 +1,8 @@
+@if((Auth::check()) && (Auth::user()->hasRole('admin')))
 <form method="GET" action="{{route('product.show', $categoryS??'categories')}}">
+@else
+<form method="GET" action="{{route('user.product.show')}}">
+@endif
     @csrf       
     <div class="flex ">
         <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
