@@ -43,7 +43,7 @@
         <div class="flex items-center" id="categories" >
             <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm" >
                 <li>
-                    <a href="{{route('home')}}" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category" aria-current="page">Home</a>
+                    <a href="{{route('welcome')}}" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category" aria-current="page">Home</a>
                 </li>
                 <li>
                     <button  id="phone_btn" class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Phones</button>
@@ -203,16 +203,16 @@
                                 </div>
                             </a>
                         </ul>
-                      </div>
+                    </div>
 
-                 
+                
                 </li>
                 <li>         
                     <div class="dropdown dropdown-notifications dropdown-bottom dropdown-left" style="background-color: transparent">
                         
                             <div tabindex="0"  onclick="resetToZero()" data-toggle="collapse" class="relative   inline-block" style="background-color: transparent; border:none;" >
-                                <div data-count="0"  class="w-4 h-4 notif-count cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
-                                    0 
+                                <div data-count="{{Count($carts)}}"  class="w-4 h-4 notif-count cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
+                                    {{Count($carts)}}
                                 </div>
                                 <span class="material-symbols-outlined cursor-pointer hover:text-regal-brown transition-all duration-500" style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">
                                     shopping_bag
@@ -220,32 +220,43 @@
                             </div> 
 
 
-                        <ul tabindex="0" id="scrollable-container" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80">
+                        <ul tabindex="0" id="scrollable-container" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box " style="width: 350px">
                             <div class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                Cart
+                                Cart                      
                             </div>
-                            <li>
-                                <a href="#" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <div class="w-32 overflow-hidden">
-                                        <img class="object-cover h-20" src="{{asset('assets/images/products/1695233140.jpg')}}" alt="Bonnie image">
+                            @if(isset($carts))
+                                @forEach($carts AS $Cart)
+                                <li class="flex flex-row items-center cart{{$Cart->id}}">
+                                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <div class="w-32 overflow-hidden">
+                                            <img class="object-cover h-20" src="{{ asset('assets/images/products/' . $Cart->profileImage) }}" alt="Bonnie image">
 
-                                    </div>
-                                    <div class="w-full pl-3">
-                                        <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">Samsung S32</div>
-                                            <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">admin</div>
-                                        <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">13$</div>
+                                        </div>
+                                        <div class="w-full pl-3">
+                                            <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">{{$Cart->name}}</div>
+                                                <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">{{$Cart->user_id}}</div>
+                                            <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{$Cart->price}}</div>
+                                        </div>
+                                    </a>
+                                    <a href="" product_id={{$Cart->id}} class="delete_cart hover:bg-transparent"> 
+                                        <span class=" ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
+                                            close
+                                        </span>
+                                    </a>
+                                </li> 
+                                @endforeach
+                            @endif
+                            <hr class="opacity-70 p-0">
+                            <li>
+                                <a href="{{route('cart.index')}}" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                                    <div class="inline-flex items-center ">
+                                        <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                                            <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+                                        </svg>
+                                            View all
                                     </div>
                                 </a>
-                            </li> 
-                            <hr class="opacity-70 p-0">
-                            <a href="{{route('carts')}}" class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-                                <div class="inline-flex items-center ">
-                                    <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                                    </svg>
-                                        View all
-                                </div>
-                            </a>
+                            </li>
                         </ul>
                       </div>    
                 </li>
@@ -306,4 +317,5 @@
         menu.classList.remove('bg-black');
     }
 });
+
 </script>

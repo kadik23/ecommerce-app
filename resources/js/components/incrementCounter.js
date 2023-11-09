@@ -20,6 +20,6 @@
             }, incrementInterval);
         }
     )}
-console.log('success2')
+console.log('success 2')
     // Call the incrementCounter function when the page loads
     window.onload = incrementCounter;

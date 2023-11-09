@@ -16,4 +16,11 @@ class Product extends Model
     public function users(){
         return $this->hasMany('App\Models\User','updatedBy','id');
     }
+
+    public function users_P()
+    {
+        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id','id');
+    }
+
+   
 }

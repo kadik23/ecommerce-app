@@ -176,7 +176,7 @@ categoryElements.forEach(function(el){
                   var id =  $(this).attr('product_id');   
                 $.ajax({
                     type: 'post',
-                     url:"{{ route('addCart') }}",
+                    url:"{{ route('cart.store') }}",
                     data: {
                         '_token': "{{csrf_token()}}",
                         'id' :id,

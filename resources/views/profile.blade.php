@@ -5,49 +5,48 @@
     @extends('layouts.accounts')
     @section('content')
 @endif 
-      <!-- Main modal -->
-      <div id="imageUpload" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-md max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="imageUpload">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Profile picture</h3>
-                    <form method="POST" action="{{route('dash.pictureEdit')}}" class="space-y-6" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div>
-                            <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+               <!-- Main modal -->
+               <dialog id="my_modal_2"  class=" modal">
+                <div class="relative w-full max-w-md max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <form method="dialog" class="modal-backdrop">
+                        <button class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        </form>
+                        <div class="px-6 py-6 lg:px-8">
+                            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Profile picture</h3>
+                            <form method="POST" action="{{route('dash.pictureEdit')}}" class="space-y-6" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div>
+                                    <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                                </div>
+                                @error('image')
+                                {{$message}}  
+                                @enderror      
+                                <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-regal-brown dark:focus:ring-blue-800">Change profile picture</button>          
+                            </form>
                         </div>
-                        @error('image')
-                        {{$message}}  
-                       @enderror
-                    
-                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-regal-brown dark:focus:ring-blue-800">Change profile picture</button>
-                    
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div> 
+            </dialog> 
+            {{-- End of Modal content --}}
     {{-- section 1 --}}
 <div class="mt-20">
     <div class="container flex flex-row justify-around ">
+
         <div class="flex flex-col">
             <div data-theme="light" class="max-w-sm mt-5 flex flex-col items-center   border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               
-                <div class="relative group overflow-hidden w-32 h-32 rounded-full mt-3 z-0">
+                <div  onclick="my_modal_2.showModal()" class="relative group overflow-hidden w-32 h-32 rounded-full mt-3 z-0">
                     <!-- Modal toggle -->
-                    <div data-modal-target="imageUpload" data-modal-toggle="imageUpload" class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer text-white bg-transparent ">   </div>
-                
                     <div class="w-32 h-32 rounded-full overflow-hidden">
-                        <img
-                        {{-- src="{{asset('assets/images/logo.png')}}" --}}
+                        <img 
                             src="{{asset('assets/images/profiles/'.Auth::user()->profileImage)}}"
                             alt="Profile Picture"
                             class="w-full h-full object-cover cursor-pointer"
@@ -55,7 +54,7 @@
                     
                     </div>
                     <div class="absolute  rounded-bl-full rounded-br-full  inset-0 flex items-center justify-center w-32 h-20 bg-black bg-opacity-40 opacity-0 cursor-pointer  group-hover:opacity-100 transition-opacity" style="top:39%;">
-                        <span class=" ml-2 text-white text-sm">Change Profile Picture</span>
+                        <span  class=" ml-2 text-white text-sm">Change Profile Picture</span>
                     </div>
                 </div>
    
@@ -76,8 +75,7 @@
                     </a>
                 </div>
             </div>
-            
-            
+
             <div  data-theme="light" class="max-w-sm  mt-3  border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               
                 <div class="py-2 px-5">

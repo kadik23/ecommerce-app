@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,8 @@ class HomeController extends Controller
     {
     }
 
-    
+    // use AuthenticatesUsers;
+
 
     /**
      * Show the application dashboard.
@@ -26,14 +28,20 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        if (Auth::user()->hasRole('admin')) {
-            return redirect()->route('admin.index');
+        if(Auth::user()){
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admin');
+            }
         }
         return $this->welcome();
     }
 
     public function welcome(){
-        return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all()]);   
- 
+        $products=[];
+        if(Auth::check()){
+            $user = Auth::user();
+            $products = $user->products; // Retrieve all products associated with the authenticated user
+        }
+        return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);   
     }
 }
