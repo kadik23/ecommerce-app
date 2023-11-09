@@ -15,14 +15,12 @@ class UserController extends Controller
     {
         $this->middleware('role:user');
     }
-
     public function index()
     {
         if(Auth::user()->hasRole('admin')){
         return view('admin');
         }
         return redirect()->route('welcome');
-
     }
     public function myorders(){
         return view('user.myOrders');
@@ -30,27 +28,4 @@ class UserController extends Controller
     public function paymentmethod(){
         return view('user.paymentMethod');
     }
-
-   public function addCart(Request $request){
-        $id=$request->id;
-        $product=Product::findOrFail($id);
-        $data =[
-            'createdBy' =>$product->createdBy,
-            'price' => $product -> price,
-            'name' =>$product -> name ,
-            'user' => Auth::id(),
-            'img' => $product -> profileImage,
-       ];
-        event(new newPanier($data));
-        return response()->json([
-            'status' => true,
-            'msg' => 'product has been added to cart',
-            'id' => $id
-        ]);
-    }
-    
-    public function carts(){
-        return view('user.carts');
-    }
-
 }

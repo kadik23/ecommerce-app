@@ -22,12 +22,14 @@ class newPanier implements ShouldBroadcast
     public $product_price;
     public $user;
     public $img;
+    public $id;
     public function __construct($data)
     {
         $this->product_name=$data['name'];
         $this->admin=$data['createdBy'];
         $this->product_price=$data['price'];
         $this->user=$data['user'];
+        $this->id=$data['id'];
         $this->img=$data['img'];
     }
 

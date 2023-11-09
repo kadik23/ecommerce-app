@@ -1,44 +1,7 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Styles link-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" >
-    @vite('resources/css/app.css')
-    @vite('resources/css/global.css')
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <!-- Scripts -->
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    @vite('resources/js/app.js')
-</head>     
-<body>
-    @auth
-    <input type="hidden" id="userId" value="{{ auth()->user()->id }}">
-    @endauth
-    <div id="app" data-theme="bumblebee">
-        @php
-            $categories = isset($categories) ? $categories : []; // Initialize as an empty array if not set
-        @endphp
-        <x-users.navbar :categories="$Categories" :Carts="$Carts"/>       
-        <main>
-            @yield('content')
-        </main>
-        <x-users.footer />
-    </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script><script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-@yield('script')
-<script>
-    // Enable pusher logging - don't include this in production
+export default
+console.log('pusher')
     Pusher.logToConsole = true;
-
+    
     var notificationsWrapper = $('.dropdown-notifications');
     var notificationsToggle = notificationsWrapper.find('div[data-toggle]');
     var notificationsCountElem = notificationsToggle.find('div[data-count]');
@@ -84,21 +47,12 @@
                                         <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">${data.product_price}</div>
                                     </div>
                                 </a>
-                                <a href="" product_id=${data.id} class="delete_cart hover:bg-transparent"> 
-                                        <span class=" ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
-                                            close
-                                        </span>
-                                </a>
                             `
             let template2= `<hr class="opacity-70 p-0">`
             var lastAElement = ulElement.querySelector("li:last-child a");
             if (lastAElement) {
                 var newLiElement = document.createElement("li");
                 newLiElement.innerHTML = template;
-                newLiElement.classList.add('flex')
-                newLiElement.classList.add('flex-row')
-                newLiElement.classList.add('items-center')
-                newLiElement.classList.add(`cart${data.id}`)
                 // Insert the new <li> element before the parent of the last <a> tag
                 lastAElement.parentElement.before(newLiElement);
                 // Insert the horizontal line after the new <li> element
@@ -110,24 +64,4 @@
 //     console.log('Subscription to new-panier channel succeeded:', data);
 // });
 
-$(document).on('click', '.delete_cart', function (e) {
-    e.preventDefault();
-    var id =  $(this).attr('product_id');   
-    $.ajax({
-        type: 'post',
-        url:"{{ route('cart.destroy', '') }}/" + id,
-        data: {
-            '_token': "{{ csrf_token() }}",
-            '_method': 'DELETE',
-        },
-        success: function (data) {
-            $('.cart'+data.data).remove();                        
-        },
-        error: function (reject) {
-            console.error(reject);
-        }
-    });
-});
-
-</script>
-</html>
+console.log('pusher')

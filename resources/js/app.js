@@ -1,16 +1,10 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 import columnChart from './components/columnChart.js';
 import incrementCounter from './components/incrementCounter.js'
 import cardAnimation from './components/cardAnimation.js'
-import pusherNotification from './pusherNotification.js'
+import pusherNotification from './components/pusherNotification.js'
 // import './bootstrap';
-// import { createApp } from 'vue';
+import { createApp } from 'vue';
 import 'flowbite';
-// import { Datepicker, Input, initTE } from "tw-elements";
 // initTE({ Datepicker, Input });
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

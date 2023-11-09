@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 
 
 Auth::routes(['verify'=>true]);
 
-Route::get('/', [App\Http\Controllers\HomeController::class,'welcome'])->name('welcome');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('welcome');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('verified');
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('verified');
 
@@ -20,11 +21,10 @@ Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictur
 });
 
 // for users---------------
-Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'dashboard'], function() { 
+Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'user'], function() { 
     Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders');
     Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod');
-    Route::post('/addCart', 'App\Http\Controllers\UserController@addCart')->name('addCart');
-    Route::get('/carts', 'App\Http\Controllers\UserController@carts')->name('carts');
+    Route::resource('/cart', CartsController::class);
 });
 Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 
@@ -40,6 +40,3 @@ Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], fun
     Route::resource('/product',ProductsController::class);
     Route::resource('/category',App\Http\Controllers\CategoriesController::class);
 });
-
-
-

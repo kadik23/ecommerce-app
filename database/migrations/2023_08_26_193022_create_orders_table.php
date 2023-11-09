@@ -1,5 +1,4 @@
 <?php
-
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -14,17 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id()->primaryKey();
+            $table->id();
             $table->string('state', 20)->nullable();
             $table->date('dateOrder')->nullable();
-            $table->decimal('quantity', 5)->nullable();
-            $table->string('paymentMethod');
-            $table->string('deliveryMethod');
-            $table->unsignedInteger('totalPrice')->nullable();
-            $table->foreignIdFor(User::class,'orderBy');
-            $table->foreignIdFor(Product::class,'productOrdered');
+            $table->decimal('quantity', 5, 2)->nullable();
+            $table->string('paymentMethod', 255);
+            $table->string('deliveryMethod', 255);
+            $table->foreignIdFor(User::class, 'orderBy');
+            $table->foreignIdFor(Product::class, 'productOrdered');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
-
         });
     }
 

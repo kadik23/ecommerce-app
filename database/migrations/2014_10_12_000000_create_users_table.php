@@ -14,19 +14,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
+            $table->string('username',20)->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('fullName', 30)->nullable();
-            $table->boolean('isAdmin')->default(false);
             $table->string('profileImage')->nullable();
-            $table->string('profileImage_Mime')->nullable();
-            $table->integer('profileImage_Size')->nullable();
             $table->string('city', 20)->nullable();
             $table->string('address', 25)->nullable();
-            $table->decimal('totalRevenue')->default(0);
-            $table->integer('custumersNumber')->default(0);
+            $table->string('country', 20)->default('Algeria');
+            $table->decimal('totalRevenue', 8, 3)->default(0);
+            $table->unsignedInteger('custumersNumber')->default(0);
+            $table->integer('phone')->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -39,8 +38,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
     }
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id');
-    }
+
 };

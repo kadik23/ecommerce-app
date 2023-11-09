@@ -18,4 +18,4 @@ export default function cardAnimation() {
   }
   
   window.onload = cardAnimation; // Assign the function as a callback without invoking it
-  
+  console.log('success 3')
