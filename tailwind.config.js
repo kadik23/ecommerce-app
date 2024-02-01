@@ -5,7 +5,6 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     "./node_modules/flowbite/**/*.js",
-    "./node_modules/tw-elements/dist/js/**/*.js"
 
   ],
   daisyui: {
@@ -52,7 +51,6 @@ export default {
             require('flowbite/plugin')({
               charts: true,}),
             require("daisyui"),
-            require("tw-elements/dist/plugin.cjs")
           ],
 }
 

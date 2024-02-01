@@ -12,6 +12,8 @@ class CreateProductUserPivotTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('job_id')->references('id')->on('job_posts')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

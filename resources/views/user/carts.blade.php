@@ -34,19 +34,64 @@
 </nav>  
 <div class="flex flex-wrap">
     <div class="flex flex-col">
-        <x-users.cart product_name="Kit" sold="23" price_sold="5900" price="7300" discription="hello" size="13" img="src"/>
-        <x-users.cart product_name="Kit" sold="23" price_sold="5900" price="7300" discription="hello" size="13" img="src"/>
-        <x-users.cart product_name="Kit" sold="23" price_sold="5900" price="7300" discription="hello" size="13" img="src"/>
-    </div>
+    @foreach($Carts as $Cart)
+        <x-users.cart 
+            :id="$Cart->id"
+            :productName="$Cart->name" 
+            sold="23" price_sold="5900" 
+            :price="$Cart->price" 
+            :description="$Cart->description" 
+            size="13" 
+            :img="$Cart->getPhotoAttribute($Cart->profileImage)"
+        />
+    @endforeach
+    @php 
+    $cartsArray = $Carts->toArray();
+    $totalPrice = array_sum(array_column($cartsArray, 'price'));
+    @endphp
+  </div>
     <div class=" w-1/3 flex flex-col justify-between h-32 px-5 py-2.5  rounded-sm " style="background-color: rgba(128, 128, 128, 0.098)"">
-        <p>CART SUMMARY <span class="font-bold">1000 $</span></p>
+        <p>CART SUMMARY <span class="font-bold" class="totalPrice">{{$totalPrice}}</span>$</p>
         <div class="pb-2.5">
             <p class="opacity-70 ">Fast delivery - 24 hours to major cities</p>
-            <form action="" method="post">
-                <button type="submit" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:ring-amber-800 font-medium rounded-lg text-sm px-16 w-full py-2 mr-2 mb-2  focus:outline-none">Order (<span>1000</span>$)</button>
+            <form action="{{ route('order.store') }}" method="post">
+                @csrf
+                @forEach($Carts as $Cart)
+                <input type="hidden" id="hidden{{ $Cart->id }}" name="hidden{{$Cart->id}}" value="1">
+                @endforeach
+                <input type="hidden" id="1" name="productId" value="1">
+                <button   class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:ring-amber-800 font-medium rounded-lg text-sm px-16 w-full py-2 mr-2 mb-2  focus:outline-none">
+                    Order (<span class="totalPrice">{{ $totalPrice}}  </span>$)
+                </button>
             </form>
         </div>
     </div>
 </div>
+<script>
+    let totalPrice = document.querySelector(".totalPrice")
+    function increment_quantity(id) {
+        let quantity = document.querySelector(`.quantity${id}`);
+        let price = document.getElementById(`price${id}`)
+        let finalQuantity = document.querySelector(`#hidden${id}`)
+        let new_Qnt = parseInt(quantity.innerHTML) + 1;
+        totalPrice.innerHTML =  parseInt(totalPrice.innerHTML)+parseInt(price.innerHTML);
+        quantity.innerHTML = new_Qnt;
+        finalQuantity.setAttribute("value", new_Qnt);
+        console.log(totalPrice)
+    }
 
+    function decrement_quantity(id) {
+        let quantity = document.querySelector(`.quantity${id}`);
+        let price = document.getElementById(`price${id}`)
+        let finalQuantity = document.querySelector(`#hidden${id}`)
+        let new_Qnt = parseInt(quantity.innerHTML) - 1;
+        if (new_Qnt >= 0) {
+            totalPrice.innerHTML =  parseInt(totalPrice.innerHTML)-parseInt(price.innerHTML);
+            quantity.innerHTML = new_Qnt;
+            finalQuantity.setAttribute("value", new_Qnt);
+        }
+        console.log(totalPrice)
+    }
+
+</script>
 @endsection

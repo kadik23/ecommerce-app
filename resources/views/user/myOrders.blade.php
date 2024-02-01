@@ -9,11 +9,9 @@
     <x-users.tags tagname="Delivered" />
 </div>
 <div class="flex flex-wrap px-10">
-    <x-users.processCards />
-    <x-users.processCards />
-    <x-users.processCards />
-    <x-users.processCards />
-    <x-users.processCards />
+    @foreach ($Orders as $Order)        
+        <x-users.processCards :data="$Order"/>
+    @endforeach
 </div>
 </div>
 

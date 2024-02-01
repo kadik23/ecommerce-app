@@ -9,18 +9,18 @@
 
     </div>
     <div class="flex flex-col ">
-        <div class=" text-black text-lg font-medium">Product name</div>
+        <div class=" text-black text-lg font-medium">{{$productName}}</div>
         <div class="flex-row justify-center inline-flex">
             <span style="text-zinc-600 text-sm    ">Description :</span>
-            <span class="text-black text-sm font-medium ">khbflqed fblsdknjms  lkdnf dlksfns dlknfdsljk</span>
+            <span class="text-black text-sm font-medium ">{{$description}}</span>
         </div>
         <div class="flex-row justify-centerinline-flex">
             <span class="text-zinc-600  text-sm">size:</span>
-            <span class="text-black text-sm font-medium  ">aaa dzaa</span>
+            <span class="text-black text-sm font-medium  ">20</span>
         </div>
     </div>
     <div class="flex-col justify-center items-end inline-flex">
-        <div class="text-black text-md font-bold mr-2">5900$</div>
+        <div id="price{{ $id }}" class="text-black text-md font-bold mr-2">{{$price}}$</div>
         <div class="justify-center items-center inline-flex mt-2">
             <div class="px-2.5 justify-center items-center  flex">
                 <span class="text-black text-opacity-50  font-medium">7300$ </span>
@@ -28,11 +28,11 @@
             </div>
         </div>
             <div class="justify-around text-center items-center inline-flex mt-2 w-28">
-                <span class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
+                <span onclick="increment_quantity({{$id}})" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
                     add
                 </span>
-                <span class="text-black text-md font-medium">1</span>
-                <span class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
+                <span  class="quantity{{ $id }}" class="text-black text-md font-medium">1</span>
+                <span  onclick="decrement_quantity({{$id}})" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
                     remove
                 </span>
             </div>

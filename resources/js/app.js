@@ -1,5 +1,5 @@
 import columnChart from './components/columnChart.js';
-import incrementCounter from './components/incrementCounter.js'
+import onLoad from './components/incrementCounter.js'
 import cardAnimation from './components/cardAnimation.js'
 import pusherNotification from './components/pusherNotification.js'
 // import './bootstrap';
@@ -16,7 +16,6 @@ const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
