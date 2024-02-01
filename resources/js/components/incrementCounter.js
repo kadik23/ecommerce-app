@@ -1,6 +1,4 @@
-   export default
-   // Function to increment the counter
-    function incrementCounter() {
+export default function incrementCounter() {// Function to increment the counter
         const counterElements = document.querySelectorAll('.customerCounter');
         counterElements.forEach((counterElement) => {
 

@@ -15,7 +15,12 @@ class CartsController extends Controller
      */
     public function index()
     {
-        return view('user.carts');
+        $products=[];
+        if(Auth::check()){
+            $user = Auth::user();
+            $products = $user->products; // Retrieve all products associated with the authenticated user
+        }   
+        return view('user.carts',['Carts'=>$products]);
     }
 
     /**

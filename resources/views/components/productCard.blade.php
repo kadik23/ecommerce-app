@@ -43,14 +43,14 @@
         <div class="flex items-center justify-between">
             <span class="text-xl font-bold text-gray-900 dark:text-white">${{$price}}</span>
             <div class="flex items-center ">
-                @if( !(Auth::check()) || (Auth::user()->hasRole('user')) )
+            @if( !(Auth::check()) || (Auth::user()->hasRole('user')) )
                 <div class="p-1  mx-3 cursor-pointer hover:bg-slate-100 flex justify-center items-center border-2 border-slate-700  rounded-full">
                     <span class="material-symbols-outlined favorite">
                         favorite
                     </span>
                 </div>
                 <a href="" product_id="{{$id}}" class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Add to cart</a>
-                @elseif(Auth::user()->hasRole('admin')) 
+            @elseif(Auth::user()->hasRole('admin')) 
                 <div class="inline-block bg-transparent" onclick="authentication_modal.showModal()">  
                     <a  data-name="{{$name}}"
                     data-image="{{$profile}}"
@@ -62,7 +62,7 @@
                     class="text-white mr-3 bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Edit</a>
                 </div>
                 <a href="" product_id="{{$id}}"   class="text-red-700 delete_btn my-auto hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2  dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</a>
-                @endif  
+            @endif  
             </div>
         </div>
     </div>
