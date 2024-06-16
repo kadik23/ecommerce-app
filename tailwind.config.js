@@ -5,38 +5,13 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     "./node_modules/flowbite/**/*.js",
-
   ],
   daisyui: {
     themes: ["light", 
     "dark", 
     "cupcake",
     "bumblebee",
-    "emerald",
-    "corporate",
-    "synthwave",
-    "retro",
-    "cyberpunk",
-    "valentine",
-    "halloween",
-    "garden",
-    "forest",
-    "aqua",
-    "lofi",
-    "pastel",
-    "fantasy",
-    "wireframe",
-    "black",
-    "luxury",
-    "dracula",
-    "cmyk",
-    "autumn",
-    "business",
-    "acid",
-    "lemonade",
-    "night",
-    "coffee",
-    "winter",],
+  ,],
   },
   theme: {
     extend: {
@@ -47,10 +22,12 @@ export default {
   },
   darkMode: "class",
 
-  plugins: [require('@tailwindcss/forms'), 
-            require('flowbite/plugin')({
-              charts: true,}),
-            require("daisyui"),
-          ],
+  plugins: [
+    require('@tailwindcss/forms'), 
+    require('flowbite/plugin')({
+      charts: true,
+    }),
+    require("daisyui"),
+  ],
 }
 

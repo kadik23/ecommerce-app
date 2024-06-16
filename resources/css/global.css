@@ -1,30 +1,9 @@
-/* .hover-box {
-    position: relative;
-    overflow: hidden;
-    &:hover {
-      img {
-        opacity: .2;
-      }
-   
-    }
-    img {
-      transition: .4s;
-    }
-  
-  } */
+
 .product:hover{
-    /* transform: matrix(0,1,1,0,0); */
     transform: scale(1.05);
     transition: transform .5s;
 }
-/* select option:hover{
-    background-color:#b17b4f;
-} */
 
-/* option:nth-child(n):hover{
-    background: rgb(144, 144, 144);
-    padding: 10px;
-} */
 select#category option:nth-child(n):hover {
     width: 100px;
     height: 50px;
@@ -41,9 +20,9 @@ select#category option:nth-child(n):hover {
 }
 
 .product-card {
-    opacity: 0; /* Initially hide the product cards */
-    transform: translateY(50px); /* Move them down */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Define animation properties */
+    opacity: 0; 
+    transform: translateY(50px); 
+    transition: opacity 0.5s ease, transform 0.5s ease; 
 }
 .visible-card {
   opacity: 1;
@@ -64,25 +43,13 @@ select#category option:nth-child(n):hover {
 }
 
 .fill{
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }
 
 .nav_animation{
- transform: translateY(-40px);
+  transform: translateY(-40px);
 }
-
-/* @keyframes sta {
-  0%{
-  }
-  100%{
-    transform: translateY(0);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-  }
-} */

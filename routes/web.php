@@ -21,7 +21,7 @@ Route::put('/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit
 Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit');
 });
 
-// for users---------------
+// for Client---------------
 Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'user'], function() { 
     Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders');
     Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod');
@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'user'], function(
 Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 
 
-// for admin--------------
+// For admin--------------
 Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], function() { 
     Route::get('/', 'App\Http\Controllers\AdminController@index')->name('admin')->middleware('verified');
     Route::get('/products', 'App\Http\Controllers\AdminController@products')->name('dashboard.products');
