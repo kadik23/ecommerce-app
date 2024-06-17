@@ -4,7 +4,7 @@
 <x-users.carousel />  <!-- Slider.. -->
 <!-- Begin of Product card -->
 <div class="container">
-  <h1 class=" text-3xl text-center font-bold my-10">Top Products</h1>
+  <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Top Products</h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
@@ -17,34 +17,34 @@
 <!-- Begin of Intro -->
 <section id="intro" class="h-96 intro flex items-center">
   <div>
-    <div class="w-1/3 ml-10 rounded-md bg-white text-center flex flex-col items-center justify-start ">
+    <div class="w-2/3 lg:w-1/3 ml-10 rounded-md bg-white text-center flex flex-col items-center justify-start ">
       <img src="{{asset('assets/images/logo.png')}}" class="w-40 h-36 " alt="">
-      <p class="font-md text-lg ">Welcome to Stanissk Store, where shopping meets convenience and quality. With a wide range of products to choose from, we're your one-stop destination for all your shopping needs.</p>
-      <button class="bg-regal-brown my-5 py-2 px-3 text-white rounded-3xl">SHOP NOW</button>
+      <p class="font-md text-xs lg:text-lg">Welcome to Stanissk Store, where shopping meets convenience and quality. With a wide range of products to choose from, we're your one-stop destination for all your shopping needs.</p>
+      <button class="bg-regal-brown my-5 text-xs lg:text-md lg:py-2 px-3 text-white rounded-3xl py-1">SHOP NOW</button>
     </div>
   </div>
 </section>
 <!-- End of Intro -->
 <div class="container">
-  <h1 class=" text-3xl text-center font-bold my-10">Latest</h1>
-  <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
+  <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Latest</h1>
+  <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
-            <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
+            <x-productC ard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
             @endforeach
     @endif
   </div>
 </div>
 <!-- Begin of Category Card -->
-<h1 class="text-3xl text-center font-bold my-10">SHOP BY BRAND</h1>
-<div class="flex justify-around m-10">
+<h1 class="text-lg lg:text-3xl text-center font-bold my-10">SHOP BY BRAND</h1>
+<div class="flex flex-wrap justify-around m-10">
   <x-users.categoryCard category="Phones" image="hal-gatewood-WcYeiHMexR0-unsplash.jpg" />
   <x-users.categoryCard category="Accesories" image="marissa-grootes-D4jRahaUaIc-unsplash.jpg" />
   <x-users.categoryCard category="Electronics" image="umberto-jXd2FSvcRr8-unsplash.jpg" />
 </div>
 {{-- End of Category Card --}}
 <div class="container">
-  <h1 id="electronics" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS </h1>
+  <h1 id="electronics" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
@@ -56,7 +56,7 @@
   </div>
 </div>
 <div class="container">
-  <h1 id="phones" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
+  <h1 id="phones" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
@@ -68,7 +68,7 @@
   </div>
 </div>
 <div class="container">
-  <h1 id="accessories" class=" text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
+  <h1 id="accessories" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
     @if($productsController!==[])
             @foreach ($productsController as $product)
@@ -81,8 +81,8 @@
 </div>
 {{-- Begin our partners --}}
 <div class="p-16 w-full flex flex-col justify-around bg-slate-100 opacity-70">
-  <h1 class="text-2xl font-bold opacity-90  text-center m-5">OUR PARTNERS</h1>
-  <div class="flex justify-around">
+  <h1 class="text-lg lg:text-2xl font-bold opacity-90  text-center m-5">OUR PARTNERS</h1>
+  <div class="flex flex-col lg:flex-row items-center justify-around">
     <div class="w-36 p-2 flex items-center bg-white h-20">
       <img src="{{asset('assets/images/partners/images.png')}}" class="w-full" alt="">
     </div>
