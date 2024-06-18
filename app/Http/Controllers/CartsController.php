@@ -20,7 +20,8 @@ class CartsController extends Controller
             $user = Auth::user();
             $products = $user->products; // Retrieve all products associated with the authenticated user
         }   
-        return view('user.carts',['Carts'=>$products]);
+        // return view('user.carts',['Carts'=>$products]);
+        return response()->json(['Carts'=>$products])
     }
 
     /**

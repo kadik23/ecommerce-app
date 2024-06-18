@@ -13,8 +13,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('user.myOrders',['Orders'=>Order::all()]);
-
+        // return view('user.myOrders',['Orders'=>Order::all()]);
+        return response()->json(['Orders'=>Order::all()]);
     }
 
     /**

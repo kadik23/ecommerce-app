@@ -42,6 +42,7 @@ class HomeController extends Controller
             $user = Auth::user();
             $products = $user->products; // Retrieve all products associated with the authenticated user
         }
-        return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);   
+        // return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);   
+        return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);
     }
 }

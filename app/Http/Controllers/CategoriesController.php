@@ -47,10 +47,11 @@ class CategoriesController extends Controller
                 $category->name =strip_tags( $request->input('category'));
                 $category->icon= $file_name;        
                 $category->save();
-                return redirect()->route('product.index');
+                // return redirect()->route('product.index');
+                return response()->json(['category' => $category]);
             
         }else{
-          return back()->withErrors([
+            return back()->withErrors([
                 'message' => 'Please upload an icon first.',
             ])->withInput();
         }
