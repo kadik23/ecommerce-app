@@ -1,37 +1,35 @@
+interface LocalStorage {
+    getItem(key: string): string | null;
+    setItem(key: string, value: string): void;
+    removeItem(key: string): void;
+}
+
 const ACCESS_TOKEN_KEY = "access_token";
 const ACCOUNT_TYPE_KEY = "account_type";
 
 export default class UserSessionRepository {
-    constructor(localStorage){
+    localStorage: LocalStorage;
+
+    constructor(localStorage: LocalStorage) {
         this.localStorage = localStorage;
     }
 
-    save(userSession){
-        let { access_token, account_type } = userSession;
+    save(userSession: UserSession): void {
+        const { access_token, account_type } = userSession;
         this.localStorage.setItem(ACCESS_TOKEN_KEY, access_token);
         this.localStorage.setItem(ACCOUNT_TYPE_KEY, account_type);
     }
 
-    getAccessToken(){
-        let access_token = this.localStorage.getItem(ACCESS_TOKEN_KEY);
-        if(access_token){
-            return access_token;
-        }
-
-        return null;
+    getAccessToken(): string | null {
+        return this.localStorage.getItem(ACCESS_TOKEN_KEY);
     }
 
-    getAccountType(){
-        let account_type = this.localStorage.getItem(ACCOUNT_TYPE_KEY);
-        if(account_type){
-            return account_type;
-        }
-
-        return null;
+    getAccountType(): string | null {
+        return this.localStorage.getItem(ACCOUNT_TYPE_KEY);
     }
 
-    clear(){
+    clear(): void {
         this.localStorage.removeItem(ACCESS_TOKEN_KEY);
         this.localStorage.removeItem(ACCOUNT_TYPE_KEY);
     }
-};
+}
