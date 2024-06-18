@@ -15,10 +15,10 @@ class ProfileController extends Controller
      * @return void
      */
     use photos;
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -27,7 +27,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile');
+        // return view('profile');
+        return response()->json(Auth::user()); 
     }
 
     public function profileEdit(Request $request){

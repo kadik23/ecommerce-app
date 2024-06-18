@@ -10,16 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {   
-    public function __construct()
-    {
-        $this->middleware('role:admin');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('role:admin');
+    // }
     public function index()
     {
         $indexTitle = 'Sales Analytics'; // Set the title
-        return view('admin.index', compact('indexTitle'));
-     
-
+        // return view('admin.index', compact('indexTitle'));
+        return response()->json(['compact'=>'indexTitle']);
     }
     public function products()
     {

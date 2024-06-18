@@ -15,7 +15,8 @@ class ProductsController extends Controller
     use orderBy;
     public function index()
     {
-        return view('admin.products',['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
+        // return view('admin.products',['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
+        return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
     }
 
     /**
@@ -23,7 +24,8 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('admin.addProduct',['Categories'=>Category::all()]);
+        // return view('admin.addProduct',['Categories'=>Category::all()]);
+        return response()->json(['Categories'=>Category::all()]);
     }
 
     /**
@@ -59,10 +61,10 @@ class ProductsController extends Controller
                 return redirect()->route('product.index');
             }
         }else{
-          return back()->withErrors([
-            'message' => 'Please upload an image first.',
-        ])->withInput();
-    }
+            return back()->withErrors([
+                'message' => 'Please upload an image first.',
+            ])->withInput();
+        }
     }
 
     /**
@@ -77,15 +79,28 @@ class ProductsController extends Controller
             $products = Product::where('name', 'like', "%{$productSearch}%")->get();
             if($categorySelected=='All categories'){
                 if($products->isEmpty()){
-                    return view('admin.products', [
+                    // return view('admin.products', [
+                    //     'product' => $productSearch,
+                    //     'productsController'=>[], 
+                    //     'Categories' => Category::all(),
+                    //     'Products' => Product::all(),
+                    //     'categoryS'=>$categorySelected,
+                    // ]); 
+                    return response()->json([
                         'product' => $productSearch,
                         'productsController'=>[], 
                         'Categories' => Category::all(),
                         'Products' => Product::all(),
                         'categoryS'=>$categorySelected,
-                    ]);  
+                    ]);
                 } 
-                return view('admin.products', [
+                // return view('admin.products', [
+                //     'productsController' => $products, 
+                //     'Categories' => Category::all(),
+                //     'Products' => Product::all(),
+                //     'categoryS'=>$categorySelected
+                // ]);
+                return response()->json([
                     'productsController' => $products, 
                     'Categories' => Category::all(),
                     'Products' => Product::all(),
@@ -97,7 +112,7 @@ class ProductsController extends Controller
                 return $product->category === $categorySelected;
             });  
             if($filteredProducts->isEmpty()){
-                return view('admin.products', [
+                return response()->json( [
                     'product' => $productSearch,
                     'productsController'=>[], 
                     'Categories' => Category::all(),
@@ -105,7 +120,7 @@ class ProductsController extends Controller
                     'categoryS'=>$categorySelected,
                 ]);  
             } 
-            return view('admin.products', [
+            return response()->json( [
                 'productsController' => $filteredProducts,
                 'cat'=>$categorySelected, 
                 'Categories' => Category::all(),
@@ -115,7 +130,7 @@ class ProductsController extends Controller
         
         }else{
             $products =Product::where('category', $category)->with('category')->get();
-            return view('admin.products',[
+            return response()->json([
                 'productsController' => $products,
                 'Categories'=>Category::all(),
                 'Products' => Product::all(),
@@ -166,7 +181,7 @@ class ProductsController extends Controller
         // return redirect()->route('product.index'); 
         return response()->json([
             'status' => true,
-            'msg' => 'تم الحذف بنجاح',
+            'msg' => 'Product has been deleted successfully',
             'id' =>  $request -> id
         ]);
  
@@ -180,7 +195,7 @@ class ProductsController extends Controller
                 $products = Product::where('name', 'like', "%{$productSearch}%")->get();
                 if($categorySelected=='All categories'){
                     if($products->isEmpty()){
-                        return view('user.productsByCategory', [
+                        return response()->json( [
                             'product' => $productSearch,
                             'productsController'=>[], 
                             'Categories' => Category::all(),
@@ -188,7 +203,7 @@ class ProductsController extends Controller
                             'categoryS'=>$categorySelected,
                         ]);  
                     } 
-                    return view('user.productsByCategory', [
+                    return response()->json([
                         'productsController' => $products, 
                         'Categories' => Category::all(),
                         'Products' => Product::all(),
@@ -199,7 +214,7 @@ class ProductsController extends Controller
                     return $product->category === $categorySelected;
                 });  
                 if($filteredProducts->isEmpty()){
-                    return view('user.productsByCategory', [
+                    return response()->json( [
                         'product' => $productSearch,
                         'productsController'=>[], 
                         'Categories' => Category::all(),
@@ -207,7 +222,7 @@ class ProductsController extends Controller
                         'categoryS'=>$categorySelected,
                     ]);  
                 } 
-                return view('user.productsByCategory', [
+                return response()->json( [
                     'productsController' => $filteredProducts,
                     'cat'=>$categorySelected, 
                     'Categories' => Category::all(),
@@ -216,7 +231,7 @@ class ProductsController extends Controller
                 ]);
             }else{
                 $products =Product::where('category', $category)->with('category')->get();
-                return view('user.productsByCategory',[
+                return response()->json([
                     'productsController' => $products,
                     'Categories'=>Category::all(),
                     'Products' => Product::all(),
@@ -254,12 +269,17 @@ class ProductsController extends Controller
         }elseif($filter=="HighToLow"){
             $products= Product::orderBy('price', 'desc')->get();
         }
-        return view('admin.products',[
+        // return view('admin.products',[
+        //     'productsController' => $products,
+        //     'Categories'=>Category::all(),
+        //     'Products' => Product::all(),
+        //     'filter' => $filter,
+        // ]);
+        return response()->json([
             'productsController' => $products,
             'Categories'=>Category::all(),
             'Products' => Product::all(),
             'filter' => $filter,
         ]);
-
     }
 }

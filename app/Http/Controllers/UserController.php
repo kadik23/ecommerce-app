@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('role:user');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('role:user');
+    // }
     public function index()
     {
         if(Auth::user()->hasRole('admin')){
@@ -24,7 +24,8 @@ class UserController extends Controller
         return redirect()->route('welcome');
     }
     public function myorders(){
-        return view('user.myOrders',['Orders'=>Order::all()]);
+        // return view('user.myOrders',['Orders'=>Order::all()]);
+        return response()->json(['Orders'=>Order::all()]);
     }
     public function paymentmethod(){
         return view('user.paymentMethod');
