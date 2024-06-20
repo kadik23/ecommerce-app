@@ -1,4 +1,7 @@
 type Route = {
     path: string,
-    component: Component
+    name?: string,
+    redirect?: string,
+    component: Component,
+    children?: Route[]
 }

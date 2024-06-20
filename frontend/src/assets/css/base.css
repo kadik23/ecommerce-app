@@ -1,0 +1,82 @@
+/* color palette from <https://github.com/vuejs/theme> */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  margin: 0;
+  place-items: center;
+  max-width: 100%;
+  min-height: 100vh;
+  color: #2c3e50;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ 
+.product:hover{
+  transform: scale(1.05);
+  transition: transform .5s;
+}
+
+select#category option:nth-child(n):hover {
+  width: 100px;
+  height: 50px;
+  padding: 10px 50px !important;
+  border: none;
+  background-color: aqua !important;
+}
+
+.owl-item {
+  animation-delay: 0.2s;
+  transition:all .5s;
+  -webkit-animation: 1s ease 1s normal both 1 running fadeInUp;
+  animation: 1s ease 1s normal both 1 running fadeInUp;   
+}
+
+.product-card {
+  opacity: 0; 
+  transform: translateY(50px); 
+  transition: opacity 0.5s ease, transform 0.5s ease; 
+}
+.visible-card {
+opacity: 1;
+transform: translate(0px);
+transition: all 0.5s ease;
+}
+
+.intro {
+background:  -moz-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url('../images/c-d-x-PDX_a_82obo-unsplash.jpg');
+background:  -webkit-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url('../images/c-d-x-PDX_a_82obo-unsplash.jpg');
+background:  -ms-linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url('../images/c-d-x-PDX_a_82obo-unsplash.jpg');
+background:  linear-gradient(rgba(46, 45, 47, 0.74), rgba(7, 7, 7, 0.65)),url('../images/c-d-x-PDX_a_82obo-unsplash.jpg');
+position: relative;
+z-index: 1;
+background-position: bottom center;
+background-size: cover;
+background-attachment: fixed;
+}
+
+.fill{
+font-variation-settings:
+'FILL' 1,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24
+}
+
+.nav_animation{
+transform: translateY(-40px);
+}

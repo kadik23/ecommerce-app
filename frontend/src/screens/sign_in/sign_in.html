@@ -1,0 +1,60 @@
+<div class="w-screen lg:h-screen flex flex-col lg:flex-row">
+    <Loading v-if="isLoading" />
+    <!-- Left Section: Login Form -->
+    <div class="h-full w-auto lg:w-1/2 flex flex-1 flex-col justify-center lg:px-8 px-10 lg:pb-0">
+        <a href="/" class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-24 rounded-full w-24" src="@/assets/images/logo.png" alt="Your Company" />
+            <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight">Sign in to your account</h2>
+        </a>
+        <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form @submit.prevent="handleSubmit" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium leading-6 float-left">Email Address</label>
+                    <div class="mt-2">
+                        <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required
+                            autofocus
+                            class="block w-full pl-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-regal-brown sm:text-sm sm:leading-6" />
+                        <span v-if="formErrors.email" class="text-red-500 text-xs">{{ formErrors.email }}</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="block text-sm font-medium leading-6">Password</label>
+                        <div class="text-sm">
+                            <router-link to="/password/reset"
+                                class="font-semibold text-regal-brown hover:text-amber-700">Forgot Your
+                                Password?</router-link>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <input v-model="form.password" id="password" name="password" type="password"
+                            autocomplete="current-password" required
+                            class="block pl-2 w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 outline-regal-brown sm:text-sm sm:leading-6" />
+                        <span v-if="formErrors.password" class="text-red-500 text-xs">{{ formErrors.password }}</span>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="flex w-full justify-center rounded-md bg-regal-brown px-3 py-1.5 mb-4 lg:mb-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                        Login
+                    </button>
+                </div>
+            </form>
+            <h2 class="text-center">Or</h2>
+            <img src="@/assets/images/icons8-google-48.png" class="h-8 mx-auto mb-4 cursor-pointer" alt="">
+        </div>
+    </div>
+
+    <!-- Right Section: Registration -->
+    <div class="lg:h-full w-full lg:w-1/2 flex flex-col">
+        <img src="@/assets/images/background.svg" alt="Background Image" class="object-cover h-full" />
+        <div class="px-8 h-1/2 bg-[#f5ecd9] py-8">
+            <h1 class="text-2xl font-bold mb-2">New Here?</h1>
+            <h3 class="mb-4">Sign up and discover a great amount of new opportunities!</h3>
+            <router-link to="/register"
+                class="flex lg:w-1/6 w-4/6 mx-auto justify-center rounded-md bg-regal-brown px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                Sign up
+            </router-link>
+        </div>
+    </div>
+</div>

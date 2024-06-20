@@ -12,6 +12,16 @@ export default defineConfig({
     vueJsx(),
     VueDevTools(),
   ],
+  server: {
+    proxy: {
+        '/api': {
+            target: 'http://127.0.0.1:8000',
+        },
+        '/storage': {
+            target: 'http://127.0.0.1:8000',
+        }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
