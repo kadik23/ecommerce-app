@@ -18,6 +18,10 @@ export default class RestUserSession {
     async logout(): Promise<any> {
         return this.axiosInstance.post('/api/auth/logout').then((response) => response.data);
     }
+    
+    async checkAuth(access_token: string){
+        return this.axiosInstance.get('/api/',{ headers: { Authorization: `Bearer ${access_token}` }}).then(response => response.data);
+    }
 
     async getInfo(): Promise<any> {
         // NOTE: To use this function you must use inject("axios") to setup the Authorization header by default.

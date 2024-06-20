@@ -1,47 +1,31 @@
 const DEFAULT_TOAST_DURATION = 3000;
 
-export default class ToastsManager {
-    constructor(){
+export default class ToastsManager implements IToastsManager {
+    toasts: ToastMessage[] = [];
+
+    constructor() {
         this.toasts = [];
     }
-    toasts: ToastMessage[] = [];
-    
-    alertSuccess(message: string, duration_in_seconds: number){ 
+
+    alertSuccess(message: string, duration_in_seconds?: number): void {
         this.toasts.push({ message, type: "success" });
-        if(duration_in_seconds){
-            setTimeout(() => {
-                this.toasts.shift();
-            }, 1000 * duration_in_seconds);
-        }else{
-            setTimeout(() => {
-                this.toasts.shift();
-            }, DEFAULT_TOAST_DURATION);
-        }
+        this.setToastRemoval(duration_in_seconds);
     }
 
-    alertError(message: string, duration_in_seconds: number){ 
+    alertError(message: string, duration_in_seconds?: number): void {
         this.toasts.push({ message, type: "error" });
-        if(duration_in_seconds){
-            setTimeout(() => {
-                this.toasts.shift();
-            }, 1000 * duration_in_seconds);
-        }else{
-            setTimeout(() => {
-                this.toasts.shift();
-            }, DEFAULT_TOAST_DURATION);
-        }
+        this.setToastRemoval(duration_in_seconds);
     }
-    
-    alertInfo(message: string, duration_in_seconds: number){
+
+    alertInfo(message: string, duration_in_seconds?: number): void {
         this.toasts.push({ message, type: "info" });
-        if(duration_in_seconds){
-            setTimeout(() => {
-                this.toasts.shift();
-            }, 1000 * duration_in_seconds);
-        }else{
-            setTimeout(() => {
-                this.toasts.shift();
-            }, DEFAULT_TOAST_DURATION);
-        }
+        this.setToastRemoval(duration_in_seconds);
+    }
+
+    private setToastRemoval(duration_in_seconds?: number): void {
+        const duration = duration_in_seconds ? 1000 * duration_in_seconds : DEFAULT_TOAST_DURATION;
+        setTimeout(() => {
+            this.toasts.shift();
+        }, duration);
     }
 }

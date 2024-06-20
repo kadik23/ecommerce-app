@@ -1,0 +1,17 @@
+<div class="dropdown" style="background-color: transparent">
+    <label tabindex="0" class="flex flex-nowrap justify-center btn text-xs lg:text-sm hover:text-regal-brown py-0 font-normal m-1"
+            style="background-color: transparent; border:none;">
+      <span class="text-nowrap">{{ label }}</span>
+      <span class="material-symbols-outlined">arrow_drop_down</span>
+    </label>
+    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <li v-for="(item, index) in items" :key="index">
+        <router-link :to="links[index]" @click.prevent="handleItemClick(links[index], item)">
+          {{ item }}
+        </router-link>
+      </li>
+    </ul>
+    <form v-if="hasLogoutItem" ref="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
+      @csrf <!-- If CSRF token is needed, ensure it's passed properly in Vue -->
+    </form>
+  </div>

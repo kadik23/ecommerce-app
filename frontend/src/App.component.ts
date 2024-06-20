@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, provide, ref } from "vue";
+import { defineComponent, provide, ref } from "vue";
 import ToastsManager from "./libs/ToastsManager";
 
 export default defineComponent({

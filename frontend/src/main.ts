@@ -6,12 +6,27 @@ import App from './App.vue'
 import RestUserSession from './libs/RestUserSession';
 import UserSessionRepository from './libs/UserSessionRepository';
 import setupAxios from './libs/ProtectAPI';
+import { SignInVue } from './screens/sign_in';
+import { SignUpVue } from './screens/sign_up';
+import { HomeVue } from './screens/home';
+import { AppLayoutVue } from './layouts/app_layout';
+import 'flowbite';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
+gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
 
 const routes: Route[] = [
-
-]
+    { path: '/sign-in', component: SignInVue},
+    { path: '/sign-up', component: SignUpVue},
+    {
+        path: '/',
+        name: 'Root',
+        redirect: '/',
+        component: AppLayoutVue,
+        children:[ { path: '/', component: HomeVue } ]
+    },]
 
 const router = createRouter({
     history: createWebHistory(),
