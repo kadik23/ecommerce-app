@@ -3,25 +3,15 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
-
-    setup() {
+    setup(props: {categories: CategoryEntity}) {
         const selectedCategory = ref('All categories');
         const searchQuery = ref('');
-        const categories = ref([]);
+        const categories = ref(props.categories);
         const formMethod = ref('GET');
         const formAction = ref('');
 
         const router = useRouter();
         const isAdmin = inject('isAdmin', false);
-
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('/api/categories');
-                categories.value = response.data;
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
 
         const handleSubmit = () => {
             const action = isAdmin ? `/product/show/${selectedCategory.value}` : '/user/product/show';
@@ -33,7 +23,6 @@ export default defineComponent({
             router.push({ path: formAction.value, query: params });
         };
 
-        onMounted(fetchCategories);
         return{formMethod}
     }
 })

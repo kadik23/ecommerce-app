@@ -13,6 +13,7 @@ import { AppLayoutVue } from './layouts/app_layout';
 import 'flowbite';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { ProfileVue } from './screens/profile';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -25,7 +26,10 @@ const routes: Route[] = [
         name: 'Root',
         redirect: '/',
         component: AppLayoutVue,
-        children:[ { path: '/', component: HomeVue } ]
+        children:[ 
+            { path: '/', component: HomeVue },
+            { path: '/profile', component: ProfileVue }
+        ]
     },]
 
 const router = createRouter({
@@ -46,7 +50,7 @@ router.beforeEach(async (to, from) => {
         }
 
         try {
-            let response = await restUserSession.checkAuth(access_token);
+            let response = await restUserSession.getCurrentUser(access_token);
             if(response.error){
                 userSessionRepository.clear();
                 return { path: 'sign_in' };
