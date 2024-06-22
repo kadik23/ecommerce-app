@@ -41,6 +41,7 @@ Route::group([
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+    Route::put('/user/update', [AuthController::class, 'update'])->middleware('auth:sanctum');
 });
 
 // for Client---------------
@@ -63,3 +64,4 @@ Route::group(['middleware' => ['auth:sanctum', 'sanctum.role:admin'],'prefix'=>'
     Route::resource('/product',ProductsController::class);
     Route::resource('/category',App\Http\Controllers\CategoriesController::class);
 });
+Route::get('/categories',[App\Http\Controllers\CategoriesController::class, 'index']);
