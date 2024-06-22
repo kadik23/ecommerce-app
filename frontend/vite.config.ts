@@ -12,6 +12,11 @@ export default defineConfig({
     vueJsx(),
     VueDevTools(),
   ],
+  css: {
+    postcss: {
+      plugins: [require('tailwindcss'), require('autoprefixer')],
+    },
+  },
   server: {
     proxy: {
         '/api': {
