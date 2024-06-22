@@ -1,7 +1,7 @@
 import './assets/main.css'
 import axios from 'axios';
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import App from './App.vue'
 import RestUserSession from './libs/RestUserSession';
 import UserSessionRepository from './libs/UserSessionRepository';
@@ -18,7 +18,7 @@ import { ProfileVue } from './screens/profile';
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
 
-const routes: Route[] = [
+const routes: RouteRecordRaw[] = [
     { path: '/sign-in', component: SignInVue},
     { path: '/sign-up', component: SignUpVue},
     {
