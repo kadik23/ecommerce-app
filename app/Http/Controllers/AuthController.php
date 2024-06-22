@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -56,5 +56,37 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        if ($request->has('username')) {
+            $user->username = $request->username;
+        }
+
+        if ($request->has('country')) {
+            $user->city = $request->username;
+        }
+
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        // if ($request->has('password')) {
+        //     $user->password = Hash::make($request->password);
+        // }
+        if ($request->has('city')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'User updated successfully']);
     }
 }

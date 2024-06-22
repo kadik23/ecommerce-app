@@ -2,7 +2,7 @@
 @if(Auth::check())
 <div class="product{{$id}} max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="height:{{Auth::user()->hasRole('admin') ? '450': '400'}}px; width:300px;">
 @else
-<div class="product{{$id}} max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 lg:mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="height:400px; width:300px;">
+<div class="product{{$id}} max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="height:400px; width:300px;">
 @endif
     <div class="overflow-hidden h-3/5">
         <img class="product overflow-hidden rounded-t-lg w-full h-full object-cover" src="{{$profile}}" alt="product image" />
