@@ -9,6 +9,7 @@ import accessoriesImage from '@/assets/images/categories/marissa-grootes-D4jRaha
 import electronicsImage from '@/assets/images/categories/umberto-jXd2FSvcRr8-unsplash.jpg';
 import eventBus from '@/eventBus';
 import CardAnimation from '@/components/CardAnimation.component';
+import { LoadingVue } from '@/components/loading';
 
 export default defineComponent({
     name: 'HomeVue',
@@ -16,7 +17,8 @@ export default defineComponent({
         CarouselVue,
         ProductCardVue,
         CategoryCardVue,
-        CardAnimation
+        CardAnimation,
+        LoadingVue
     },
     props: {},
     setup() {
@@ -37,8 +39,7 @@ export default defineComponent({
                 console.log(products.value )
                 electronics.value = productsRes.filter((product: ProductEntity) => product.category === Category.Electronics);
                 phones.value = productsRes.filter((product: ProductEntity) => product.category === Category.Phones);
-                accessories.value = productsRes.filter((product: ProductEntity) => product.category === Category.Accessories);
-                categories.value = data.Categories;
+                accessories.value = productsRes.filter((product: ProductEntity) => product.category === Category.Accessories);                categories.value = data.categories;
                 carts.value = data.carts;
             } catch (error) {
                 console.error('Error fetching products:', error);

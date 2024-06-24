@@ -53,12 +53,9 @@
                 </li>
             </ul>
         </div>
-        <div class=" " id="searchBar" v-show="searchBarHidden">
+        <div class="flex items-center" id="searchBar" v-show="!searchBarHidden">
             <SearchBarVue :categories="categories" />
-            <span
-                @click="toggleSearch"
-                class="material-symbols-outlined text-3xl ml-10 hover:text-regal-brown transition-all duration-500 cursor-pointer"
-                id="close">close</span>
+            <span @click="toggleSearch" class="material-symbols-outlined text-3xl ml-10 hover:text-regal-brown transition-all duration-500 cursor-pointer" id="close">close</span>
         </div>
         <div class="flex items-center" id="buttons">
             <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">

@@ -3,10 +3,12 @@ import axios from 'axios';
 import RestUserSession from '@/libs/RestUserSession';
 import UploadImage from '@/libs/UploadImage';
 import UserSessionRepository from '@/libs/UserSessionRepository';
+import { LoadingVue } from '@/components/loading';
 
 export default defineComponent({
     name: 'ProfileVue',
     components: {
+        LoadingVue
     },
     props: {},
     setup() {
@@ -70,6 +72,7 @@ export default defineComponent({
             try {
                 console.log(form)
                 await RestUser.updateUserInfo(form);
+                isLoading.value = true;
             } catch (error) {
                 console.error('Error updating profile:', error);
             } finally {
