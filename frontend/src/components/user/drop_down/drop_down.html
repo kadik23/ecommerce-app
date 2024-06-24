@@ -11,7 +11,6 @@
         </router-link>
       </li>
     </ul>
-    <form v-if="hasLogoutItem" ref="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
-      @csrf <!-- If CSRF token is needed, ensure it's passed properly in Vue -->
+    <form v-if="hasLogoutItem" ref="logoutForm" action="logout" method="POST" class="d-none">
     </form>
   </div>

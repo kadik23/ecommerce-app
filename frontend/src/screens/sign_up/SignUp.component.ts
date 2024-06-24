@@ -4,8 +4,12 @@ import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineComponent } from 'vue'
 import type { Ref } from 'vue'
+import { LoadingVue } from "@/components/loading";
 
 export default defineComponent({
+    components: {
+        LoadingVue
+    },
     setup(){
         let toastManager = inject<IToastsManager>("toastManager");
 

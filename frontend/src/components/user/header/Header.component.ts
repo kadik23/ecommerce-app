@@ -1,6 +1,6 @@
 import logo from '@/assets/images/logo.png';
 import RestUserSession from "@/libs/RestUserSession";
-import {ref,inject} from 'vue'
+import {ref,inject, onMounted} from 'vue'
 import axios from "axios";  
 import { DropDownVue } from '../drop_down';
 import { SearchBarVue } from '@/components/search_bar';
@@ -11,22 +11,21 @@ export default {
         DropDownVue,
         SearchBarVue
     },    setup(){
-        const isLoggedIn = ref(false); 
+        const isLoggedIn = inject<any>("isLoggedIn"); 
         const searchBarHidden = ref<boolean>(false);
-
         const itemsLoggedIn = ['Profile', 'Logout'];
-        const linksLoggedIn = ['sign-out', 'profile'];
+        const linksLoggedIn = ['profile', 'sign-out'];
         const itemsLoggedOut = ['Login', 'Register'];
         const linksLoggedOut = ['sign-in', 'sign-up'];
 
         const toggleSearch = ()=> {
             searchBarHidden.value = !searchBarHidden.value;
+            console.log(searchBarHidden.value)
         }
         // document.getElementById('hamburger').onclick = function() {
         //     const mobileMenu = document.getElementById('mobileMenu');
         //     mobileMenu.classList.toggle('hidden');
         // };
-
         // document.getElementById('searchbtn_mobile').onclick = function() {
         //     document.getElementById('searchBar').classList.toggle('hidden');
         // };

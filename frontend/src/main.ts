@@ -1,6 +1,6 @@
 import './assets/main.css'
 import axios from 'axios';
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import App from './App.vue'
 import RestUserSession from './libs/RestUserSession';
@@ -14,6 +14,7 @@ import 'flowbite';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ProfileVue } from './screens/profile';
+import { CartsVue } from './screens/carts';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -28,16 +29,21 @@ const routes: RouteRecordRaw[] = [
         component: AppLayoutVue,
         children:[ 
             { path: '/', component: HomeVue },
-            { path: '/profile', component: ProfileVue }
+            { path: '/profile', component: ProfileVue },
+            { path: '/carts', component: CartsVue }
         ]
-    },]
+    },
+];
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
 });
 
-const UNPROTECTED_ROUTES = ['/','/sign_in', '/sign_up'];
+const UNPROTECTED_ROUTES = ['/', '/sign-in', '/sign-up'];
+
+const isLoggedIn = ref(false);
+app.provide('isLoggedIn', isLoggedIn);
 
 router.beforeEach(async (to, from) => {
     if(!UNPROTECTED_ROUTES.includes(to.path)){
@@ -46,23 +52,22 @@ router.beforeEach(async (to, from) => {
         let access_token = userSessionRepository.getAccessToken();
         
         if(!access_token){
-            return { path: '/sign_in' };
+            return { path: '/sign-in' };
         }
 
         try {
             let response = await restUserSession.getCurrentUser(access_token);
             if(response.error){
                 userSessionRepository.clear();
-                return { path: 'sign_in' };
+                return { path: 'sign-in' };
             }
-            
+            isLoggedIn.value = true;
             app.provide('axios', setupAxios(access_token));
         } catch (error) {
             console.log(error);
         }
-        
     }
 });
 
 app.use(router);
-app.mount('#app')
+app.mount('#app');
