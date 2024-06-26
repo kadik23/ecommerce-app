@@ -15,6 +15,7 @@ import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ProfileVue } from './screens/profile';
 import { CartsVue } from './screens/carts';
+import { OrdersVue } from './screens/orders';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -30,7 +31,8 @@ const routes: RouteRecordRaw[] = [
         children:[ 
             { path: '/', component: HomeVue },
             { path: '/profile', component: ProfileVue },
-            { path: '/carts', component: CartsVue }
+            { path: '/carts', component: CartsVue },
+            { path: '/orders', component: OrdersVue }
         ]
     },
 ];
