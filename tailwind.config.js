@@ -1,10 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  mode: 'jit',
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
     "./node_modules/flowbite/**/*.js",
+    "./resources/**/*.html",
+    "./resources/**/*.jsx",
+    "./resources/**/*.tsx",
   ],
   daisyui: {
     themes: ["light", 
@@ -21,7 +25,11 @@ export default {
     },
   },
   darkMode: "class",
-
+  safelist: [
+    'lg:p-5',
+    'overflow-x-scroll',
+    'lg:flex-row'
+  ],
   plugins: [
     require('@tailwindcss/forms'), 
     require('flowbite/plugin')({

@@ -21,7 +21,7 @@
       </label>
     </div> 
       <a class="mb-4 ml-2 mr-5 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0">
-             <img
+            <img
             src="{{asset('assets/images/logo.png')}}"
             style="height: 35px"
             alt="TE Logo"
@@ -50,7 +50,7 @@
       </div>
     </div>
     <!-- Right elements -->
-    <div class="relative flex flex-wrap items-center ">
+    <div class="relative hidden lg:flex flex-wrap items-center  ">
       <ul class="menu menu-horizontal items-center px-1">
   
         <!-- dark mode choices --> 

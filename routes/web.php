@@ -6,7 +6,7 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
-
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify'=>true]);
 

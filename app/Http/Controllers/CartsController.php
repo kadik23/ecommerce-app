@@ -21,7 +21,7 @@ class CartsController extends Controller
             $products = $user->products; // Retrieve all products associated with the authenticated user
         }   
         // return view('user.carts',['Carts'=>$products]);
-        return response()->json(['Carts'=>$products])
+        return response()->json(['Carts'=>$products]);  
     }
 
     /**

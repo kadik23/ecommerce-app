@@ -1,6 +1,6 @@
-<div class="m-3 p-5 inline-block text-center bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+<div class="m-3 p-6 lg:p-5 inline-block text-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="flex items-center justify-center">
-        <span class="material-symbols-outlined text-3xl mr-2" style="
+        <span class="material-symbols-outlined text-xl lg:text-3xl mr-2" style="
         color: {{ $color ?? 'black' }};
         font-variation-settings:
           'FILL' 1,
@@ -10,7 +10,7 @@
       
         {{$iconCard}}
         </span>
-        <h1 class="text-xl opacity-80 font-bold">{{$orderStat}}</h1>
+        <h1 class="text-xl lg:text-3xl opacity-80 font-bold">{{$orderStat}}</h1>
     </div>
   
 
