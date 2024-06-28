@@ -1,13 +1,7 @@
 import { CartItemVue } from '@/components/cart_item';
-import { defineComponent, ref, computed } from 'vue';
-
-interface CartItem {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    profileImage: string;
-}
+import RestCarts from '@/libs/RestCarts';
+import axios from 'axios';
+import { defineComponent, ref, computed, onMounted } from 'vue';
 
 export default defineComponent({
     name: 'Cart',
@@ -15,10 +9,21 @@ export default defineComponent({
         CartItemVue// Lazy-load the component
     },
     setup() {
-        const carts = ref<CartItem[]>([
-            { id: '1', name: 'Product 1', price: 100, description: 'Description 1', profileImage: 'image1.jpg' },
-            { id: '2', name: 'Product 2', price: 200, description: 'Description 2', profileImage: 'image2.jpg' },
-        ]);
+        const carts = ref<CartEntity[]>([]);
+        const isLoading = ref(false);
+        const restCarts: IRestCarts =new RestCarts(axios)
+
+        const fetchCarts =async () => {
+            try {
+                isLoading.value = true
+                carts.value = await restCarts.getAll()
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        onMounted(fetchCarts);
+
         const quantities = ref<Record<string, number>>({});
 
         const totalPrice = computed(() => {
@@ -46,7 +51,8 @@ export default defineComponent({
             totalPrice,
             incrementQuantity,
             decrementQuantity,
-            submitOrder
+            submitOrder,
+            isLoading
         };
     }
 });

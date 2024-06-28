@@ -24,3 +24,13 @@ interface IUploadImage {
     axiosInstance: AxiosInstance;
     UploadImage(file: File): Promise<any>;
 }
+
+interface IRestOrders {
+    axiosInstance: AxiosInstance;
+    getAll(): Promise<OrderEntity[]>;
+}
+
+interface IRestCarts {
+    axiosInstance: AxiosInstance;
+    getAll(): Promise<CartEntity[]>;
+}
