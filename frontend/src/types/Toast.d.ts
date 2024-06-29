@@ -1,7 +1,7 @@
 type ToastMessageType = "error" | "success" | "info";
 
 interface ToastMessage {
-    toasts: any;
+    toasts?: any;
     id?: number;
     message: string;
     type: MessageType;
