@@ -8,7 +8,7 @@
                 <span>Free Support</span> (213) 0798816073
             </p>
         </div>
-        <div class="flex items-center">
+        <div class="md:flex items-center hidden">
             <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" label="My account" :links="linksLoggedIn" />
             <DropDownVue v-else :items="itemsLoggedOut" label="My account" :links="linksLoggedOut" />
             <div class="dropdown" style="background-color: transparent">
@@ -24,6 +24,11 @@
             </div>
             <a href="#" class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact Us</a>
         </div>
+        <button id="hamburger" class="md:hidden block text-gray-900 dark:text-white">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
     </div>
 </nav>
 
@@ -53,7 +58,7 @@
                 </li>
             </ul>
         </div>
-        <div class="flex items-center" id="searchBar" v-show="!searchBarHidden">
+        <div class="items-center flex-wrap md:flex-nowrap hidden md:flex" id="searchBar" v-show="!searchBarHidden">
             <SearchBarVue :categories="categories" />
             <span @click="toggleSearch" class="material-symbols-outlined text-3xl ml-10 hover:text-regal-brown transition-all duration-500 cursor-pointer" id="close">close</span>
         </div>
@@ -179,4 +184,22 @@
             </ul>
         </li>
     </ul>
+</div>
+<div id="mobileMenu" class=" md:hidden flex flex-col items-center">
+    <div class="md:flex items-center hidden">
+        <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" label="My account" :links="linksLoggedIn" />
+        <DropDownVue v-else :items="itemsLoggedOut" label="My account" :links="linksLoggedOut" />
+        <div class="dropdown" style="background-color: transparent">
+            <label tabindex="0"
+                class="btn text-nowrap lg:text-sm text-xs hover:text-regal-brown py-0 font-normal m-1"
+                style="background-color: transparent; border:none;">
+                Languages<span class="material-symbols-outlined">arrow_drop_down</span>
+            </label>
+            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a href="#">English</a></li>
+                <li><a href="#">Arabic</a></li>
+            </ul>
+        </div>
+        <a href="#" class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact Us</a>
+    </div>
 </div>
