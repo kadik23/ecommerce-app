@@ -150,7 +150,7 @@
             </ul>
           </div>  
         </li>
-        <hr class="border mt-4 border-gray-400">
+        <hr class="border lg:hidden mt-4 border-gray-300">
         <li class=" mt-5">
           <a
             href="{{  Auth::user()->hasRole('user')  ? route('user') : route('admin') }}"
@@ -195,7 +195,7 @@
             <span>Customers</span>
           </a>
           </li>
-          <hr class="border mt-4 border-gray-400 lg:hidden">
+          <hr class="border mt-4 border-gray-300 lg:hidden">
           <li class="lg:hidden">
             <a
               href="{{ route('dash.myprofile') }}"

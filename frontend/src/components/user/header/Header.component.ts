@@ -5,30 +5,28 @@ import axios from "axios";
 import { DropDownVue } from '../drop_down';
 import { SearchBarVue } from '@/components/search_bar';
 import eventBus from '@/eventBus';
+import { DrawerVue } from '../drawer';
 
 export default {
     components: {
         DropDownVue,
-        SearchBarVue
-    },    setup(){
+        SearchBarVue,
+        DrawerVue
+    },
+    setup(){
         const isLoggedIn = inject<any>("isLoggedIn"); 
         const searchBarHidden = ref<boolean>(false);
         const itemsLoggedIn = ['Profile', 'Logout'];
         const linksLoggedIn = ['profile', 'sign-out'];
         const itemsLoggedOut = ['Login', 'Register'];
         const linksLoggedOut = ['sign-in', 'sign-up'];
+        const categoriesLinks = ref(['Phones', 'Accessories', 'Electronics']);
+        const DrawerId = ref('navbar1');
 
         const toggleSearch = ()=> {
             searchBarHidden.value = !searchBarHidden.value;
             console.log(searchBarHidden.value)
         }
-        // document.getElementById('hamburger').onclick = function() {
-        //     const mobileMenu = document.getElementById('mobileMenu');
-        //     mobileMenu.classList.toggle('hidden');
-        // };
-        // document.getElementById('searchbtn_mobile').onclick = function() {
-        //     document.getElementById('searchBar').classList.toggle('hidden');
-        // };
         let toastManager = inject<IToastsManager>("toastManager");
         let isShow = ref(false)
         let isShow2 = ref(false)
@@ -64,7 +62,8 @@ export default {
             itemsLoggedOut,
             linksLoggedOut,
             scrollT,
-            toggleSearch
+            toggleSearch,
+            categoriesLinks
         }
     }
 }
