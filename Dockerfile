@@ -1,23 +1,20 @@
-FROM php:8.2-cli
+FROM php:7.4-apache
+D
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libzip-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && a2enmod rewrite \
+    && docker-php-ext-install pdo_pgsql zip
 
-RUN apt-get update -y && apt-get install -y libmcrypt-dev libpq-dev unzip nodejs npm
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN docker-php-ext-install pdo pdo_pgsql
+COPY . /var/www/html
 
-WORKDIR /app
-COPY . /app
-COPY .env.example /app/.env
+RUN chown -R www-data:www-data /var/www/html /var/www/html/storage /var/www/html/bootstrap/cache
 
-RUN composer install
+WORKDIR /var/www/html
 
-RUN php artisan key:generate
-RUN php artisan migrate:fresh
-RUN php artisan db:seed
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-dev --optimize-autoloader
 
-ENV PORT 4173 
-EXPOSE 4173
-
-RUN chmod +x ./scripts/start.sh
-
-CMD ["sh","./scripts/start.sh"]
+EXPOSE 80
