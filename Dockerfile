@@ -1,32 +1,22 @@
-FROM php:7.4-apache
+FROM php:8.2-cli
 
-# Install required packages
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    libzip-dev
+RUN apt-get update -y && apt-get install -y libmcrypt-dev libpq-dev unzip nodejs npm
 
-# Clean sources
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install URL rewrite module
-RUN a2enmod rewrite
-
-# Install php dependencies
-RUN docker-php-ext-install pdo_pgsql zip
-
-# Copy Laravel app files
-COPY . /var/www/html
-
-# Set write permissions to used folders
-RUN chown -R www-data:www-data /var/www/html /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Change working directory to Laravel app root
-WORKDIR /var/www/html
-
-# Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN docker-php-ext-install pdo pdo_pgsql
 
-# Expose port 80 for Apache
-EXPOSE 80
+WORKDIR /app
+COPY . /app
+
+RUN composer install
+
+RUN php artisan key:generate
+RUN php artisan migrate:fresh
+RUN php artisan db:seed
+
+ENV PORT 4173 
+EXPOSE 4173
+
+RUN chmod +x ./scripts/start.sh
+
+CMD ["sh","./scripts/start.sh"]
