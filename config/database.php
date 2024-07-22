@@ -75,7 +75,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
-        ],
+            'options' => [
+                PDO::MYSQL_ATTR_SSL_CA => base_path('path/to/ca-certificate.crt'),
+            ],        ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
