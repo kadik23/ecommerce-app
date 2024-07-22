@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('country', 20)->default('Algeria');
             $table->decimal('totalRevenue', 8, 3)->default(0);
             $table->unsignedInteger('custumersNumber')->default(0);
-            $table->integer('phone')->unsigned();
+            $table->integer('phone')->unsigned()->nullable();;
             $table->rememberToken();
             $table->timestamps();
         });
