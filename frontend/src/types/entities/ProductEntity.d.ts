@@ -15,4 +15,4 @@ interface ProductEntity{
     updated_at: data;
 }
 
-enum Category {"Electronics" , "Phones" , "Accessories"}
+type Category = "Electronics" | "Phones" | "Accessories"
