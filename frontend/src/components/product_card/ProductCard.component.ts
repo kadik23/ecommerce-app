@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent({
     props: {
@@ -44,6 +44,7 @@ export default defineComponent({
         const productName = ref<string>(props.name);
         const productPrice = ref<number>(props.price);
         const file = ref<File | null>(null);
+        const isFavorite = ref<boolean>(false);
 
         const showModal = () => {
             const modal = document.querySelector('.modal') as HTMLElement;
@@ -72,6 +73,17 @@ export default defineComponent({
         const updateProduct = () => {
             closeModal();
         };
+        
+        onMounted(() => {
+            const storedFavoriteStatus = localStorage.getItem(`favorite-${props.id}`);
+            isFavorite.value = storedFavoriteStatus === 'true';
+        });
+        
+        const toggleFavorite = () => {
+            isFavorite.value = !isFavorite.value;
+            console.log(isFavorite.value)
+            localStorage.setItem(`favorite-${props.id}`, isFavorite.value? 'true': 'false');
+        };
 
         return {
             productId,
@@ -82,7 +94,9 @@ export default defineComponent({
             closeModal,
             editProduct,
             handleFileUpload,
-            updateProduct
+            updateProduct,
+            isFavorite,
+            toggleFavorite,
         };
     }
 });

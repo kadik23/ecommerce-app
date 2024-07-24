@@ -25,7 +25,7 @@
             </template>
             <span
                 class="bg-amber-100 text-regal-brown text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-amber-200 dark:text-regal-brown ml-3">
-                {{ rating ? rating.toFixed(2) : '0.00' }}
+                {{ rating ? rating : '0.00' }}
             </span>
         </div>
         <div class="flex flex-col">
@@ -36,8 +36,9 @@
             <span class="text-xl font-bold text-gray-900 dark:text-white">${{ price }}</span>
             <div class="flex items-center">
                 <div v-if="!isAdmin"
-                    class="p-1 mx-3 cursor-pointer hover:bg-slate-100 flex justify-center items-center border-2 border-slate-700 rounded-full">
-                    <span class="material-symbols-outlined favorite">favorite</span>
+                    @click="toggleFavorite"
+                    class="p-1 mx-3 cursor-pointer hover:bg-amber-50 flex justify-center items-center border-2 border-regal-brown rounded-full">
+                    <span :class="['material-symbols-outlined', 'text-regal-brown', isFavorite ? 'fill' : '']">favorite</span>
                 </div>
                 <a v-if="!isAdmin" href="#" :product_id="id"
                     class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Add
