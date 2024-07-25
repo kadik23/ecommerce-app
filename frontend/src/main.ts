@@ -42,7 +42,7 @@ const router = createRouter({
     routes,
 });
 
-const UNPROTECTED_ROUTES = ['/', '/sign-in', '/sign-up'];
+const UNPROTECTED_ROUTES = [ '/sign-in', '/sign-up'];
 
 const isLoggedIn = ref(false);
 app.provide('isLoggedIn', isLoggedIn);

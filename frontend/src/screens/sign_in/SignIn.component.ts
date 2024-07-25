@@ -52,7 +52,6 @@ export default defineComponent({
                 if (response.access_token) {
                     userSessionRepository.save({ access_token: response.access_token, account_type: response.account_type });
                     toastManager?.alertSuccess("Sign in successfuly.");
-                    // Simulate redirect after login success
                     setTimeout(() => {
                         router.push('/');
                     }, 3000);
