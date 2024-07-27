@@ -13,6 +13,7 @@ RUN composer install
 
 RUN php artisan key:generate
 RUN php artisan config:clear
+RUN php artisan config:cache
 RUN php artisan migrate:fresh
 RUN php artisan db:seed
 
