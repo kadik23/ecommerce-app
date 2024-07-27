@@ -12,6 +12,7 @@ COPY .env.example /app/.env
 RUN composer install
 
 RUN php artisan key:generate
+RUN php artisan config:clear
 RUN php artisan migrate:fresh
 RUN php artisan db:seed
 
