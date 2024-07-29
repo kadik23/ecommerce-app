@@ -6,6 +6,8 @@ import { DropDownVue } from '../drop_down';
 import { SearchBarVue } from '@/components/search_bar';
 import { DrawerVue } from '../drawer';
 import RestProducts from '@/libs/RestProducts';
+import RestCarts from '@/libs/RestCarts';
+import UserSessionRepository from '@/libs/UserSessionRepository';
 
 export default {
     components: {
@@ -32,7 +34,10 @@ export default {
             console.log(searchBarHidden.value)
         }
         const favoriteProducts = ref<ProductEntity[]>([]); 
-
+        const restCarts: IRestCarts = new RestCarts(axios);
+        const userSessionRepository = new UserSessionRepository(localStorage);
+        const access_token = userSessionRepository.getAccessToken();
+        const carts = ref()
 
         const handleErrorMessage = (error: string): void => {
             toastManager?.alertError(error);
@@ -96,12 +101,25 @@ export default {
             }
         };
 
+        const fetchCarts = async () => {
+            try {
+                if (access_token) {
+                    const data = await restCarts.getAll(access_token);
+                    carts.value = data
+                    console.log(data)
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            } 
+        }
+
         
         onMounted (()=>{
             sectionRefAccessories.value = document.getElementById('accessories');
             sectionRefElectronics.value = document.getElementById('electronics');
             sectionRefPhones.value = document.getElementById('phones');
             fetchProducts()
+            fetchCarts()
         })
         
         return { logo ,isShow ,isShow2 , logout,
@@ -118,7 +136,8 @@ export default {
             sectionRefAccessories ,
             searchBarHidden,
             favoriteNbr,
-            favoriteProducts
+            favoriteProducts,
+            carts
         }
     }
 }
