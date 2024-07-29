@@ -1,15 +1,11 @@
-import { ref, onMounted, defineComponent, reactive, computed } from 'vue';
+import { ref, onMounted, defineComponent, reactive, computed, inject, type Ref } from 'vue';
 import axios from 'axios';
 import RestUserSession from '@/libs/RestUserSession';
 import UploadImage from '@/libs/UploadImage';
 import UserSessionRepository from '@/libs/UserSessionRepository';
-import { LoadingVue } from '@/components/loading';
 
 export default defineComponent({
     name: 'ProfileVue',
-    components: {
-        LoadingVue
-    },
     props: {},
     setup() {
         const isLoading = ref(false);
@@ -35,7 +31,7 @@ export default defineComponent({
         const image = ref<File | null>(null);
         const modal = ref<null | HTMLDialogElement>(null);
         const userSessionRepository = new UserSessionRepository(localStorage);
-
+        let toastManager = inject<Ref<IToastsManager>>("toastManager");
         const access_token = userSessionRepository.getAccessToken();
 
         const profileImage = computed(() => `@/assets/images/profiles/${form.profileImage}`);
@@ -72,9 +68,11 @@ export default defineComponent({
             try {
                 console.log(form)
                 await RestUser.updateUserInfo(form);
+                toastManager?.value?.alertSuccess("Sign in successfuly.");
                 isLoading.value = true;
             } catch (error) {
                 console.error('Error updating profile:', error);
+                toastManager?.value.alertError(error as string);
             } finally {
                 isLoading.value = false;
             }
