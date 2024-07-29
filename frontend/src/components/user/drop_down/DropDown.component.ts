@@ -1,3 +1,5 @@
+import RestUserSession from '@/libs/RestUserSession';
+import axios from 'axios';
 import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
@@ -9,7 +11,7 @@ export default defineComponent({
     // @ts-ignore
     setup(props: { label: string, items: string[], links: string[] }) {
         const hasLogoutItem = computed(() => props.items.includes('Logout'));
-
+        const restUserSession = new RestUserSession(axios)
         const handleItemClick = (link: string, item: string) => {
             if (item === 'Logout') {
                 submitLogoutForm();
@@ -19,9 +21,11 @@ export default defineComponent({
         };
 
         const submitLogoutForm = () => {
-            const form = document.getElementById('logout-form') as HTMLFormElement | null;
-            if (form) {
-                form.submit();
+            try{
+                restUserSession.logout()
+                window.location.href = '/'
+            }catch(err) {
+                console.log(err);
             }
         };
 
