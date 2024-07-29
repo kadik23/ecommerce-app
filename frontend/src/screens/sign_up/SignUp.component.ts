@@ -4,14 +4,10 @@ import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 import { defineComponent } from 'vue'
 import type { Ref } from 'vue'
-import { LoadingVue } from "@/components/loading";
 
 export default defineComponent({
-    components: {
-        LoadingVue
-    },
     setup(){
-        let toastManager = inject<IToastsManager>("toastManager");
+        let toastManager = inject<Ref<IToastsManager>>("toastManager");
 
         const isLoading = ref(false);
         const restUserSession = new RestUserSession(axios);
@@ -40,7 +36,7 @@ export default defineComponent({
             let t = 0;
             for(let key of keys){
                 setTimeout(() => {
-                    toastManager?.alertError(`${error[key]}`);
+                    toastManager?.value.alertError(`${error[key]}`);
                 }, t);
                 t += 300;
             }
@@ -56,7 +52,7 @@ export default defineComponent({
                 if(response.error){
                     handleErrorMessage(response.data);
                 }else{
-                    toastManager?.alertSuccess("Sign up successfuly.");
+                    toastManager?.value.alertSuccess("Sign up successfuly.");
                     router.push('/sign-in');
                 }
             }).catch(error => {
@@ -68,7 +64,7 @@ export default defineComponent({
                 } else {
                 isLoading.value = false;
                 console.log(error);
-                alert('Bad credentials');
+                toastManager?.value.alertSuccess("Sign up failed.");
                 }
             });
         }

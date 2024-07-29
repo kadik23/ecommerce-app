@@ -1,4 +1,3 @@
-import { LoadingVue } from '@/components/loading';
 import { ProcessCardVue } from '@/components/orders_components/process_card';
 import { TagVue } from '@/components/orders_components/tag';
 import RestOrders from '@/libs/RestOrders';
@@ -10,7 +9,6 @@ export default defineComponent({
     components: {
         TagVue,
         ProcessCardVue,
-        LoadingVue
     },
     setup() {
         const orders = ref<OrderEntity[]>([]);

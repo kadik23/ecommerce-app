@@ -8,7 +8,6 @@ import phonesImage from '@/assets/images/categories/hal-gatewood-WcYeiHMexR0-uns
 import accessoriesImage from '@/assets/images/categories/marissa-grootes-D4jRahaUaIc-unsplash.jpg';
 import electronicsImage from '@/assets/images/categories/umberto-jXd2FSvcRr8-unsplash.jpg';
 import CardAnimation from '@/components/CardAnimation.component';
-import { LoadingVue } from '@/components/loading';
 
 export default defineComponent({
     name: 'HomeVue',
@@ -17,7 +16,6 @@ export default defineComponent({
         ProductCardVue,
         CategoryCardVue,
         CardAnimation,
-        LoadingVue
     },
     props: {},
     setup() {
