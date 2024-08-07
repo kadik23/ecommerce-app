@@ -22,34 +22,31 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('welcome');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth:sanctum');
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('auth:sanctum');
 
-// for profiles--------------
-Route::group(['prefix'=>'dashboard'], function() { 
-    Route::get('/myprofile', 'App\Http\Controllers\ProfileController@index')->name('dash.myprofile')->middleware('auth:sanctum');
-    Route::put('/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit')->name('dash.profileEdit')->middleware('auth:sanctum');
-    Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit')->middleware('auth:sanctum');
-});
-
 // Auth Routes
 Route::group([
 
     'middleware' => 'api',
     'prefix' => 'auth'
 
-], function ($router) {
-
+], function () {
+    
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-    Route::put('/user/update', [AuthController::class, 'update'])->middleware('auth:sanctum');
+    Route::put('/user/  ', [AuthController::class, 'update'])->middleware('auth:sanctum');
 });
 
 // for Client---------------
-Route::group([['auth:sanctum', 'sanctum.role:user'],'prefix'=>'user'], function() { 
-    Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders');
-    Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod');
-    Route::resource('/cart', CartsController::class);
-    Route::resource('/order', OrderController::class);
+Route::group([
+    'middleware' => 'api',
+    'prefix'=>'user'
+], function() { 
+    Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders')->middleware('auth:sanctum');
+    Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod')->middleware('auth:sanctum');
+    Route::post('/cart/markItRead', [CartsController::class, 'markItRead'])->middleware('auth:sanctum');
+    Route::resource('/cart', CartsController::class)->middleware('auth:sanctum');
+    Route::resource('/order', OrderController::class)->middleware('auth:sanctum');
 });
 Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 

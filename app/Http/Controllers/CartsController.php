@@ -29,7 +29,7 @@ class CartsController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('cart.store');
     }
 
     /**
@@ -37,25 +37,33 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-        $userId = auth()->user()->id; 
-        $id=$request->id;
-        $product=Product::findOrFail($id);
-            // Use the attach method to associate the user with the product
-        if(!($product->users_P()->where('user_id', $userId)->exists())){
-            $product->users_P()->attach($userId);
-            $data =[
-                'id' =>$product->id,
-                'createdBy' =>$product->createdBy,
-                'price' => $product -> price,
-                'name' =>$product -> name,
-                'user' => Auth::id(),
-                'img' => $product -> profileImage,
-            ];
-            event(new newPanier($data));
+        if (Auth::check()) {
+            $userId = Auth::user()->id; 
+            $id=$request->cart;
+            $product=Product::findOrFail($id);
+                // Use the attach method to associate the user with the product
+            if(!($product->users_P()->where('user_id', $userId)->exists())){
+                $product->users_P()->attach($userId);
+                $data =[
+                    'id' =>$product->id,
+                    'createdBy' =>$product->createdBy,
+                    'price' => $product -> price,
+                    'name' =>$product -> name,
+                    'user' => Auth::id(),
+                    'img' => $product -> profileImage,
+                ];
+                event(new newPanier($data));
+                return response()->json([
+                    'status' => true,
+                    'msg' => 'product has been added to cart',
+                    'id' => $id
+                ]);
+            }
+        }else {
+            // User is not authenticated
             return response()->json([
-                'status' => true,
-                'msg' => 'product has been added to cart',
-                'id' => $id
+                'status' => false,
+                'msg' => 'User is not authenticated',
             ]);
         }
     }
@@ -89,16 +97,45 @@ class CartsController extends Controller
      */
     public function destroy(string $id)
     {
-        $user_id = auth()->user()->id; 
-        $product_id = $id;
+        if (Auth::check()) {
+            $user_id = Auth::user()->id; 
+            $product_id = $id;
 
-        if ($user_id) {
-            // Detach the specified product from the user
-            $user=User::findOrFail($user_id);
-            $user->products()->detach($product_id);
-            return response()->json(['message' => 'Record removed from pivot table','data' => $product_id], 200);
-        } else {
-            return response()->json(['error' => 'User not found'], 404);
+            if ($user_id) {
+                // Detach the specified product from the user
+                $user=User::findOrFail($user_id);
+                $user->products()->detach($product_id);
+                return response()->json(['message' => 'Record removed from pivot table','data' => $product_id], 200);
+            } else {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+        }else{
+            return response()->json([
+                'status' => false,
+                'msg' => 'User is not authenticated',
+            ]); 
         }
+    }
+
+    public function markItRead(Request $request)
+    {
+        $request->validate([
+            'carts' => 'required|array',
+            'carts.*.pivot.user_id' => 'required|integer|exists:users,id',
+            'carts.*.pivot.product_id' => 'required|integer|exists:products,id',
+        ]);
+        $carts = $request->input('carts');
+        foreach ($carts as $cartItem) {
+            $userId = $cartItem['pivot']['user_id'];
+            $productId = $cartItem['pivot']['product_id'];
+
+            // Find the user
+            $user = User::findOrFail($userId);
+
+            // Update the pivot table
+            $user->products()->updateExistingPivot($productId, ['isRead' => true]);
+        }
+
+        return response()->json(['message' => 'Cart items marked as read successfully.'], 200);
     }
 }
