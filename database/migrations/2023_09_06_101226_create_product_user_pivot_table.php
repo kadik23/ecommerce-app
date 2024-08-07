@@ -11,6 +11,7 @@ class CreateProductUserPivotTable extends Migration
         Schema::create('product_user', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
+            $table->boolean('isRead')->default(false);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

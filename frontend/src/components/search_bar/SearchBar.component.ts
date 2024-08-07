@@ -23,6 +23,6 @@ export default {
             router.push({ path: formAction.value, query: params });
         };
 
-        return{formMethod, handleSubmit}
+        return{formMethod, handleSubmit, selectedCategory}
     }
 }

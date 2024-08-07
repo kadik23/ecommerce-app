@@ -32,5 +32,8 @@ interface IRestOrders {
 
 interface IRestCarts {
     axiosInstance: AxiosInstance;
-    getAll(): Promise<CartEntity[]>;
+    getAll(access_token:string): Promise<CartEntity[]>;
+    Create(cart:string, access_token:string): Promise<CartEntity>;
+    Delete(id:string, access_token:string): any;
+    markItRead(carts:any[], access_token:string): any;
 }

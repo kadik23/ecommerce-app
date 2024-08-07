@@ -19,7 +19,7 @@ class Product extends Model
 
     public function users_P()
     {
-        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id','id');
+        return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id','id')->withPivot('isRead');
     }
 
    

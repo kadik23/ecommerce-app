@@ -17,6 +17,8 @@
     "axios": "^1.7.2",
     "flowbite": "^2.3.0",
     "gsap": "^3.12.5",
+    "laravel-echo": "^1.16.1",
+    "pusher-js": "^8.4.0-rc2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

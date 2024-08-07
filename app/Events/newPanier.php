@@ -43,8 +43,8 @@ class newPanier implements ShouldBroadcast
         // return [
         //     new PrivateChannel('user.' . $this->user)
         // ];
-        return ['user.' . $this->user];
-        // return new PrivateChannel('user.' . $this->user);
+        // return ['user.' . $this->user];
+        return new PrivateChannel('user.' . $this->user);
 
 
     }
