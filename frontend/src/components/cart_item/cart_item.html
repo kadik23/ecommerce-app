@@ -1,4 +1,4 @@
-<div class="h-48 p-5 mx-5 border-t flex flex-row justify-around items-center" style="background-color: rgba(128, 128, 128, 0.098); border-color:black ">
+<div class="min-h-48 p-5 mx-5 border-t flex flex-row justify-around items-center border-black bg-gray-100">
     <div class="h-full w-24 flex justify-center items-center">
         <span class="material-symbols-outlined cursor-pointer text-regal-brown " style="font-size: 3rem">
             close
@@ -8,13 +8,13 @@
         <img class="h-full object-cover overflow-hidden " src='@/assets/images/products/1695233140.jpg'/>
 
     </div>
-    <div class="flex flex-col ">
+    <div class="flex flex-col items-start w-3/5">
         <div class=" text-black text-lg font-medium">{{productName}}</div>
-        <div class="flex-row justify-center inline-flex">
-            <span class="text-zinc-600 text-sm ">Description :</span>
+        <div class="flex-row justify-center inline-flex gap-2">
+            <span class="text-zinc-600 text-sm text-nowrap">Description :</span>
             <span class="text-black text-sm font-medium ">{{description}}</span>
         </div>
-        <div class="flex-row justify-centerinline-flex">
+        <div class="flex-row justify-center inline-flex gap-2">
             <span class="text-zinc-600  text-sm">size:</span>
             <span class="text-black text-sm font-medium  ">20</span>
         </div>
@@ -23,16 +23,20 @@
         <div id="price{{ $id }}" class="text-black text-md font-bold mr-2">{{price}}$</div>
         <div class="justify-center items-center inline-flex mt-2">
             <div class="px-2.5 justify-center items-center  flex">
-                <span class="text-black text-opacity-50  font-medium">7300$ </span>
-                <span class="text-regal-brown ml-2 bg-amber-100 text-md font-semibold">-23%</span>
-            </div>
+                <span class="text-black text-opacity-50 font-medium">
+                    {{ sold ? (price * sold / 100).toFixed(2) : price }}$
+                </span>
+                <span class="text-regal-brown ml-2 bg-amber-100 text-md font-semibold">
+                    {{ sold ? sold : 100 }}%
+                </span>
+        </div>
         </div>
             <div class="justify-around text-center items-center inline-flex mt-2 w-28">
-                <span @onclick="incrementQuantity(id)" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
+                <span @click="incrementQuantity(id)" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
                     add
                 </span>
                 <span  id="quantity{{ $id }}" class="text-black text-md font-medium">{{quantity}}</span>
-                <span  @onclick="decrementQuantity(id)" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
+                <span  @click="decrementQuantity(id)" class="material-symbols-outlined cursor-pointer rounded-md bg-regal-brown text-white">
                     remove
                 </span>
             </div>

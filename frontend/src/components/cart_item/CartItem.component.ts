@@ -34,7 +34,7 @@ export default {
         const decrementQuantity = () => {
         if (quantity.value > 1) {
             quantity.value--;
-            emit('decrement', props.quantities);
+            emit('decrement', props.id);
         }
         };
     

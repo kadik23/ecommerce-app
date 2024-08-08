@@ -4,7 +4,7 @@ export default defineComponent({
     name: 'Tag',
     props: {
         tagname: {
-            type: String as PropType<string>,
+            type: String,
             required: true,
         },
     },

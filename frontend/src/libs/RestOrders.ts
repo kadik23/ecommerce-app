@@ -6,7 +6,12 @@ export default class RestOrders implements IRestOrders {
     }
     axiosInstance: AxiosInstance;
 
-    async getAll(): Promise<OrderEntity[]> {
-            return this.axiosInstance.get(`/api/order`).then(response => response.data);
+    async getAll(access_token:string): Promise<any[]> {
+            return this.axiosInstance.get(`/api/user/order`).then(response => response.data);
+    }
+
+    async sendOrder(orders: OrderEntity[],access_token:string){
+
+        return this.axiosInstance.post('/api/user/order',{orders}).then((response: any) => response.data);
     }
 };

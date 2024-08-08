@@ -6,7 +6,7 @@ export default class RestCarts implements IRestCarts {
     }
     axiosInstance: AxiosInstance;
 
-    async getAll(access_token:string): Promise<CartEntity[]> {
+    async getAll(access_token:string): Promise<any[]> {
         return this.axiosInstance.get(`/api/user/cart`, {
             headers: { Authorization: `Bearer ${access_token}` }
         }).then(response => response.data);

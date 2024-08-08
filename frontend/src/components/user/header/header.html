@@ -232,7 +232,7 @@
                                     Cart
                                 </div>
                                 <li v-for="cart in carts" :key="cart.id" class="flex flex-row items-center">
-                                    <a href="#" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <router-link to="/carts" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <div class="w-32 overflow-hidden">
                                             <img :src="`/assets/images/products/${cart.img}`" class="object-cover h-20" alt="image">
                                         </div>
@@ -241,7 +241,7 @@
                                             <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">{{ cart.user_id }}</span></div>
                                             <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{ cart.price }}</div>
                                         </div>
-                                    </a>
+                                    </router-link>
                                     <a href="#" @click="deleteCard(cart[0].id)" class="delete_cart hover:bg-transparent">
                                         <span  class="ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
                                             close
@@ -250,7 +250,7 @@
                                 </li>
                                 <hr class="opacity-70 p-0">
                                 <li>
-                                    <a href="cart.index"
+                                    <router-link to="/carts"
                                         class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
                                         <div class="inline-flex items-center ">
                                             <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"
@@ -261,7 +261,7 @@
                                             </svg>
                                             View all
                                         </div>
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>
