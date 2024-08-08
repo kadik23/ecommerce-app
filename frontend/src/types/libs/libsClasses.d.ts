@@ -27,12 +27,13 @@ interface IUploadImage {
 
 interface IRestOrders {
     axiosInstance: AxiosInstance;
-    getAll(): Promise<OrderEntity[]>;
+    getAll(access_token:string): Promise<any[]>;
+    sendOrder(order:OrderEntity[], access_token:string): Promise<any>;
 }
 
 interface IRestCarts {
     axiosInstance: AxiosInstance;
-    getAll(access_token:string): Promise<CartEntity[]>;
+    getAll(access_token:string): Promise<any>;
     Create(cart:string, access_token:string): Promise<CartEntity>;
     Delete(id:string, access_token:string): any;
     markItRead(carts:any[], access_token:string): any;

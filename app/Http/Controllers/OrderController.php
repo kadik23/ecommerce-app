@@ -13,7 +13,6 @@ class OrderController extends Controller
      */
     public function index()
     {
-        // return view('user.myOrders',['Orders'=>Order::all()]);
         return response()->json(['Orders'=>Order::all()]);
     }
 
@@ -22,7 +21,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('order.store');
     }
 
     /**
@@ -30,38 +29,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $userId = auth()->user()->id; 
-        $new_order = new Order();
-        $new_order->orderBy = $userId;
-        $new_order->productOrdered = $request->input('productId');
-        $quantityTotal = $request->input('hidden');
-        $cartValues = [];
-        $productIDs = [];
-        foreach ($request->all() as $key => $value) {
-            // Check if the key starts with 'hidden' to identify hidden inputs
-            if (strpos($key, 'hidden') === 0) {
-                $cartId = substr($key, 6); // Extract Cart ID from the key
-                $cartValues[$cartId] = $value;
-                array_push($productIDs, $cartId);
+        $request->validate([
+            'orders' => 'required|array',
+            'orders.*.quantity' => 'required|integer|min:1',
+            'orders.*.orderBy' => 'required|exists:users,id',
+            'orders.*.Product' => 'required|exists:products,id',
+            'orders.*.paymentMethod' => 'required|string',
+            'orders.*.deliveryMethod' => 'required|string',
+        ]);
+        $user = $request->user();
+        foreach ($request->orders as $orderData) {
+            Order::create([
+                'quantity' => $orderData['quantity'],
+                'orderBy' => $orderData['orderBy'],
+                'productOrdered' => $orderData['Product'],
+                'paymentMethod' => $orderData['paymentMethod'],
+                'deliveryMethod' => $orderData['deliveryMethod'],
+                'dateOrder' => now(),
+            ]);
+            $user->products()->detach($orderData['Product']);
+        }
 
-            }
-        }
-        $quantityTotal = array_sum($cartValues);
-        $new_order->quantity = $quantityTotal;
-        $new_order->deliveryMethod = 'deliveryMethod';
-        $new_order->paymentMethod = 'paymentMethod';
-        $currentDate = date('Y-m-d'); 
-        $currentTime = date('H:i:s');
-        $new_order->state = "processing ";
-        $new_order->dateOrder =  $currentDate." ".$currentTime;
-        $new_order->save();
-        foreach( $productIDs as $productID ) {
-            $product=Product::findOrFail($productID);
-            // if (!($product->users_P()->where('user_id', $userId)->exists())) {
-                $product->users_P()->detach($userId);
-            // }
-        }
-        return redirect()->route("myorders");
+        return response()->json(['message' => 'Order(s) placed successfully', 'status' => 201], 201);
     }
 
     /**

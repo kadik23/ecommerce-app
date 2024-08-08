@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('state', 20)->nullable();
+            $table->string('state', 20)->default('processing');
             $table->date('dateOrder')->nullable();
             $table->decimal('quantity', 5, 2)->nullable();
             $table->string('paymentMethod', 255);
