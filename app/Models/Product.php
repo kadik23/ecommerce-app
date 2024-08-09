@@ -22,5 +22,8 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'product_user', 'product_id', 'user_id','id')->withPivot('isRead');
     }
 
-   
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

@@ -1,4 +1,5 @@
 import RestCarts from '@/libs/RestCarts';
+import RestRates from '@/libs/RestRates';
 import RestUserSession from '@/libs/RestUserSession';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import axios from 'axios';
@@ -49,10 +50,15 @@ export default defineComponent({
         const productPrice = ref<number>(props.price);
         const file = ref<File | null>(null);
         const isFavorite = ref<boolean>(false);
+        const isLoading = ref<boolean>(false);
         const restCarts: IRestCarts = new RestCarts(axios);
         const userSessionRepository = new UserSessionRepository(localStorage);
         const access_token = userSessionRepository.getAccessToken();
-        let toastManager = inject<Ref<IToastsManager>>("toastManager");
+        const toastManager = inject<Ref<IToastsManager>>("toastManager");
+        const RateModal = ref();
+        const restRate: IRestRates  = new RestRates(axios)
+        const userRating =ref(null)
+
         const showModal = () => {
             const modal = document.querySelector('.modal') as HTMLElement;
             modal.style.display = 'block';
@@ -103,6 +109,26 @@ export default defineComponent({
             } 
         }
 
+        const rateProduct = async () => {
+            try {
+                isLoading.value = true
+                if(access_token){
+                    const res = await restRate.rateProduct({productId: props.id,rating: userRating.value})
+                    if(res.message){
+                        toastManager?.value.alertSuccess("Rate added successfuly.");
+                    }
+                }
+                else{
+                    toastManager?.value.alertInfo("Please login to your account.");
+                }
+            }catch (error) {
+                console.log(error)
+                toastManager?.value.alertError("Rate added failed.");
+            }finally{
+                isLoading.value = false
+            }
+        }
+
         return {
             productId,
             productName,
@@ -110,12 +136,15 @@ export default defineComponent({
             file,
             showModal,
             closeModal,
-            // editProduct,
             handleFileUpload,
             updateProduct,
             isFavorite,
             toggleFavorite,
-            addToCart
+            addToCart,
+            RateModal,
+            userRating,
+            rateProduct,
+            isLoading
         };
     }
 });

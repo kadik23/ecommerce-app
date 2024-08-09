@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RateController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -47,6 +48,7 @@ Route::group([
     Route::post('/cart/markItRead', [CartsController::class, 'markItRead'])->middleware('auth:sanctum');
     Route::resource('/cart', CartsController::class)->middleware('auth:sanctum');
     Route::resource('/order', OrderController::class)->middleware('auth:sanctum');
+    Route::resource('/rate', RateController::class)->middleware('auth:sanctum');
 });
 Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 
