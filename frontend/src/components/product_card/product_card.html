@@ -1,5 +1,6 @@
 <div :class="'product' + id + ' max-w-sm product-card overflow-hidden hover:shadow-xl bg-white border border-gray-200 my-5 mx-10 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'"
     :style="{ height: isAdmin ? '450px' : '400px', width: '300px' }">
+    <Loading v-if="isLoading" />
     <div class="overflow-hidden h-3/5">
         <img class="product overflow-hidden rounded-t-lg w-full h-full object-cover" :src="profile"
             alt="product image" />
@@ -10,7 +11,7 @@
         <div>
             <h5 class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{ name }}</h5>
         </div>
-        <div class="flex items-center mt-2.5 mb-5">
+        <div @click="()=>RateModal.showModal()" class="flex items-center mt-2.5 mb-5 cursor-pointer">
             <template v-for="i in 5">
                 <svg v-if="i <= rating" class="w-4 h-4 text-yellow-300 mr-1" xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 22 20" :key="'star-' + i">
@@ -54,53 +55,23 @@
         </div>
     </div>
 
-    <!-- Modal for Admin -->
-    <dialog v-if="isAdmin" id="authentication_modal" class="modal" ref="modal">
-        <div class="relative w-full max-w-md max-h-full">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <form method="dialog" class="modal-backdrop">
-                    <button type="button"
-                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        @click="closeModal">
-                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </form>
-                <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit your product</h3>
-                    <form class="space-y-6" @submit.prevent="updateProduct">
-                        <input id="idModal" name="idModal" type="hidden" v-model="productId">
-                        <div>
-                            <label for="product"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                                name</label>
-                            <input type="text" name="product" id="product"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                placeholder="Product name" v-model="productName" required>
-                        </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                for="file_input">Upload image</label>
-                            <input name="file_input"
-                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-regal-brown dark:border-gray-600 dark:placeholder-gray-400"
-                                id="file_input" type="file" @change="handleFileUpload">
-                        </div>
-                        <div>
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                            <input type="number" name="price" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                placeholder="Price" v-model="productPrice" required>
-                        </div>
-                        <button type="submit"
-                            class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Edit
-                            product</button>
-                    </form>
-                </div>
+    <!-- Modal for rating -->
+    <dialog id="my_modal_3" class="modal" ref="RateModal">
+        <div class="modal-box flex flex-col gap-2 items-center">
+            <h3 class="text-lg font-bold">Rate our product!</h3>
+            <h3 class="text-sm font-semibold">How would you love this product</h3>
+            <div class="rating">
+                <input type="radio" name="rating" :value="1" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
+                <input type="radio" name="rating" :value="2" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
+                <input type="radio" name="rating" :value="3" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
+                <input type="radio" name="rating" :value="4" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
+                <input type="radio" name="rating" :value="5" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
             </div>
+            <button @click="rateProduct" class="btn bg-regal-brown text-white btn-primary">Submit</button>
+            <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <p class="py-4">Press ESC key or click on ✕ button to close</p>
         </div>
     </dialog>
 </div>

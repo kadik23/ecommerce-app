@@ -38,3 +38,8 @@ interface IRestCarts {
     Delete(id:string, access_token:string): any;
     markItRead(carts:any[], access_token:string): any;
 }
+
+interface IRestRates {
+    axiosInstance: AxiosInstance;
+    rateProduct(rate:any): Promise<any>;
+}
