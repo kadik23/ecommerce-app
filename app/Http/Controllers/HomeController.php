@@ -40,7 +40,7 @@ class HomeController extends Controller
         $products=[];
         if(Auth::check()){
             $user = Auth::user();
-            $products = $user->products; // Retrieve all products associated with the authenticated user
+            $products = $user->products; 
         }
         // return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);   
         return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);

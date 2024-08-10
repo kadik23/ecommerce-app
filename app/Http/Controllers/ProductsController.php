@@ -15,8 +15,11 @@ class ProductsController extends Controller
     use orderBy;
     public function index()
     {
-        // return view('admin.products',['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
-        return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
+        if(Auth::user()->hasRole('admin')){
+            return view('admin.products',['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
+        } else {
+            return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Products'=> Product::all()]);
+        }
     }
 
     /**
@@ -24,8 +27,12 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        // return view('admin.addProduct',['Categories'=>Category::all()]);
-        return response()->json(['Categories'=>Category::all()]);
+        // Create an instance of CategoryController
+        $categoryController = new CategoriesController();
+        
+        $categoriesResponse = $categoryController->getAll();
+        
+        return view('admin.addProduct',['Categories'=>$categoriesResponse]);
     }
 
     /**
@@ -39,7 +46,7 @@ class ProductsController extends Controller
                 $request->validate([
                     'image' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Adjust validation rules as needed
                 ]);
-               
+
                 $file_name = $this->save_photo($request->image,'products');
                 $request->validate([  
                     'name'=>['required '],
@@ -79,13 +86,6 @@ class ProductsController extends Controller
             $products = Product::where('name', 'like', "%{$productSearch}%")->get();
             if($categorySelected=='All categories'){
                 if($products->isEmpty()){
-                    // return view('admin.products', [
-                    //     'product' => $productSearch,
-                    //     'productsController'=>[], 
-                    //     'Categories' => Category::all(),
-                    //     'Products' => Product::all(),
-                    //     'categoryS'=>$categorySelected,
-                    // ]); 
                     return response()->json([
                         'product' => $productSearch,
                         'productsController'=>[], 
@@ -93,13 +93,7 @@ class ProductsController extends Controller
                         'Products' => Product::all(),
                         'categoryS'=>$categorySelected,
                     ]);
-                } 
-                // return view('admin.products', [
-                //     'productsController' => $products, 
-                //     'Categories' => Category::all(),
-                //     'Products' => Product::all(),
-                //     'categoryS'=>$categorySelected
-                // ]);
+                }
                 return response()->json([
                     'productsController' => $products, 
                     'Categories' => Category::all(),
@@ -157,13 +151,13 @@ class ProductsController extends Controller
         $product_update=Product::findOrFail($idModal); 
         if ($request->hasFile('file_input')) {
             $request->validate([
-                'file_input' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Adjust validation rules as needed
+                'file_input' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ]);
             $file_name = $this->save_photo($request->file_input,'products');
             $product_update->profileImage=$file_name;
 
         }
-     
+
         $product_update->name=strip_tags($request->input('product'));
         $product_update->price=strip_tags($request->input('price'));
         $product_update->save();
@@ -238,27 +232,14 @@ class ProductsController extends Controller
                     'categoryS'=>$categorySelected,
                 ]);
             }
-        // }else{
-        //     $category=$request->input('category');
-        //     $products=Product::where('category','=',$category);
-        //     return view('user.productsByCategory',[
-        //         'productsController' => $products,
-        //         'Categories'=>Category::all(),
-        //         'Products' => Product::all(),
-        //         'categoryS'=>$category,
-        //     ]);
-        // }
     }
     
     public function product_show(Request $request ,string $category){
         // return view('user.productsByCategory');
-
-       
     }
 
     public function filter(Request $request){
         $filter= $request->filter;
-        // $products=$this->getTavlesByColumn('price','asc','Product');
         $products=Product::all();
         if($filter=="Best selling"){
             $products=$this->getTavlesByColumn('price','asc','Product');
@@ -269,12 +250,6 @@ class ProductsController extends Controller
         }elseif($filter=="HighToLow"){
             $products= Product::orderBy('price', 'desc')->get();
         }
-        // return view('admin.products',[
-        //     'productsController' => $products,
-        //     'Categories'=>Category::all(),
-        //     'Products' => Product::all(),
-        //     'filter' => $filter,
-        // ]);
         return response()->json([
             'productsController' => $products,
             'Categories'=>Category::all(),
