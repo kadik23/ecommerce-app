@@ -99,13 +99,12 @@ class CartsController extends Controller
     {
         if (Auth::check()) {
             $user_id = Auth::user()->id; 
-            $product_id = $id;
 
             if ($user_id) {
                 // Detach the specified product from the user
                 $user=User::findOrFail($user_id);
-                $user->products()->detach($product_id);
-                return response()->json(['message' => 'Record removed from pivot table','data' => $product_id], 200);
+                $user->products()->detach($id);
+                return response()->json(['message' => 'Record removed from pivot table','data' => $id], 200);
             } else {
                 return response()->json(['error' => 'User not found'], 404);
             }

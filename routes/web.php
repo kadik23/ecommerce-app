@@ -1,11 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CartsController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify'=>true]);
@@ -21,13 +17,6 @@ Route::put('/editMyProfile', 'App\Http\Controllers\ProfileController@profileEdit
 Route::put('/editpictureProfile', 'App\Http\Controllers\ProfileController@pictureEdit')->name('dash.pictureEdit');
 });
 
-// for Client---------------
-Route::group(['middleware' => ['auth', 'role:user'],'prefix'=>'user'], function() { 
-    Route::get('/myorders', 'App\Http\Controllers\UserController@myorders')->name('myorders');
-    Route::get('/paymentmethod', 'App\Http\Controllers\UserController@paymentmethod')->name('paymentmethod');
-    Route::resource('/cart', CartsController::class);
-    Route::resource('/order', OrderController::class);
-});
 Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
 
 

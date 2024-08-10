@@ -15,10 +15,6 @@ class ProfileController extends Controller
      * @return void
      */
     use photos;
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
 
     /**
      * Show the application dashboard.

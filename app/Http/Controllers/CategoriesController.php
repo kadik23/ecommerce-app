@@ -32,7 +32,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         if ($request->hasFile('icon')) {
-           
+
                 $request->validate([
                     'icon' => 'required|image|mimes:svg,png|max:2048','category'=>['required '], 
                 ]);
@@ -87,5 +87,10 @@ class CategoriesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getAll()
+    {
+        return Category::all();
     }
 }
