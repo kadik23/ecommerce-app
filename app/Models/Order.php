@@ -19,4 +19,9 @@ class Order extends Model
     public function users(){
         return $this->hasMany('App\Models\User','orderBy','id');
     }
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Product','id','productOrdered');
+    }
 }

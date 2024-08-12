@@ -10,7 +10,7 @@
       >
       {{$iconCard}}
       </span>
-      <h1 class="text-xl lg:text-3xl opacity-80 font-bold">{{$orderStat}}</h1>
+      <h1 class="text-xl lg:text-3xl opacity-80 font-bold capitalize">{{$orderStat}}</h1>
   </div>
   <h2  class="font-bold customerCounter text-2xl mt-3" data-target="{{$nbr}}">0</h2>
 </div>

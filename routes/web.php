@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->
 Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], function() { 
     Route::get('/', 'App\Http\Controllers\AdminController@index')->name('admin')->middleware('verified');
     Route::get('/products', 'App\Http\Controllers\AdminController@products')->name('dashboard.products');
+    Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     Route::get('/orders', 'App\Http\Controllers\AdminController@orders')->name('dashboard.orders');
     Route::get('/customers', 'App\Http\Controllers\AdminController@customers')->name('dashboard.Customers');
     Route::get('/product/byCategory', 'App\Http\Controllers\ProductsController@byCategory')->name('product.byCategory');

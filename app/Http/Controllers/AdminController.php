@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\Component\admin;
@@ -27,29 +28,23 @@ class AdminController extends Controller
     }
     public function orders()
     {   
-        $orderTitle = 'Orders Management'; // Set the title
-        $iconCard=['priority','cancel','recommend','refresh'];
-        $nbr=[370,23,3600,12];
-        $orderStat=['Completed','Canceled','Confirmed','Refunded'];
-
-        $state = 'CANCELED'; // Replace with the actual value of $state
-
-        // Calculate the color based on $state
-        if ($state === 'CANCELED') {
-            $color = 'red';
-        } elseif ($state === 'COMPLETED') {
-            $color = 'blue';
-        } elseif ($state === 'REFUNDED') {
-            $color = 'black';
-        } elseif ($state === 'CONFIRMED') {
-            $color = 'blue';
-        } else {
-            $color = 'default-color'; // Default color if none of the conditions match
-        }   
+        $orderTitle = 'Orders Management'; 
+        $iconCard = ['priority', 'cancel', 'recommend', 'refresh'];
+        $orderStat = ['completed', 'canceled', 'confirmed', 'pending'];
+    
+        // Count the number of orders for each state
+        $nbr = [
+            Order::where('state', 'complete')->count(),
+            Order::where('state', 'cancel')->count(),
+            Order::where('state', 'confirm')->count(),
+            Order::where('state', 'pending')->count(),
+        ];
+    
+        $orders = Order::with('product')->get();
         
-        return view('admin.orders', compact('orderTitle','iconCard','nbr','orderStat','state','color'));
-
+        return view('admin.orders', compact('orderTitle', 'iconCard', 'nbr', 'orderStat', 'orders'));
     }
+    
 
     public function customers(){
         $customersTitle='Customers';
