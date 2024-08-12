@@ -26,4 +26,9 @@ class Product extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

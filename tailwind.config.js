@@ -28,7 +28,8 @@ export default {
   safelist: [
     'lg:p-5',
     'overflow-x-scroll',
-    'lg:flex-row'
+    'lg:flex-row',
+    'capitalize'
   ],
   plugins: [
     require('@tailwindcss/forms'), 
