@@ -7,4 +7,6 @@ interface OrderEntity {
     orderBy: number;
     Product: string;
     deleted_at?: Date;
+    created_at: Date;
+    state: 'confirm' | 'complete' | 'canceled' | 'pending' 
 }

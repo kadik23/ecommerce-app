@@ -7,5 +7,18 @@ export default defineComponent({
             type: String,
             required: true,
         },
-    },
+        isCurrentState: {
+            type: Boolean,
+            required: true,
+        }
+    },  
+    setup(props: any, {emit}:any){
+        const changeState = () => {
+            emit('recievedCurrentState',props.tagname);
+        }
+
+        return{
+            changeState
+        }
+    }
 });
