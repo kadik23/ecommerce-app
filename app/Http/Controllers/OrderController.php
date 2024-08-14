@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -13,7 +14,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(['Orders'=>Order::all()]);
+        $orders = Order::with('product')
+        ->where('orderBy', Auth::user()->id) 
+        ->get();
+        return response()->json(['data' => $orders, 'status' => 201], 201); 
     }
 
     /**

@@ -1,13 +1,13 @@
 <div class="container flex flex-col items-start">
     <Loading v-if="isLoading" />
-    <div class="font-bold mt-10 opacity-80 px-10 text-3xl float-left">My order :</div>
+    <div class="font-bold mt-10 opacity-80 px-16 text-3xl float-left">My order :</div>
     <div class="flex flex-wrap px-10 mt-5 ml-5">
-        <TagVue tagname="Processing" />
-        <TagVue tagname="Shipped" />
-        <TagVue tagname="Delivered" />
+        <TagVue @recievedCurrentState="changeCurrentState" tagname="Processing" :isCurrentState="currentStatus == 'Processing'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" tagname="Shipped" :isCurrentState="currentStatus == 'Shipped'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" tagname="Delivered" :isCurrentState="currentStatus == 'Delivered'"/>
     </div>
     <div class="flex flex-wrap px-10">
         <Loading v-if="isLoading" />
-        <ProcessCardVue v-for="order in orders" :key="order.id" :data="order" />
+        <ProcessCardVue v-for="order in filteredOrders" :key="order.id" :data="order" />
     </div>
 </div>

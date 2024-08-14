@@ -5,6 +5,8 @@ import UserSessionRepository from '@/libs/UserSessionRepository';
 import { type AxiosInstance } from 'axios';
 import { defineComponent, inject, onMounted, ref } from 'vue';
 
+type Istate = 'Processing' | 'Shipped' | 'Delivered'
+
 export default defineComponent({
     name: 'Orders',
     components: {
@@ -18,13 +20,26 @@ export default defineComponent({
         const userSessionRepository = new UserSessionRepository(localStorage);
         const access_token = userSessionRepository.getAccessToken();
         const restOrders: IRestOrders =new RestOrders(axios as AxiosInstance)
-        
+        const currentStatus =ref<Istate>("Processing")
+        const filteredOrders = ref<null | OrderEntity[]>(null)
+        const changeCurrentState = (newState: Istate) => {
+            currentStatus.value = newState
+            if(newState == 'Processing'){
+                filteredOrders.value = orders.value.filter(or => or.state == 'confirm' || or.state == 'pending')
+            }else if(newState == 'Shipped'){
+                filteredOrders.value = orders.value.filter(or => or.state == 'complete' )
+            }else{
+                filteredOrders.value = orders.value.filter(or => or.state == 'canceled' )
+            }
+        }
+
         const fetchOrders =async () => {
             try {
                 isLoading.value = true
                 if(access_token){
-                    const response = await restOrders.getAll(access_token)
-                    orders.value = response
+                    const response: any = await restOrders.getAll(access_token)
+                    orders.value = response.data
+                    filteredOrders.value = orders.value.filter(or => or.state == 'confirm' || or.state == 'complete')
                 }
             } catch (err) {
                 console.log(err)
@@ -37,9 +52,11 @@ export default defineComponent({
 
 
         return {
-            orders,
             fetchOrders,
-            isLoading
+            isLoading,
+            currentStatus,
+            changeCurrentState,
+            filteredOrders
         };
     }
 });
