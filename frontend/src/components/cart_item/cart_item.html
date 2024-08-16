@@ -1,14 +1,13 @@
-<div class="min-h-48 p-5 mx-5 border-t flex flex-row justify-around items-center border-black bg-gray-100">
-    <div class="h-full w-24 flex justify-center items-center">
+<div class="min-h-48 p-5 mx-5 border-t flex flex-col md:flex-row justify-around items-center border-black bg-gray-100">
+    <div class="md:h-full w-24 flex justify-center items-center">
         <span class="material-symbols-outlined cursor-pointer text-regal-brown " style="font-size: 3rem">
             close
         </span>
     </div>
-    <div class="overflow-hidden h-4/5 border border-black border-1 w-16 mr-2">
+    <div class="overflow-hidden w-full md:h-4/5 border border-black border-1 md:w-16 mr-2">
         <img class="h-full object-cover overflow-hidden " src='@/assets/images/products/1695233140.jpg'/>
-
     </div>
-    <div class="flex flex-col items-start w-3/5">
+    <div class="flex flex-col items-start md:w-3/5 w-full">
         <div class=" text-black text-lg font-medium">{{productName}}</div>
         <div class="flex-row justify-center inline-flex gap-2">
             <span class="text-zinc-600 text-sm text-nowrap">Description :</span>
@@ -19,7 +18,7 @@
             <span class="text-black text-sm font-medium  ">20</span>
         </div>
     </div>
-    <div class="flex-col justify-center items-end inline-flex">
+    <div class="flex-col justify-center items-center md:items-end inline-flex">
         <div id="price{{ $id }}" class="text-black text-md font-bold mr-2">{{price}}$</div>
         <div class="justify-center items-center inline-flex mt-2">
             <div class="px-2.5 justify-center items-center  flex">
