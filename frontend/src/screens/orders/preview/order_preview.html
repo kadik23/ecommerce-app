@@ -1,0 +1,45 @@
+<Loading v-if="isLoading" />
+<div class="container" v-if="order">
+    <div class="mx-8 p-4 rounded-md bg-[#dddddd] flex justify-between items-center">
+        <div class="text-regal-brown flex items-center gap-2">
+            <Icon icon="mdi:cart" width="24" height="24" />
+            <div>Order</div>
+            <div>{{order.id}}</div>
+        </div>
+        <div>
+            {{order.created_at}} PM
+        </div>
+    </div>
+    <div class="flex flex-col md:flex-row gap-2 md:justify-between">
+        <div class="">
+            <div class="p-4 mx-8 rounded-md bg-[#dddddd] flex flex-col gap-2">
+                <div class="font-semibold mb-2">Order info</div>
+                <div>
+                    <div class="font-semibold">Status</div>
+                    <div>{{order.state}}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Product name</div>
+                    <div>{{order.product.name}}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Quantity</div>
+                    <div>{{order.quantity}}</div>
+                </div>
+                <div>
+                    <div class="font-semibold">Delivery method</div>
+                    <div>{{order.deliveryMethod}}</div>
+                </div>
+            </div>
+            <button class="btn w-10/12 mx-8">Action</button>
+        </div>
+        <div>
+            <ul class="steps steps-vertical text-regal-brown">
+                <li class="step step-primary ">Order sent</li>
+                <li class="step step-primary">Order confirmed</li>
+                <li class="step">Order paid</li>
+                <li class="step">Order delivered</li>
+            </ul>
+        </div>
+    </div>
+</div>

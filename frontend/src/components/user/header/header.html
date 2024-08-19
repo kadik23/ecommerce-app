@@ -35,9 +35,9 @@
                         <li><a href="#">Arabic</a></li>
                     </ul>
                 </div>
-                <a href="#"
+                <router-link to="/contact"
                     class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact
-                    Us</a>
+                    Us</router-link>
             </div>
         </div>
     </div>
@@ -57,27 +57,28 @@
                     <li><a href="#">Arabic</a></li>
                 </ul>
             </div>
-            <a href="#"
-                class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">ContactUs</a>
+            <router-link to="/contact"
+            class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact
+            Us</router-link>
         </ul>
     </div>
 </div>
 
 <!-- Main Navbar -->
 <nav id="menu" class="bg-gray-50 transition-all duration-1000 dark:bg-gray-700">
-    <div class="max-w-screen-xl flex justify-between items-center px-4 py-7 mx-auto" id="navBottom">
-        <a href="/" class="flex items-center">
+    <div class="max-w-screen-xl flex flex-col md:flex-row md:justify-between items-start md:items-center px-4 py-7 mx-auto" id="navBottom">
+        <router-link to="/" class="flex items-center">
             <img src="@/assets/images/logo.png"
                 class="h-8 mr-3 hover:scale-150 transition-all duration-500 rounded-full" alt="Flowbite Logo" />
             <span
                 class="self-center opacity-75 text-sm lg:text-xl font-semibold whitespace-nowrap dark:text-white">Stanissk
                 Store</span>
-        </a>
-        <div class="items-center hidden lg:flex " id="categories" v-if="searchBarHidden">
+        </router-link>
+        <div :class="[currentPath !== '/' ? 'hidden' : 'lg:flex' ]" class="items-center hidden  " id="categories" v-if="searchBarHidden">
             <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
-                <li><a href="/"
+                <li><router-link to="/"
                         class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category"
-                        aria-current="page">Home</a></li>
+                        aria-current="page">Home</router-link></li>
                 <li @click="scrollTo(sectionRefPhones)"><button id="phone_btn"
                         class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Phones</button>
                 </li>
@@ -226,12 +227,12 @@
                             </div>
 
                             <ul tabindex="0" id="scrollable-container"
-                                class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[350px]">
+                                class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[380px]">
                                 <div
                                     class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
                                     Cart
                                 </div>
-                                <li v-for="cart in carts" :key="cart.id" class="flex flex-row items-center">
+                                <li v-for="cart in carts" :key="cart.id" class="flex flex-row">
                                     <router-link to="/carts" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <div class="w-32 overflow-hidden">
                                             <img :src="`/assets/images/products/${cart.img}`" class="object-cover h-20" alt="image">
@@ -242,11 +243,11 @@
                                             <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{ cart.price }}</div>
                                         </div>
                                     </router-link>
-                                    <a href="#" @click="deleteCard(cart[0].id)" class="delete_cart hover:bg-transparent">
+                                    <button @click="deleteCard(cart[0].id)" class="delete_cart hover:bg-transparent">
                                         <span  class="ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
                                             close
                                         </span>
-                                    </a>
+                                    </button>
                                 </li>
                                 <hr class="opacity-70 p-0">
                                 <li>

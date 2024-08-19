@@ -18,6 +18,8 @@ import { CartsVue } from './screens/carts';
 import { OrdersVue } from './screens/orders';
 import { LoadingVue } from './components/loading';
 import { ToastVue } from './components/toast';
+import { OrderPreviewVue } from './screens/orders/preview';
+import { ContactVue } from './screens/contact';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -34,7 +36,9 @@ const routes: RouteRecordRaw[] = [
             { path: '/', component: HomeVue },
             { path: '/profile', component: ProfileVue },
             { path: '/carts', component: CartsVue },
-            { path: '/orders', component: OrdersVue }
+            { path: '/orders', component: OrdersVue },
+            { path: '/order-preview/:id', component: OrderPreviewVue },
+            { path: '/contact', component: ContactVue }
         ]
     },
 ];

@@ -6,7 +6,7 @@
     <!-- Product Card Section -->
     <div class="container">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Top Products</h1>
-        <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
+        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profile"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
@@ -22,8 +22,8 @@
                     Welcome to Stanissk Store, where shopping meets convenience and quality. With a wide range of
                     products to choose from, we're your one-stop destination for all your shopping needs.
                 </p>
-                <button class="bg-regal-brown my-5 text-xs lg:text-md lg:py-2 px-3 text-white rounded-3xl py-1">SHOP
-                    NOW</button>
+                <router-link to="sign-up" class="bg-regal-brown my-5 text-xs lg:text-md lg:py-2 px-3 text-white rounded-3xl py-1">SHOP
+                    NOW</router-link>
             </div>
         </div>
     </section>
@@ -31,7 +31,7 @@
     <!-- Latest Products Section -->
     <div class="container">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Latest</h1>
-        <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
+        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profileImage"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
@@ -49,7 +49,7 @@
     <!-- Best Offers Electronics Section -->
     <div class="container">
         <h1 id="electronics" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS</h1>
-        <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
+        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in electronics" :key="product.id" :name="product.name"
                 :profile="product.profileImage" :id="product.id" :category="product.category" :sold="product.sold"
                 :quantity="product.quantity" :price="product.price" :rating="product.rating" />
@@ -59,7 +59,7 @@
     <!-- Best Offers Phones Section -->
     <div class="container">
         <h1 id="phones" class="text-lg lg:text-3xl text-center font-bold my-10 phones">BEST OFFERS HIGH PHONES</h1>
-        <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
+        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in phones" :key="product.id" :name="product.name" :profile="product.profileImage"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
@@ -69,7 +69,7 @@
     <!-- Best Offers Accessories Section -->
     <div class="container">
         <h1 id="accessories" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES</h1>
-        <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
+        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in accessories" :key="product.id" :name="product.name"
                 :profile="product.profileImage" :id="product.id" :category="product.category" :sold="product.sold"
                 :quantity="product.quantity" :price="product.price" :rating="product.rating" />
