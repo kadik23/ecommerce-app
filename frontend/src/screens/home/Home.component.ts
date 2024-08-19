@@ -1,6 +1,5 @@
-import { ref, onMounted, defineComponent, provide, type Ref } from 'vue';
+import { ref, onMounted, defineComponent, provide, type Ref, inject } from 'vue';
 import RestProducts from '@/libs/RestProducts';
-import axios from 'axios';
 import { CategoryCardVue } from '@/components/user/category_card';
 import { ProductCardVue } from '@/components/product_card';
 import { CarouselVue } from '@/components/carousel';
@@ -8,6 +7,7 @@ import phonesImage from '@/assets/images/categories/hal-gatewood-WcYeiHMexR0-uns
 import accessoriesImage from '@/assets/images/categories/marissa-grootes-D4jRahaUaIc-unsplash.jpg';
 import electronicsImage from '@/assets/images/categories/umberto-jXd2FSvcRr8-unsplash.jpg';
 import CardAnimation from '@/components/CardAnimation.component';
+import type { AxiosInstance } from 'axios';
 
 export default defineComponent({
     name: 'HomeVue',
@@ -26,7 +26,9 @@ export default defineComponent({
         const categories = ref<CategoryEntity[]>([]);
         const carts = ref<any[]>([]);
         const isLoading = ref(false);
-        const restProducts: IRestProducts = new RestProducts(axios);
+        const axios = inject<AxiosInstance>('axios')
+
+        const restProducts: IRestProducts = new RestProducts(axios as AxiosInstance);
         const fetchProducts = async () => {
             isLoading.value = true;
             try {
