@@ -10,10 +10,6 @@ export default {
             type: String,
             required: true
         },
-        route: {
-            type: String,
-            required: true
-        }
     },
     setup() {
         const square1 = ref<HTMLElement | null>(null);

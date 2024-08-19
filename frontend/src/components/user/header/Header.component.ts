@@ -1,6 +1,6 @@
 import logo from '@/assets/images/logo.png';
 import RestUserSession from "@/libs/RestUserSession";
-import { ref, inject, type Ref, onMounted } from 'vue'
+import { ref, inject, type Ref, onMounted, computed } from 'vue'
 import axios from "axios";
 import { DropDownVue } from '../drop_down';
 import { SearchBarVue } from '@/components/search_bar';
@@ -9,6 +9,7 @@ import RestProducts from '@/libs/RestProducts';
 import RestCarts from '@/libs/RestCarts';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import echo from '@/libs/Pusher';
+import { useRoute } from 'vue-router';
 
 export default {
     components: {
@@ -30,6 +31,9 @@ export default {
         const isLoading = ref(false);
         const restUserSession = new RestUserSession(axios);
         const favoriteNbr = ref<number>(0);
+        const route = useRoute();
+        const currentPath = computed(() => route.path);
+
         const toggleSearch = () => {
             searchBarHidden.value = !searchBarHidden.value;
             console.log(searchBarHidden.value)
@@ -217,7 +221,8 @@ export default {
             carts,
             resetToZero,
             deleteCard,
-            notificationCount
+            notificationCount,
+            currentPath
         }
     }
 }

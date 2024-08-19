@@ -23,6 +23,7 @@ export default {
   plugins: [
     require('flowbite/plugin'),
     require('daisyui'),
+    require('@tailwindcss/forms')
   ]
 }
 
