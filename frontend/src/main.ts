@@ -21,6 +21,7 @@ import { ToastVue } from './components/toast';
 import { OrderPreviewVue } from './screens/orders/preview';
 import { ContactVue } from './screens/contact';
 import { ProductByCategoryVue } from './screens/products_by_category';
+import { PaymentVue } from './screens/payment';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -40,7 +41,8 @@ const routes: RouteRecordRaw[] = [
             { path: '/orders', component: OrdersVue },
             { path: '/order-preview/:id', component: OrderPreviewVue },
             { path: '/contact', component: ContactVue },
-            { path: '/product-by-categroy/:category', component: ProductByCategoryVue }
+            { path: '/product-by-categroy/:category', component: ProductByCategoryVue },
+            { path: '/payment-method/:id', component: PaymentVue }
         ]
     },
 ];

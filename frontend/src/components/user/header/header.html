@@ -67,13 +67,16 @@
 <!-- Main Navbar -->
 <nav id="menu" class="bg-gray-50 transition-all duration-1000 dark:bg-gray-700">
     <div class="max-w-screen-xl flex flex-col md:flex-row md:justify-between items-start md:items-center px-4 py-7 mx-auto" id="navBottom">
-        <router-link to="/" class="flex items-center">
-            <img src="@/assets/images/logo.png"
-                class="h-8 mr-3 hover:scale-150 transition-all duration-500 rounded-full" alt="Flowbite Logo" />
-            <span
-                class="self-center opacity-75 text-sm lg:text-xl font-semibold whitespace-nowrap dark:text-white">Stanissk
-                Store</span>
-        </router-link>
+        <div class="flex w-full justify-between md:w-fit md:block">
+            <router-link to="/" class="flex items-center">
+                <img src="@/assets/images/logo.png"
+                    class="h-8 mr-3 hover:scale-150 transition-all duration-500 rounded-full" alt="Flowbite Logo" />
+                <span
+                    class="self-center opacity-75 text-sm lg:text-xl font-semibold whitespace-nowrap dark:text-white">Stanissk
+                    Store</span>
+            </router-link>
+            <DrawerVue DrawerId='navbar2' />
+        </div>
         <div :class="[currentPath !== '/' ? 'hidden' : 'lg:flex' ]" class="items-center hidden  " id="categories" v-if="searchBarHidden">
             <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
                 <li><router-link to="/"
@@ -269,7 +272,6 @@
                     </li>
                 </ul>
             </div>
-            <DrawerVue DrawerId='navbar2' />
         </div>
     </div>
 </nav>
