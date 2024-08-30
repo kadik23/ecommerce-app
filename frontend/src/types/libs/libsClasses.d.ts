@@ -29,6 +29,7 @@ interface IRestOrders {
     axiosInstance: AxiosInstance;
     getAll(access_token:string): Promise<any[]>;
     sendOrder(order:OrderEntity[], access_token:string): Promise<any>;
+    getOrderById(id:string, access_token:string): Promise<any>;
 }
 
 interface IRestCarts {
