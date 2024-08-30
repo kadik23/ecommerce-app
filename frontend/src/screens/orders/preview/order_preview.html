@@ -1,6 +1,6 @@
 <Loading v-if="isLoading" />
-<div class="container" v-if="order">
-    <div class="mx-8 p-4 rounded-md bg-[#dddddd] flex justify-between items-center">
+<div class="container flex flex-col gap-4" v-if="order">
+    <div class="md:mx-8 mx-4 p-4 rounded-md bg-[#dddddd] flex justify-between items-center">
         <div class="text-regal-brown flex items-center gap-2">
             <Icon icon="mdi:cart" width="24" height="24" />
             <div>Order</div>
@@ -10,9 +10,9 @@
             {{order.created_at}} PM
         </div>
     </div>
-    <div class="flex flex-col md:flex-row gap-2 md:justify-between">
-        <div class="">
-            <div class="p-4 mx-8 rounded-md bg-[#dddddd] flex flex-col gap-2">
+    <div class="md:mx-8 mx-4 flex flex-col md:flex-row gap-4 md:gap-0 md:justify-between">
+        <div class="md:w-1/3 w-full flex flex-col gap-4">
+            <div class="p-4 rounded-md bg-[#dddddd] flex flex-col gap-2">
                 <div class="font-semibold mb-2">Order info</div>
                 <div>
                     <div class="font-semibold">Status</div>
@@ -31,14 +31,52 @@
                     <div>{{order.deliveryMethod}}</div>
                 </div>
             </div>
-            <button class="btn w-10/12 mx-8">Action</button>
+            <button class="btn cursor-not-allowed w-full opacity-50" v-if="order.state == 'pending'">Go to payment</button>
+            <router-link :to="'/payment-method/'+order.id" class="btn w-full text-white bg-regal-brown" v-if="order.state == 'confirm'">Go to payment</router-link>
+            <button class="btn w-full text-white bg-regal-brown" v-if="order.state == 'complete'">Complete the delivery process</button>
         </div>
-        <div>
-            <ul class="steps steps-vertical text-regal-brown">
-                <li class="step step-primary ">Order sent</li>
-                <li class="step step-primary">Order confirmed</li>
-                <li class="step">Order paid</li>
-                <li class="step">Order delivered</li>
+        <div class="bg-[#dddddd] rounded-md p-4 w-full md:w-1/6">
+            <ul class="steps steps-vertical ">
+                <li :class="['step', order.state == 'pending' || 'confirm' || 'complete' ?  'step-primary' : '',]">    
+                    <div class="flex flex-col items-start">
+                        <div :class="['my-0', 'py-0', order.state == 'pending' || 'confirm' || 'complete' ?  'text-regal-brown' : 'text-gray-400']">
+                            Order sent
+                        </div>
+                        <div class="text-nowrap my-0 py-0 text-sm text-gray-400">
+                            {{order.updated_at.split('T')[0]}}
+                        </div>
+                    </div>
+                </li>
+                <li :class="['step', order.state == 'confirm' || 'complete' ?  'step-primary' :'' ]">    
+                    <div class="flex flex-col items-start">
+                        <div :class="['my-0', 'py-0', order.state == 'confirm' || 'complete' ?  'text-regal-brown' : 'text-gray-400']">
+                            Order confirmed
+                        </div>
+                        <div class="text-nowrap my-0 py-0 text-sm text-gray-400">
+                            {{order.updated_at.split('T')[0]}}
+                        </div>
+                    </div>
+                </li>
+                <li :class="['step', order.state == 'complete' ?  'step-primary' : '',]">    
+                    <div class="flex flex-col items-start">
+                        <div :class="['my-0', 'py-0', order.state == 'complete' ?  'text-regal-brown' : 'text-gray-400']">
+                            Order paid
+                        </div>
+                        <div class="text-nowrap my-0 py-0 text-sm text-gray-400">
+                            {{order.updated_at.split('T')[0]}}
+                        </div>
+                    </div>
+                </li>
+                <li :class="['step', order.state == 'complete' ?  'step-primary' : '', ]">    
+                    <div class="flex flex-col items-start">
+                        <div :class="['my-0', 'py-0', order.state == 'complete' ?  'text-regal-brown' : 'text-gray-400']">
+                            Order delivered
+                        </div>
+                        <div class="text-nowrap my-0 py-0 text-sm text-gray-400">
+                            {{order.updated_at.split('T')[0]}}
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

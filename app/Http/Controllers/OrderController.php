@@ -62,7 +62,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::with('product')->find($id);
+        if ($order) {
+            return response()->json(['data' => $order]);
+        } else {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
     }
 
     /**
