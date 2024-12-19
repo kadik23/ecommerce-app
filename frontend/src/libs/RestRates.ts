@@ -7,6 +7,6 @@ export default class RestRates implements IRestRates {
     axiosInstance: AxiosInstance;
 
     async rateProduct(rate: any){
-        return this.axiosInstance.post(`/user/rate`,rate).then(response => response.data);
+        return this.axiosInstance.post(`/api/user/rate`,rate).then(response => response.data);
     }
 };
