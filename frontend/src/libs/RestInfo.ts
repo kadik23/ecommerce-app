@@ -6,6 +6,6 @@ export default class RestInfo {
     }
     axiosInstance
     async getInfo(){
-        return this.axiosInstance.get('/api/info').then((response: any) => response.data);
+        return this.axiosInstance.get('/info').then((response: any) => response.data);
     }
 };
