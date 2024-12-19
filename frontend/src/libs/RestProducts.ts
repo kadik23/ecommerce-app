@@ -7,6 +7,6 @@ export default class RestProducts implements IRestProducts {
     axiosInstance: AxiosInstance;
 
     async getAll(){
-            return this.axiosInstance.get(`/api/`).then(response => response.data);
+            return this.axiosInstance.get(`/`).then(response => response.data);
     }
 };
