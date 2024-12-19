@@ -10,7 +10,7 @@ export default class UploadImage implements IUploadImage {
     UploadImage = async (file: File): Promise<any> => {
         let formData = new FormData();
         formData.append(`image`, file);
-        return await this.axiosInstance.post('/auth/upload_images', formData, {
+        return await this.axiosInstance.post('/api/auth/upload_images', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // Important for file uploads
             },
