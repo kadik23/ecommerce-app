@@ -16,6 +16,7 @@ export default defineConfig({
     proxy: {
         '/api': {
             target: 'https://ecommerce-app-laravel.onrender.com/',
+            changeOrigin: true, 
         },
         '/storage': {
             target: 'http://127.0.0.1:8000',
