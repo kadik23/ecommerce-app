@@ -8,6 +8,7 @@ import { defineComponent, ref, computed, onMounted, inject, type Ref } from 'vue
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
+    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Cart',
     components: {
         CartItemVue// Lazy-load the component
@@ -22,7 +23,7 @@ export default defineComponent({
         const access_token = userSessionRepository.getAccessToken();
         const restOrder: IRestOrders =new RestOrders(axios as AxiosInstance)
         const quantities = ref<Record<string, number>>({});
-        let toastManager = inject<Ref<IToastsManager>>("toastManager");
+        const toastManager = inject<Ref<IToastsManager>>("toastManager");
         const router = useRouter();
 
         const fetchCarts =async () => {
@@ -68,6 +69,9 @@ export default defineComponent({
                         deliveryMethod: 'delivery',
                         orderBy: userId as number, 
                         Product: cart.id,
+                        created_at: new Date(),
+                        updated_at: new Date(),
+                        state: 'pending'
                     }));
         
                     // Send the order data
