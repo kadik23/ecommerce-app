@@ -59,16 +59,16 @@ app.provide('isLoggedIn', isLoggedIn);
 
 router.beforeEach(async (to, from) => {
     if(!UNPROTECTED_ROUTES.includes(to.path)){
-        let userSessionRepository = new UserSessionRepository(localStorage);
-        let restUserSession = new RestUserSession(axios);
-        let access_token = userSessionRepository.getAccessToken();
+        const userSessionRepository = new UserSessionRepository(localStorage);
+        const restUserSession = new RestUserSession(axios);
+        const access_token = userSessionRepository.getAccessToken();
         
         if(!access_token){
             return { path: '/sign-in' };
         }
 
         try {
-            let response = await restUserSession.getCurrentUser(access_token);
+            const response = await restUserSession.getCurrentUser(access_token);
             if(response.error){
                 userSessionRepository.clear();
                 return { path: 'sign-in' };
