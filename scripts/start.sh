@@ -5,7 +5,8 @@ php artisan jwt:secret
 
 echo "# Linking storage..."
 php artisan storage:link
-
+echo "# Building frontend assets..."
+npm install
 npm run build
 npm run dev
 echo "# Starting the PHP application..."
