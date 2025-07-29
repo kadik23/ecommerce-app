@@ -58,7 +58,7 @@ class ProductsController extends Controller
                 $product->name =strip_tags( $request->input('name'));
                 $product->price = strip_tags($request->input('price'));
                 $product->category = strip_tags($request->input('category'));
-                $product->sold = strip_tags($request->input('sold'));
+                $product->sold = 0;
                 $product->profileImage= $file_name;
                 // $product->profileImage = strip_tags($request->input('image'));
                 $product->description = strip_tags($request->input('description'));
