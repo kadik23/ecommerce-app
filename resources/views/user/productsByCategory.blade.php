@@ -27,8 +27,8 @@
     </div>
 </div>
 <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
             <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
             @endforeach
     @else 

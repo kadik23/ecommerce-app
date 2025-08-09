@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RateController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -19,7 +19,7 @@ Route::get('/info',function (Request $request) {
     ]);
 });
 
-Route::get('/', 'App\Http\Controllers\HomeController@index')->name('welcome');
+Route::get('/', 'App\Http\Controllers\Api\HomeController@index')->name('landingPage');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth:sanctum');
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('auth:sanctum');
 
@@ -48,5 +48,6 @@ Route::group([
     Route::resource('/order', OrderController::class)->middleware('auth:sanctum');
     Route::resource('/rate', RateController::class)->middleware('auth:sanctum');
 });
-Route::get('/byCategory','App\Http\Controllers\ProductsController@byCategory')->name('user.product.show');
+
+Route::get('/byCategory','App\Http\Controllers\Api\ProductController@byCategory')->name('user.product.show');
 Route::get('/categories',[App\Http\Controllers\CategoriesController::class, 'index']);

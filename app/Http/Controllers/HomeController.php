@@ -18,8 +18,6 @@ class HomeController extends Controller
     {
     }
 
-    // use AuthenticatesUsers;
-
 
     /**
      * Show the application dashboard.
@@ -28,21 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        if(Auth::user()){
-            if (Auth::user()->hasRole('admin')) {
-                return redirect()->route('admin');
-            }
-        }
-        return $this->welcome();
-    }
-
-    public function welcome(){
-        $products=[];
-        if(Auth::check()){
-            $user = Auth::user();
-            $products = $user->products; 
-        }
-        // return view('welcome',['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);   
-        return response()->json(['productsController' => Product::all(),'Categories'=>Category::all(),'Carts'=>$products]);
+        return redirect()->route('admin');
     }
 }

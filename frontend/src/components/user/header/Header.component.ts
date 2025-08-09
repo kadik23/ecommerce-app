@@ -100,7 +100,7 @@ export default {
         const fetchProducts = async () => {
             try {
                 const data: any = await restProducts.getAll();
-                let productsRes: ProductEntity[] = data.productsController
+                let productsRes: ProductEntity[] = data.products
                 products.value = productsRes;
                 countFavorites();
             } catch (error) {
