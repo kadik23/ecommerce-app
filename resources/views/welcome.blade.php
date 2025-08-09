@@ -6,8 +6,8 @@
 <div class="container">
   <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Top Products</h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
             <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
             @endforeach
     @endif
@@ -28,8 +28,8 @@
 <div class="container">
   <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Latest</h1>
   <div id="productList" class="flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
             <x-productC ard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
             @endforeach
     @endif
@@ -46,8 +46,8 @@
 <div class="container">
   <h1 id="electronics" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
               @if($product->category=="Electronics")
               <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
               @endif
@@ -58,8 +58,8 @@
 <div class="container">
   <h1 id="phones" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH PHONES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
               @if($product->category=="Phones")
               <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
               @endif
@@ -70,8 +70,8 @@
 <div class="container">
   <h1 id="accessories" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES </h1>
   <div id="productList" class=" flex ml-9 flex-wrap dark:bg-gray-900">
-    @if($productsController!==[])
-            @foreach ($productsController as $product)
+    @if($products!==[])
+            @foreach ($products as $product)
               @if($product->category=="Accessories")
               <x-productCard  :name="$product->name" :profile="$product->getPhotoAttribute($product->profileImage)" :id="$product->id" :category="$product->category" :sold="$product->sold" :quantity="$product->quantity" :price="$product->price" :rating="$product->rating" />
               @endif

@@ -33,7 +33,7 @@ export default defineComponent({
             isLoading.value = true;
             try {
                 const data: any = await restProducts.getAll();
-                let productsRes: ProductEntity[] = data.productsController
+                let productsRes: ProductEntity[] = data.products
                 products.value = productsRes;
                 console.log(products.value )
                 electronics.value = productsRes.filter((product: ProductEntity) => product.category === "Electronics");
