@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Traits\photos;
-use App\Models\Product;
 use App\Traits\orderBy;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Services\ProductPageService;
 use App\Http\Requests\ProductFilterRequest;
+use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
+use App\Http\Requests\ProductStoreRequest;
 
 class ProductsController extends Controller
 {
@@ -18,8 +18,11 @@ class ProductsController extends Controller
     protected $productPageService;
 
 
-    public function __construct(ProductPageService $productPageService)
-    {
+    public function __construct(
+        ProductPageService $productPageService,
+        private ProductRepositoryInterface $productsRepository,
+        private CategoryRepositoryInterface $categoriesRepository,
+    ) {
         $this->productPageService = $productPageService;
     }
 
@@ -34,109 +37,41 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        // Create an instance of CategoryController
-        $categoryController = new CategoriesController();
-
-        $categoriesResponse = $categoryController->getAll();
-
-        return view('admin.addProduct', ['Categories' => $categoriesResponse]);
+        return view('admin.addProduct', ['Categories' => $this->categoriesRepository->all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        if ($request->hasFile('image')) {
-            if (Auth::check()) {
-                $admin = Auth::user();
-                $request->validate([
-                    'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                ]);
+        $data = $request->validated();
 
-                $file_name = $this->save_photo($request->image, 'products');
-                $request->validate([
-                    'name' => ['required '],
-                    'category' => 'required',
-                    'price' => 'required',
-                    'qnt' => 'required'
-                ]); 
-                $product = new Product();
-                $product->name = strip_tags($request->input('name'));
-                $product->price = strip_tags($request->input('price'));
-                $product->category = strip_tags($request->input('category'));
-                $product->sold = 0;
-                $product->profileImage = $file_name;
-                // $product->profileImage = strip_tags($request->input('image'));
-                $product->description = strip_tags($request->input('description'));
-                $product->quantity = strip_tags($request->input('qnt'));
-                $product->createdBy = $admin->id;
-                $product->save();
-                return redirect()->route('product.index');
-            }
-        } else {
-            return back()->withErrors([
-                'message' => 'Please upload an image first.',
-            ])->withInput();
+        if ($request->hasFile('image')) {
+            $fileName = $this->save_photo($request->file('image'), 'products');
+            $data['profileImage'] = $fileName;
+            unset($data['image']);
         }
+
+        $data['createdBy'] = auth()->id();
+        $data['sold'] = 0;
+
+        $this->productsRepository->create($data);
+
+        return redirect()->route('product.index')->with('success', 'Product created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $category)
+    public function show(ProductFilterRequest $request)
     {
-        $productSearch = $request->input('search');
-        $categorySelected = $request->input('category');
-        $category = $categorySelected;
-        if ($productSearch !== '') {
-            $products = Product::where('name', 'like', "%{$productSearch}%")->get();
-            if ($categorySelected == 'All categories') {
-                if ($products->isEmpty()) {
-                    return response()->json([
-                        'product' => $productSearch,
-                        'products' => [],
-                        'Categories' => Category::all(),
-                        'Products' => Product::all(),
-                        'categoryS' => $categorySelected,
-                    ]);
-                }
-                return response()->json([
-                    'products' => $products,
-                    'Categories' => Category::all(),
-                    'Products' => Product::all(),
-                    'categoryS' => $categorySelected
-                ]);
-            }
+        $data = $this->productPageService->getProductsByCategory(
+            $request->input('category'),
+            $request->input('search')
+        );
 
-            $filteredProducts = $products->filter(function ($product) use ($categorySelected) {
-                return $product->category === $categorySelected;
-            });
-            if ($filteredProducts->isEmpty()) {
-                return response()->json([
-                    'product' => $productSearch,
-                    'products' => [],
-                    'Categories' => Category::all(),
-                    'Products' => Product::all(),
-                    'categoryS' => $categorySelected,
-                ]);
-            }
-            return response()->json([
-                'products' => $filteredProducts,
-                'cat' => $categorySelected,
-                'Categories' => Category::all(),
-                'Products' => Product::all(),
-                'categoryS' => $categorySelected
-            ]);
-        } else {
-            $products = Product::where('category', $category)->with('category')->get();
-            return response()->json([
-                'products' => $products,
-                'Categories' => Category::all(),
-                'Products' => Product::all(),
-                'categoryS' => $categorySelected,
-            ]);
-        }
+        return response()->json($data);
     }
 
     /**
@@ -152,20 +87,20 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate(['product' => 'required', 'price' => 'required']);
-        $idModal = $request->input('idModal');
-        $product_update = Product::findOrFail($idModal);
-        if ($request->hasFile('file_input')) {
-            $request->validate([
-                'file_input' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            ]);
-            $file_name = $this->save_photo($request->file_input, 'products');
-            $product_update->profileImage = $file_name;
+        $data = $request->validated();
+        $productId = $data['idModal'];
+
+        if (!empty($data['file_input'])) {
+            $fileName = $this->save_photo($data['file_input'], 'products');
+            $data['profileImage'] = $fileName;
+            unset($data['file_input']);
         }
 
-        $product_update->name = strip_tags($request->input('product'));
-        $product_update->price = strip_tags($request->input('price'));
-        $product_update->save();
+        $data['name'] = strip_tags($data['product']);
+        $data['price'] = strip_tags($data['price']);
+        unset($data['product'], $data['idModal']);
+
+        $this->productsRepository->update($productId, $data);
         return redirect(route('product.index'));
     }
 
@@ -174,44 +109,22 @@ class ProductsController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        $product_delete = Product::findOrFail($request->id);
-        $product_delete->delete();
-        // return redirect()->route('product.index'); 
+        $this->productsRepository->delete($id);
         return response()->json([
             'status' => true,
             'msg' => 'Product has been deleted successfully',
-            'id' =>  $request->id
+            'id' => $request->id
         ]);
-    }
-
-    public function byCategory(ProductFilterRequest $request)
-    {
-        return response()->json(
-            $this->productPageService->getProductsByCategory(
-                $request->input('category'),
-                $request->input('search')
-            )
-        );
     }
 
     public function filter(Request $request)
     {
-        $filter = $request->filter;
-        $products = Product::all();
-        if ($filter == "Best selling") {
-            $products = $this->getTavlesByColumn('price', 'asc', 'Product');
-        } elseif ($filter == "Available") {
-            $products = Product::where('quantity', '>', 0)->get();
-        } elseif ($filter == "LowToHigh") {
-            $products = Product::orderBy('price', 'asc')->get();
-        } elseif ($filter == "HighToLow") {
-            $products = Product::orderBy('price', 'desc')->get();
-        }
-        return response()->json([
-            'products' => $products,
-            'Categories' => Category::all(),
-            'Products' => Product::all(),
-            'filter' => $filter,
-        ]);
+        return match ($request->filter) {
+            "Best selling" => $this->getTavlesByColumn('price', 'asc', 'Product'),
+            "Available" => $this->productsRepository->where('quantity', '>', 0),
+            "LowToHigh" => $this->productsRepository->orderBy('price', 'asc'),
+            "HighToLow" => $this->productsRepository->orderBy('price', 'desc'),
+            default => $this->productsRepository->all(),
+        };
     }
 }

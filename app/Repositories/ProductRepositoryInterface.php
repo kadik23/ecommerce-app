@@ -10,5 +10,7 @@ interface ProductRepositoryInterface
     public function update(int $id, array $data): mixed;
     public function delete(int $id): bool;
     public function searchByCategoryAndName(?string $category, ?string $search);
+    public function where($column, $operator, $value);
+    public function orderBy($column, $direction = 'asc');
 
 }
