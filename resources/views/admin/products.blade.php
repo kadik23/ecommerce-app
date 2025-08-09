@@ -24,7 +24,7 @@
                 new category</button>
             <x-admin.modalCategorie />
             <div class="mt-3">
-                <x-SearchBar :categories="$Categories" />
+                <x-SearchBar :categories="$categories" />
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
         <div class=" flex flex-col mr-16 items-end">
             <div class="inline-block mt-5 ">
                 <h5 class="inline-block text-md  cursor-default  text-gray-600 dark:text-white">Views products
-                    {{count($products)}}/{{count($Products)}} </h5>
+                    {{count($products)}}/{{count($products)}} </h5>
             </div>
             <x-Select option="Best selling" name="Price" />
         </div>

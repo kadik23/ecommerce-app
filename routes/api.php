@@ -49,5 +49,5 @@ Route::group([
     Route::resource('/rate', RateController::class)->middleware('auth:sanctum');
 });
 
-Route::get('/byCategory','App\Http\Controllers\Api\ProductController@byCategory')->name('user.product.show');
+Route::get('/byCategory',action: 'App\Http\Controllers\Api\ProductController@byCategory')->name('user.product.show');
 Route::get('/categories',[App\Http\Controllers\CategoriesController::class, 'index']);

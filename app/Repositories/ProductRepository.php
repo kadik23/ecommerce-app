@@ -58,5 +58,15 @@ class ProductRepository implements ProductRepositoryInterface
     
         return $query->get();
     }
+
+     public function where($column, $operator, $value)
+    {
+        return Product::where($column, $operator, $value)->get();
+    }
+
+    public function orderBy($column, $direction = 'asc')
+    {
+        return Product::orderBy($column, $direction)->get();
+    }
         
 }
