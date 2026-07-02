@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\View\Component\admin;
-use Illuminate\Support\Facades\Auth;
+use App\Models\WalletTransaction;
 
 
 class AdminController extends Controller
@@ -18,9 +16,13 @@ class AdminController extends Controller
     public function index()
     {
         $indexTitle = 'Sales Analytics'; // Set the title
-        return view('admin.index', compact('indexTitle'));
-     
 
+        // (sum of order_payment transaction amounts)
+        $totalRevenue = WalletTransaction::where('type', 'order_payment')->sum('amount');
+
+        $totalProfits = $totalRevenue * 0.85;
+
+        return view('admin.index', compact('indexTitle', 'totalRevenue', 'totalProfits'));
     }
     public function products()
     {

@@ -14,7 +14,8 @@ class Order extends Model
         'paymentMethod',
         'deliveryMethod',
         'orderBy',
-        'productOrdered'
+        'productOrdered',
+        'state'
     ];
     public function users(){
         return $this->hasMany('App\Models\User','orderBy','id');
@@ -23,5 +24,28 @@ class Order extends Model
     public function product()
     {
         return $this->hasOne('App\Models\Product','id','productOrdered');
+    }
+
+    protected static function booted()
+    {
+        static::saved(function ($order) {
+            if ($order->state === 'complete') {
+                $product = Product::find($order->productOrdered);
+                $price = $product ? $product->price : 0;
+                $amount = $order->quantity * $price;
+                
+                $idempotencyKey = 'order_payment_' . $order->id;
+
+                WalletTransaction::firstOrCreate(
+                    ['idempotency_key' => $idempotencyKey],
+                    [
+                        'user_id' => $order->orderBy,
+                        'order_id' => $order->id,
+                        'amount' => $amount,
+                        'type' => 'order_payment',
+                    ]
+                );
+            }
+        });
     }
 }
