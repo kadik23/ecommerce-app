@@ -26,14 +26,16 @@ class AdminController extends Controller
 
         // (sum of order_payment transaction amounts)
         $totalRevenue = WalletTransaction::where('type', 'order_payment')->sum('amount');
-
         $totalProfits = $totalRevenue * 0.85;
 
         // user statistics (default: 7days)
         $range = $request->query('range', '7days');
         $userStats = $this->userRepository->getRegistrationStats($range);
 
-        return view('admin.index', compact('indexTitle', 'totalRevenue', 'totalProfits', 'userStats', 'range'));
+        // latest 3 customers with revenue
+        $latestCustomers = $this->userRepository->getLatestCustomersWithRevenue(3);
+
+        return view('admin.index', compact('indexTitle', 'totalRevenue', 'totalProfits', 'userStats', 'range', 'latestCustomers'));
     }
 
     public function userStats(Request $request)

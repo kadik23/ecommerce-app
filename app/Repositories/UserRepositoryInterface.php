@@ -11,4 +11,12 @@ interface UserRepositoryInterface
      * @return array
      */
     public function getRegistrationStats(string $range): array;
+
+    /**
+     * Get the latest registered customers with their total revenue.
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getLatestCustomersWithRevenue(int $limit = 3): array;
 }
