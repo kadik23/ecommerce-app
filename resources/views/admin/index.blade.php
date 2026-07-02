@@ -9,65 +9,80 @@
 
     <div class=" m-3 w-full lg:w-2/3 ">
         <div class=" w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <script>
+                window.userStatsInitialData = @json($userStats['chart_data']);
+                window.userStatsInitialLabels = @json($userStats['chart_labels']);
+            </script>
             <h5 class="inline-block text-sm lg:text-xl font-bold my-3 text-gray-900 dark:text-white">Users Statistic</h5> 
             <div class="flex justify-between">
                 <div>
-                    <h5 class="leading-none text-xl lg:text-3xl font-bold text-gray-900 dark:text-white pb-2">32.4k</h5>
-                    <p class="text-sm lg:text-base font-normal text-gray-500 dark:text-gray-400">Users this week</p>
+                    <h5 class="leading-none text-xl lg:text-3xl font-bold text-gray-900 dark:text-white pb-2" id="stat-count">
+                        {{ number_format($userStats['count']) }}
+                    </h5>
+                    <p class="text-sm lg:text-base font-normal text-gray-500 dark:text-gray-400" id="stat-range-label">
+                        {{ $userStats['range_label'] }}
+                    </p>
                 </div>
-                <div
-                    class="flex items-center px-2.5 py-0.5 text-sm lg:text-base font-semibold text-green-500 dark:text-green-500 text-center">
-                    12%
-                    <svg class="w-3 h-3 ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                <div class="flex items-center px-2.5 py-0.5 text-sm lg:text-base font-semibold {{ $userStats['trend'] === 'up' ? 'text-green-500' : 'text-red-500' }} text-center" id="stat-trend-container">
+                    <span id="stat-percentage">{{ $userStats['percentage'] }}%</span>
+                    <svg id="stat-trend-icon" class="w-3 h-3 ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                        @if($userStats['trend'] === 'up')
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                        @else
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0L1 9m4 4 4-4"/>
+                        @endif
                     </svg>
                 </div>
             </div>
             <div id="area-chart"></div>
             <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-            <div class="flex justify-between items-center pt-5">
-                <!-- Button -->
-                <button
-                    id="dropdownDefaultButton"
-                    data-dropdown-toggle="lastDaysdropdown"
-                    data-dropdown-placement="bottom"
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                    type="button">
-                    Last 7 days
-                    <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                <div class="flex justify-between items-center pt-5">
+                    <!-- Dropdown Wrapper -->
+                    <div class="relative">
+                        <!-- Button -->
+                        <button
+                            id="dropdownDefaultButton"
+                            data-dropdown-toggle="lastDaysdropdown"
+                            data-dropdown-placement="bottom"
+                            class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                            type="button">
+                            <span id="dropdown-selected-label">Last 7 days</span>
+                            <svg class="w-2.5 m-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="lastDaysdropdown" class="z-20 hidden absolute left-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white range-filter-btn" data-range="yesterday">Yesterday</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white range-filter-btn" data-range="today">Today</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white range-filter-btn" data-range="7days">Last 7 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white range-filter-btn" data-range="30days">Last 30 days</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white range-filter-btn" data-range="90days">Last 90 days</a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a
+                    href="{{ route('admin.usersReport', ['range' => '7days']) }}"
+                    id="users-report-btn"
+                    class="uppercase text-xs lg:text-sm font-semibold inline-flex items-center rounded-lg text-regal-brown hover:text-amber-700 dark:hover:text-amber-700  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                    Users Report
+                    <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                     </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
-                    </li>
-                    </ul>
+                    </a>
                 </div>
-                <a
-                href="#"
-                class="uppercase text-xs lg:text-sm font-semibold inline-flex items-center rounded-lg text-regal-brown hover:text-amber-700 dark:hover:text-amber-700  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
-                Users Report
-                <svg class="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                </svg>
-                </a>
             </div>
-        </div>
         </div>
     </div>
 
@@ -170,4 +185,85 @@
 
 </div>
 
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        let currentRange = '7days';
+
+        // Toggle dropdown display manually to bypass any framework loading delays
+        $('#dropdownDefaultButton').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#lastDaysdropdown').toggleClass('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('#dropdownDefaultButton').length && !$(e.target).closest('#lastDaysdropdown').length) {
+                $('#lastDaysdropdown').addClass('hidden');
+            }
+        });
+
+        // Listen for filter buttons
+        $('.range-filter-btn').on('click', function(e) {
+            $('#lastDaysdropdown').addClass('hidden');
+            e.preventDefault();
+            const range = $(this).data('range');
+            const labelText = $(this).text();
+            
+            currentRange = range;
+
+            // Update dropdown button text
+            $('#dropdown-selected-label').text(labelText);
+
+            $.ajax({
+                url: "{{ route('admin.userStats') }}",
+                type: 'GET',
+                data: { range: range },
+                dataType: 'json',
+                success: function(data) {
+                    // Update stats text
+                    $('#stat-count').text(new Intl.NumberFormat().format(data.count));
+                    $('#stat-range-label').text(data.range_label);
+                    $('#stat-percentage').text(data.percentage + '%');
+
+                    // Update trend color and icon
+                    const container = $('#stat-trend-container');
+                    const icon = $('#stat-trend-icon');
+                    
+                    if (data.trend === 'up') {
+                        container.removeClass('text-red-500').addClass('text-green-500');
+                        icon.html('<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>');
+                    } else {
+                        container.removeClass('text-green-500').addClass('text-red-500');
+                        icon.html('<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0L1 9m4 4 4-4"/>');
+                    }
+
+                    // Update report link range parameter
+                    const reportUrl = "{{ route('admin.usersReport') }}?range=" + range;
+                    $('#users-report-btn').attr('href', reportUrl);
+
+                    // Update the ApexChart dynamically
+                    if (window.userStatsChart) {
+                        window.userStatsChart.updateSeries([{
+                            name: "New users",
+                            data: data.chart_data,
+                            color: "#b17b4f"
+                        }]);
+                        window.userStatsChart.updateOptions({
+                            xaxis: {
+                                categories: data.chart_labels
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Failed to load statistics:", error);
+                }
+            });
+        });
+    });
+</script>
 @endsection

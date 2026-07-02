@@ -5,24 +5,100 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\WalletTransaction;
-
+use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {   
-    public function __construct()
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->middleware('role:admin');
+        $this->userRepository = $userRepository;
     }
-    public function index()
+
+    public function index(Request $request)
     {
-        $indexTitle = 'Sales Analytics'; // Set the title
+        $indexTitle = 'Sales Analytics';
 
         // (sum of order_payment transaction amounts)
         $totalRevenue = WalletTransaction::where('type', 'order_payment')->sum('amount');
 
         $totalProfits = $totalRevenue * 0.85;
 
-        return view('admin.index', compact('indexTitle', 'totalRevenue', 'totalProfits'));
+        // user statistics (default: 7days)
+        $range = $request->query('range', '7days');
+        $userStats = $this->userRepository->getRegistrationStats($range);
+
+        return view('admin.index', compact('indexTitle', 'totalRevenue', 'totalProfits', 'userStats', 'range'));
+    }
+
+    public function userStats(Request $request)
+    {
+        $range = $request->query('range', '7days');
+        $stats = $this->userRepository->getRegistrationStats($range);
+
+        return response()->json($stats);
+    }
+
+    public function usersReport(Request $request)
+    {
+        $range = $request->query('range', '7days');
+        
+        $startDate = null;
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today();
+                break;
+            case 'yesterday':
+                $startDate = Carbon::yesterday();
+                break;
+            case '30days':
+                $startDate = Carbon::now()->subDays(30)->startOfDay();
+                break;
+            case '90days':
+                $startDate = Carbon::now()->subDays(90)->startOfDay();
+                break;
+            case '7days':
+            default:
+                $startDate = Carbon::now()->subDays(7)->startOfDay();
+                break;
+        }
+
+        $users = User::where('created_at', '>=', $startDate)->get(['id', 'username', 'fullName', 'email', 'created_at']);
+
+        $csvFileName = 'users_report_' . $range . '_' . date('Y-m-d') . '.csv';
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$csvFileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['ID', 'Username', 'Full Name', 'Email', 'Registration Date'];
+
+        $callback = function() use($users, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->id,
+                    $user->username,
+                    $user->fullName,
+                    $user->email,
+                    $user->created_at->toDateTimeString()
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
     public function products()
     {
