@@ -117,67 +117,36 @@
             </div>
             <div class="flow-root">
                 <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 text-regal-brown dark:text-amber-500 flex items-center justify-center font-bold text-xs">
-                                    NS
+                    @forelse($latestCustomers as $customer)
+                        <li class="py-3 sm:py-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0">
+                                    @if($customer['profile_image'])
+                                        <img class="w-8 h-8 rounded-full object-cover" src="{{ asset('assets/images/profiles/' . $customer['profile_image']) }}" alt="{{ $customer['name'] }}">
+                                    @else
+                                        <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 text-regal-brown dark:text-amber-500 flex items-center justify-center font-bold text-xs">
+                                            {{ $customer['initials'] }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs lg:text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        {{ $customer['name'] }}
+                                    </p>
+                                    <p class="text-xs lg:text-sm text-gray-500 truncate dark:text-gray-400">
+                                        {{ $customer['email'] }}
+                                    </p>
+                                </div>
+                                <div class="inline-flex items-center text-xs lg:text-base font-semibold text-gray-900 dark:text-white">
+                                    ${{ number_format($customer['revenue'], 2) }}
                                 </div>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-xs lg:text-sm font-medium text-gray-900 truncate dark:text-white">
-                                    Neil Sims
-                                </p>
-                                <p class="text-xs lg:text-sm text-gray-500 truncate dark:text-gray-400">
-                                    email@windster.com
-                                </p>
-                            </div>
-                            <div class="inline-flex items-center text-xs lg:text-base font-semibold text-gray-900 dark:text-white">
-                                $320
-                            </div>
-                        </div>
-                    </li>
-                    <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 text-regal-brown dark:text-amber-500 flex items-center justify-center font-bold text-xs">
-                                    BG
-                                </div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-xs lg:text-sm font-medium text-gray-900 truncate dark:text-white">
-                                    Bonnie Green
-                                </p>
-                                <p class="text-xs lg:text-sm text-gray-500 truncate dark:text-gray-400">
-                                    email@windster.com
-                                </p>
-                            </div>
-                            <div class="inline-flex items-center text-lg lg:text-base font-semibold text-gray-900 dark:text-white">
-                                $3467
-                            </div>
-                        </div>
-                    </li>
-                    <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 text-regal-brown dark:text-amber-500 flex items-center justify-center font-bold text-xs">
-                                    MG
-                                </div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-xs lg:text-sm font-medium text-gray-900 truncate dark:text-white">
-                                    Michael Gough
-                                </p>
-                                <p class="text-xs lg:text-sm text-gray-500 truncate dark:text-gray-400">
-                                    email@windster.com
-                                </p>
-                            </div>
-                            <div class="inline-flex items-center text-lg lg:text-base font-semibold text-gray-900 dark:text-white">
-                                $67
-                            </div>
-                        </div>
-                    </li>
-                
+                        </li>
+                    @empty
+                        <li class="py-3 sm:py-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+                            No customers found.
+                        </li>
+                    @endforelse
                 </ul>
             </div>
         </div>

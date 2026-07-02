@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\WalletTransaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -113,6 +114,44 @@ class UserRepository implements UserRepositoryInterface
             'chart_labels' => $chartLabels,
             'range_label' => $this->getRangeLabel($range)
         ];
+    }
+
+    public function getLatestCustomersWithRevenue(int $limit = 3): array
+    {
+        $users = User::orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->take($limit)
+            ->get();
+
+        $result = [];
+        foreach ($users as $user) {
+            $revenue = WalletTransaction::where('user_id', $user->id)
+                ->where('type', 'order_payment')
+                ->sum('amount');
+
+            $initials = '';
+            if (!empty($user->fullName)) {
+                $words = explode(' ', $user->fullName);
+                foreach ($words as $word) {
+                    $initials .= strtoupper(substr($word, 0, 1));
+                }
+                $initials = substr($initials, 0, 2);
+            }
+            if (empty($initials)) {
+                $initials = strtoupper(substr($user->username ?? 'U', 0, 2));
+            }
+
+            $result[] = [
+                'id' => $user->id,
+                'name' => $user->fullName ?: $user->username,
+                'email' => $user->email,
+                'revenue' => $revenue,
+                'initials' => $initials,
+                'profile_image' => $user->profileImage
+            ];
+        }
+
+        return $result;
     }
 
     private function getRangeLabel(string $range): string
