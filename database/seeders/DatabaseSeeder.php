@@ -12,12 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-        $this->call(LaratrustSeeder::class);
+        if (\App\Models\Role::count() === 0) {
+            $this->call(LaratrustSeeder::class);
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call(StoreSeeder::class);
     }
 }

@@ -13,10 +13,13 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'category_id',
+        'category',
         'profileImage',
+        'rating',
+        'quantity',
+        'sold',
         'createdBy',
-        'sold'
+        'updatedBy'
     ];
     
     public function getPhotoAttribute($val){
