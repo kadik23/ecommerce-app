@@ -120,7 +120,7 @@ class AdminController extends Controller
             Order::where('state', 'pending')->count(),
         ];
     
-        $orders = Order::with('product')->get();
+        $orders = Order::with('product')->orderBy('dateOrder', 'desc')->paginate(15);
         
         return view('admin.orders', compact('orderTitle', 'iconCard', 'nbr', 'orderStat', 'orders'));
     }

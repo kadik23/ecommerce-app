@@ -12,11 +12,11 @@
     <span id="order-status-{{$id}}" class="text-xs lg:text-lg px-3 lg:px-6 py-2 ml-16 capitalize border-none text-white text-center rounded-l-full rounded-r-full 
         @if($state === 'pending')
             bg-gray-500
-        @elseif($state === 'confirm')
+        @elseif($state === 'confirm' || $state === 'confirmed')
             bg-orange-500
-        @elseif($state === 'completed')
+        @elseif($state === 'complete' || $state === 'completed')
             bg-green-500
-        @elseif($state === 'canceled')
+        @elseif($state === 'cancel' || $state === 'canceled')
             bg-red-500
         @endif"
     >
@@ -47,39 +47,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.querySelectorAll('.confirm-order').forEach(item => {
-        item.addEventListener('click', function() {
-            const orderId = this.getAttribute('data-id');
-            updateOrderStatus(orderId, 'confirm');
-        });
-    });
-
-    document.querySelectorAll('.cancel-order').forEach(item => {
-        item.addEventListener('click', function() {
-            const orderId = this.getAttribute('data-id');
-            updateOrderStatus(orderId, 'canceled');
-        });
-    });
-
-    function updateOrderStatus(orderId, newStatus) {
-        fetch(`//order/${orderId}/update-status`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                status: newStatus
-            })
-        }).then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const statusSpan = document.getElementById(`order-status-${orderId}`);
-                statusSpan.textContent = newStatus;
-                statusSpan.className = `text-xs lg:text-lg px-3 lg:px-6 py-2 ml-16 capitalize border-none text-white text-center rounded-l-full rounded-r-full bg-${newStatus === 'confirm' ? 'orange' : 'red'}-500`;
-            }
-        });
-    }
-</script>
