@@ -106,7 +106,7 @@ class AdminController extends Controller
     {
         return view('admin.products',['productsController' => Product::all()]);
     }
-    public function orders()
+    public function orders(Request $request)
     {   
         $orderTitle = 'Orders Management'; 
         $iconCard = ['priority', 'cancel', 'recommend', 'refresh'];
@@ -120,7 +120,30 @@ class AdminController extends Controller
             Order::where('state', 'pending')->count(),
         ];
     
-        $orders = Order::with('product')->orderBy('dateOrder', 'desc')->paginate(15);
+        $query = Order::with('product');
+        
+        if ($request->filled('status')) {
+            $query->where('state', $request->status);
+        }
+        
+        $sort = $request->query('filter');
+        if ($sort === 'LowToHigh') {
+            $query->select('orders.*')
+                  ->join('products', 'orders.productOrdered', '=', 'products.id')
+                  ->orderBy('products.rating', 'asc');
+        } elseif ($sort === 'HighToLow') {
+            $query->select('orders.*')
+                  ->join('products', 'orders.productOrdered', '=', 'products.id')
+                  ->orderBy('products.rating', 'desc');
+        } elseif ($sort === 'Available') {
+            $query->select('orders.*')
+                  ->join('products', 'orders.productOrdered', '=', 'products.id')
+                  ->where('products.quantity', '>', 0);
+        } else {
+            $query->orderBy('dateOrder', 'desc');
+        }
+        
+        $orders = $query->paginate(15)->withQueryString();
         
         return view('admin.orders', compact('orderTitle', 'iconCard', 'nbr', 'orderStat', 'orders'));
     }
