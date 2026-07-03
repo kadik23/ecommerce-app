@@ -50,7 +50,8 @@ class StoreSeeder extends Seeder
                 'phone' => 123456789,
                 'city' => 'Algiers',
                 'address' => '123 Admin St',
-                'country' => 'Algeria'
+                'country' => 'Algeria',
+                'email_verified_at' => now(),
             ]);
             $adminRole = \App\Models\Role::where('name', 'admin')->first();
             if ($adminRole) {

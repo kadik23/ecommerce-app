@@ -19,10 +19,10 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->longText('description')->nullable();
             $table->string('profileImage', 2000)->nullable();
-            $table->foreignIdFor(Category::class, 'category')->nullable();
+            $table->string('category')->nullable();
             $table->decimal('rating', 10, 2)->nullable();
             $table->integer('quantity')->nullable();
-            $table->decimal('sold', 3, 2)->nullable();
+            $table->integer('sold')->default(0)->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->foreignIdFor(User::class, 'createdBy')->nullable();
             $table->foreignIdFor(User::class, 'updatedBy')->nullable();

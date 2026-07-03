@@ -61,7 +61,6 @@ class ProductsController extends Controller
         }
 
         $data['createdBy'] = auth()->id();
-        $data['sold'] = 0;
 
         $this->productsRepository->create($data);
 
