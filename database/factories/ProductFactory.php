@@ -35,7 +35,7 @@ class ProductFactory extends Factory
             'category' => $category,
             'rating' => fake()->randomFloat(2, 1, 5),
             'quantity' => fake()->numberBetween(5, 100),
-            'sold' => fake()->randomFloat(2, 0, 9),
+            'sold' => fake()->numberBetween(0, 100),
             'createdBy' => $admin ? $admin->id : null,
             'updatedBy' => $admin ? $admin->id : null,
         ];

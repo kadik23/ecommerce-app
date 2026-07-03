@@ -193,10 +193,14 @@
         });
 
         // submetting when select
-        $(document).ready(function () {
-            $('#filter').on('change', function () {
-                $('#filterForm').submit();
-            });
+        $(document).on('change', '#filter', function () {
+            $('#filterForm').submit();
         });
+
+        @if ($errors->has('category') || $errors->has('icon') || $errors->has('message'))
+            document.addEventListener("DOMContentLoaded", function() {
+                my_modal_1.showModal();
+            });
+        @endif
     </script>
 @endsection

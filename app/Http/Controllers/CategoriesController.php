@@ -48,7 +48,10 @@ class CategoriesController extends Controller
                 $category->icon= $file_name;        
                 $category->save();
                 // return redirect()->route('product.index');
-                return response()->json(['category' => $category]);
+                if($request->ajax() || $request->wantsJson()){
+                    return response()->json(['category' => $category]);
+                }
+                return redirect()->route('product.index');
             
         }else{
             return back()->withErrors([
