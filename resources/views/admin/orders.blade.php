@@ -23,14 +23,14 @@
     </div>
 </div>
 <div class="m-3 px-2 bg-white border border-gray-200 rounded-lg overflow-x-scroll w-full lg:w-auto shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex justify-around text-xs lg:text-lg">
-        <span class="text-regal-brown text-lg p-5">#ORDER</span>
-        <span class="text-regal-brown text-lg p-5">PRODUCT</span>
-        <span class="text-regal-brown text-lg p-5">CATEGORY</span>
-        <span class="text-regal-brown text-lg p-5">PAYMENT METHOD</span>
-        <span class="text-regal-brown text-lg p-5">ORDER STATUS</span>
-        <span class="text-regal-brown text-lg p-5">RATE</span>
-        <span class="text-regal-brown text-lg p-5">ACTIONS</span>
+    <div class="grid grid-cols-7 text-xs lg:text-base font-semibold text-center items-center py-4 border-b border-gray-200 dark:border-gray-700">
+        <span class="text-regal-brown">#ORDER</span>
+        <span class="text-regal-brown">PRODUCT</span>
+        <span class="text-regal-brown">CATEGORY</span>
+        <span class="text-regal-brown">PAYMENT METHOD</span>
+        <span class="text-regal-brown">ORDER STATUS</span>
+        <span class="text-regal-brown">RATE</span>
+        <span class="text-regal-brown">ACTIONS</span>
     </div>
     @if(isset($orders))
         @foreach($orders as $order)
@@ -48,5 +48,59 @@
         @endforeach
     @endif
 </div>
-<x-Pagination />
+<x-Pagination :paginator="$orders" />
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        // Use event delegation or direct click listener
+        $(document).on('click', '.confirm-order', function(e) {
+            e.preventDefault();
+            const orderId = $(this).data('id');
+            updateOrderStatus(orderId, 'confirm');
+        });
+
+        $(document).on('click', '.cancel-order', function(e) {
+            e.preventDefault();
+            const orderId = $(this).data('id');
+            updateOrderStatus(orderId, 'cancel');
+        });
+    });
+
+    function updateOrderStatus(orderId, newStatus) {
+        $.ajax({
+            url: `/dashboard/order/${orderId}/update-status`,
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                status: newStatus
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data.success) {
+                    const statusSpan = $(`#order-status-${orderId}`);
+                    statusSpan.text(newStatus);
+                    
+                    // Reset status bg colors
+                    statusSpan.removeClass('bg-gray-500 bg-orange-500 bg-green-500 bg-red-500');
+                    
+                    // Apply new colors
+                    if (newStatus === 'confirm' || newStatus === 'confirmed') {
+                        statusSpan.addClass('bg-orange-500');
+                    } else if (newStatus === 'cancel' || newStatus === 'canceled') {
+                        statusSpan.addClass('bg-red-500');
+                    } else if (newStatus === 'complete' || newStatus === 'completed') {
+                        statusSpan.addClass('bg-green-500');
+                    } else {
+                        statusSpan.addClass('bg-gray-500');
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Failed to update status:", error);
+            }
+        });
+    }
+</script>
 @endsection
