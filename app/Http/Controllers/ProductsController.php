@@ -10,6 +10,8 @@ use App\Http\Requests\ProductFilterRequest;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Models\Product;
 
 class ProductsController extends Controller
 {
@@ -28,8 +30,13 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $data = $this->productPageService->getProductPageData();
-        return view('admin.products', $data);
+        $categories = $this->categoriesRepository->all();
+        $products = Product::paginate(6)->withQueryString();
+        return view('admin.products', [
+            'products' => $products,
+            'categories' => $categories,
+            'Categories' => $categories
+        ]);
     }
 
     /**
@@ -66,12 +73,35 @@ class ProductsController extends Controller
      */
     public function show(ProductFilterRequest $request)
     {
-        $data = $this->productPageService->getProductsByCategory(
-            $request->input('category'),
-            $request->input('search')
-        );
+        $category = $request->input('category');
+        $search = $request->input('search');
+        
+        $query = Product::query();
+        if (!empty($search)) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        if (!empty($category) && $category !== 'All categories') {
+            $query->where('category', $category);
+        }
+        
+        $products = $query->paginate(6)->withQueryString();
+        
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'products' => $products,
+                'categoryS' => $category,
+                'search' => $search
+            ]);
+        }
 
-        return response()->json($data);
+        $categories = $this->categoriesRepository->all();
+        return view('admin.products', [
+            'products' => $products,
+            'categories' => $categories,
+            'Categories' => $categories,
+            'categoryS' => $category,
+            'search' => $search
+        ]);
     }
 
     /**
@@ -85,7 +115,7 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
         $data = $request->validated();
         $productId = $data['idModal'];
@@ -101,7 +131,7 @@ class ProductsController extends Controller
         unset($data['product'], $data['idModal']);
 
         $this->productsRepository->update($productId, $data);
-        return redirect(route('product.index'));
+        return redirect(route('dashboard.products'));
     }
 
     /**
@@ -119,12 +149,27 @@ class ProductsController extends Controller
 
     public function filter(Request $request)
     {
-        return match ($request->filter) {
-            "Best selling" => $this->getTavlesByColumn('price', 'asc', 'Product'),
-            "Available" => $this->productsRepository->where('quantity', '>', 0),
-            "LowToHigh" => $this->productsRepository->orderBy('price', 'asc'),
-            "HighToLow" => $this->productsRepository->orderBy('price', 'desc'),
-            default => $this->productsRepository->all(),
-        };
+        $query = Product::query();
+        
+        if ($request->filter === 'Available') {
+            $query->where('quantity', '>', 0);
+        } elseif ($request->filter === 'LowToHigh') {
+            $query->orderBy('price', 'asc');
+        } elseif ($request->filter === 'HighToLow') {
+            $query->orderBy('price', 'desc');
+        }
+        
+        $products = $query->paginate(6)->withQueryString();
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json($products);
+        }
+
+        $categories = $this->categoriesRepository->all();
+        return view('admin.products', [
+            'products' => $products,
+            'categories' => $categories,
+            'Categories' => $categories
+        ]);
     }
 }

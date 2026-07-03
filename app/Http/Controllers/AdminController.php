@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\WalletTransaction;
@@ -104,7 +105,12 @@ class AdminController extends Controller
     }
     public function products()
     {
-        return view('admin.products',['productsController' => Product::all()]);
+        $categories = Category::all();
+        return view('admin.products', [
+            'products' => Product::all(),
+            'categories' => $categories,
+            'Categories' => $categories
+        ]);
     }
     public function orders(Request $request)
     {   
