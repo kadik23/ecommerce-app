@@ -1,6 +1,6 @@
 
 
-<div class="navbar fixed z-40 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 justify-between py-0 shadow-md border-b border-gray-100 dark:border-gray-700">
+<div class="navbar fixed left-0 right-0 z-40 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 justify-between py-0 shadow-md border-b border-gray-100 dark:border-gray-700">
     <!-- left elements -->
     <div class="flex flex-wrap items-center  justify-start px-3">
       <!-- Toggler -->

@@ -33,7 +33,7 @@
         })();
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200 overflow-x-hidden">
     <div id="app" data-theme="cupcake" class="min-h-screen flex flex-col">
       @include('..components.admin.navbar')
       @include('..components.admin.sidebar')
