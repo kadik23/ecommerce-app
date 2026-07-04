@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {   
@@ -158,13 +159,71 @@ class AdminController extends Controller
     public function customers(){
         $customersTitle='Customers';
         $iconCard=['group','flag','public','shopping_cart'];
-        $nbr=[3600,23,370,12];
+        
+        $totalCustomersCount = User::whereDoesntHave('roles', function($q) {
+            $q->where('name', 'admin');
+        })->count();
+        
+        $localCustomersCount = User::whereDoesntHave('roles', function($q) {
+            $q->where('name', 'admin');
+        })->where('country', 'Algeria')->count();
+        
+        $worldCustomersCount = User::whereDoesntHave('roles', function($q) {
+            $q->where('name', 'admin');
+        })->where(function($query) {
+            $query->where('country', '!=', 'Algeria')->orWhereNull('country');
+        })->count();
+        
+        $cartCount = DB::table('product_user')->count();
+        
+        $nbr = [$totalCustomersCount, $localCustomersCount, $worldCustomersCount, $cartCount];
         $cardName=['All','Local','World','Shopping Cart'];
-        return view('admin.Customers',compact('customersTitle','iconCard','nbr','cardName'));
+
+        // Conversion Rate stats by Year
+        $currentYear = date('Y');
+        $customerYearly = User::whereDoesntHave('roles', function($q) {
+            $q->where('name', 'admin');
+        })
+            ->select(DB::raw('YEAR(created_at) as year'), DB::raw('count(*) as count'))
+            ->groupBy('year')
+            ->pluck('count', 'year')
+            ->toArray();
+            
+        $revenueYearly = WalletTransaction::where('type', 'order_payment')
+            ->select(DB::raw('YEAR(created_at) as year'), DB::raw('sum(amount) as revenue'))
+            ->groupBy('year')
+            ->pluck('revenue', 'year')
+            ->toArray();
+
+        $years = collect(array_keys($customerYearly))
+            ->merge(array_keys($revenueYearly))
+            ->push($currentYear)
+            ->unique()
+            ->sort()
+            ->reverse()
+            ->values();
+
+        $conversionRateData = [];
+        foreach ($years as $yr) {
+            $conversionRateData[] = [
+                'year' => $yr,
+                'customers' => $customerYearly[$yr] ?? 0,
+                'revenue' => $revenueYearly[$yr] ?? 0
+            ];
+        }
+
+        $customers = User::whereDoesntHave('roles', function($q) {
+            $q->where('name', 'admin');
+        })
+            ->withSum(['walletTransactions as revenue' => function($q) {
+                $q->where('type', 'order_payment');
+            }], 'amount')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.Customers',compact('customersTitle','iconCard','nbr','cardName','conversionRateData', 'customers'));
     }
-    // public function myprofile(){
-    //     return view('admin.profile');
-    // }
     
 
 }

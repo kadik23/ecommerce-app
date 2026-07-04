@@ -1,21 +1,17 @@
-<li class="flex flex-wrap md:flex-nowrap justify-between py-3 sm:py-4">
-    <div class="flex-shrink-0 w-16 lg:w-36 p-2">
-        <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image">
+@props(['fullname', 'email', 'revenue', 'country', 'profileImage' => null])
+
+<div class="grid grid-cols-5 min-w-[600px] text-xs lg:text-base text-center items-center py-4 border-b border-gray-100 dark:border-gray-700">
+    <div class="flex justify-center">
+        @if($profileImage)
+            <img class="w-10 h-10 rounded-full object-cover" src="{{ asset('assets/images/profiles/' . $profileImage) }}" alt="{{ $fullname }}">
+        @else
+            <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-gray-700 flex items-center justify-center text-regal-brown font-bold text-sm">
+                {{ strtoupper(substr($fullname ?: $email, 0, 2)) }}
+            </div>
+        @endif
     </div>
-    <div class="px-4 lg:px-8 w-full md:w-auto">
-        <p class="text-sm lg:text-lg font-medium text-gray-900 truncate dark:text-white">
-            {{$fullname}}
-        </p>
-    </div>
-    <div class="p-2 w-full md:w-auto">
-        <p class="text-sm lg:text-lg text-gray-900 font-medium truncate dark:text-gray-400">
-            {{$email}}
-        </p>
-    </div>
-    <div class="p-2 text-sm lg:text-lg text-gray-900 font-medium truncate dark:text-gray-400 w-full md:w-auto">
-        ${{$revenue}}
-    </div>
-    <div class="p-2 text-sm lg:text-lg text-gray-900 font-medium truncate dark:text-gray-400 w-full md:w-auto">
-        {{$country}}
-    </div>
-</li>
+    <span class="truncate px-2 text-gray-900 dark:text-white font-medium">{{ $fullname ?: 'N/A' }}</span>
+    <span class="truncate px-2 text-gray-500 dark:text-gray-400">{{ $email }}</span>
+    <span class="font-semibold text-gray-900 dark:text-white">${{ number_format($revenue ?? 0, 2) }}</span>
+    <span class="text-gray-500 dark:text-gray-400">{{ $country ?: 'N/A' }}</span>
+</div>
