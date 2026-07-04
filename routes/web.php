@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Auth;
 
-Auth::routes(['verify'=>true]);
+Auth::routes(['verify'=>true, 'register'=>false]);
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('welcome');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('verified');

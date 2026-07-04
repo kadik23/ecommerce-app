@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -29,10 +29,14 @@ class LoginController extends Controller
     // protected $redirectTo = '/user';
     protected function authenticated(Request $request, $user)
     {
-        if( $user->hasRole('admin'))
+        if($user->hasRole('admin')){
             return redirect('/dashboard');
-        if( $user->hasRole('user'))
-            return redirect('/');
+        }
+
+        Auth::logout();
+        return redirect()->route('login')->withErrors([
+            'email' => 'Only administrators are allowed to log in.',
+        ]);
     }
     /**
      * Create a new controller instance.
