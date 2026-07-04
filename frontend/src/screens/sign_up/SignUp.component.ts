@@ -56,15 +56,15 @@ export default defineComponent({
                     router.push('/sign-in');
                 }
             }).catch(error => {
+                isLoading.value = false;
                 if (error.response && error.response.status === 422) {
                     const errors = error.response.data.errors;
                     formErrors.value.username = errors.username ? errors.username[0] : '';
                     formErrors.value.email = errors.email ? errors.email[0] : '';
                     formErrors.value.password = errors.password ? errors.password[0] : '';
                 } else {
-                isLoading.value = false;
                 console.log(error);
-                toastManager?.value.alertSuccess("Sign up failed.");
+                toastManager?.value.alertError("Sign up failed.");
                 }
             });
         }

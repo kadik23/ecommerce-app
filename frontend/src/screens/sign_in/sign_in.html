@@ -13,8 +13,8 @@
                     <div class="mt-2">
                         <input v-model="form.email" id="email" name="email" type="email" autocomplete="email" required
                             autofocus
-                            class="block w-full pl-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-regal-brown sm:text-sm sm:leading-6" />
-                        <span v-if="formErrors.email" class="text-red-500 text-xs">{{ formErrors.email }}</span>
+                            class="block w-full pl-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-regal-brown focus:border-regal-brown focus:outline-none sm:text-sm sm:leading-6" />
+                        <span v-if="formErrors.email" class="text-regal-brown text-xs">{{ formErrors.email }}</span>
                     </div>
                 </div>
                 <div>
@@ -29,8 +29,8 @@
                     <div class="mt-2">
                         <input v-model="form.password" id="password" name="password" type="password"
                             autocomplete="current-password" required
-                            class="block pl-2 w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 outline-regal-brown sm:text-sm sm:leading-6" />
-                        <span v-if="formErrors.password" class="text-red-500 text-xs">{{ formErrors.password }}</span>
+                            class="block pl-2 w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-regal-brown focus:border-regal-brown focus:outline-none sm:text-sm sm:leading-6" />
+                        <span v-if="formErrors.password" class="text-regal-brown text-xs">{{ formErrors.password }}</span>
                     </div>
                 </div>
                 <div>

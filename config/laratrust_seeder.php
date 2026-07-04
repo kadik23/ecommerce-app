@@ -6,7 +6,9 @@ return [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
-        // other roles...
+        'user' => [
+            'profile' => 'r,u'
+        ],
     ],
     'permissions_map' => [
         'c' => 'create',
