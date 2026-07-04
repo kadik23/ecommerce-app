@@ -108,7 +108,7 @@ class AdminController extends Controller
     {
         $categories = Category::all();
         return view('admin.products', [
-            'products' => Product::all(),
+            'products' => Product::paginate(12)->withQueryString(),
             'categories' => $categories,
             'Categories' => $categories
         ]);
@@ -151,8 +151,9 @@ class AdminController extends Controller
         }
         
         $orders = $query->paginate(15)->withQueryString();
+        $categories = Category::all();
         
-        return view('admin.orders', compact('orderTitle', 'iconCard', 'nbr', 'orderStat', 'orders'));
+        return view('admin.orders', compact('orderTitle', 'iconCard', 'nbr', 'orderStat', 'orders', 'categories'));
     }
     
 

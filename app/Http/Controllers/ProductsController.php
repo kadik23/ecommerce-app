@@ -31,7 +31,7 @@ class ProductsController extends Controller
     public function index()
     {
         $categories = $this->categoriesRepository->all();
-        $products = Product::paginate(6)->withQueryString();
+        $products = Product::paginate(12)->withQueryString();
         return view('admin.products', [
             'products' => $products,
             'categories' => $categories,
