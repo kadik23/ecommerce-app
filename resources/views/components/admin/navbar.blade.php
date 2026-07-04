@@ -1,12 +1,12 @@
 
 
-<div data-theme="dark"  class="navbar fixed z-40 bg-[#FBFBFB]   justify-between py-0 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10">
+<div class="navbar fixed z-40 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 justify-between py-0 shadow-md border-b border-gray-100 dark:border-gray-700">
     <!-- left elements -->
     <div class="flex flex-wrap items-center  justify-start px-3">
       <!-- Toggler -->
       <div class="drawer-content">
       <label for="my-drawer" class="btn min-h-fit  h-8 border-none bg-regal-brown px-2 py-0  hover:bg-amber-700 active:bg-regal-brown drawer-button">
-        <span class="block [&>svg]:h-5 [&>s vg]:w-5 [&>svg]:text-white">
+        <span class="block [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -56,7 +56,7 @@
         <!-- dark mode choices --> 
         <li>
           <details class="dropdown">
-            <summary class="m-1 btn dark:text-slate-100 bg-transparent border-none "> 
+            <summary class="m-1 btn btn-ghost dark:text-slate-100 bg-transparent border-none"> 
               <a
                 class="hidden-arrow px-0 py-0 flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
                 href="#"
@@ -70,7 +70,8 @@
             <ul class="p-2 shadow menu dropdown-content z-[1] dark:text-slate-900 bg-base-100 rounded-box w-28">
               <li>    
                 <a
-                  class="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
+                  id="theme-light-btn"
+                  class="theme-toggle-light block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
                   href="#"
                 >
                 <div class="pointer-events-none">
@@ -90,8 +91,8 @@
               </li>
               <li>  
                 <a
-                  id="theme-switcher"
-                  class="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent  disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
+                  id="theme-dark-btn"
+                  class="theme-toggle-dark block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent  disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
                   href="#"
                   >
                   <div class="pointer-events-none">

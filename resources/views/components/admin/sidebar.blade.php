@@ -1,4 +1,4 @@
-<div class="drawer z-50" data-theme="coffee">
+<div class="drawer z-50">
     <input id="my-drawer" type="checkbox" class="drawer-toggle " />
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay"></label>
@@ -60,7 +60,7 @@
               <!--start dark mode choices --> 
               <li>
                 <details class="dropdown">
-                  <summary class="m-1 btn dark:text-slate-100 bg-transparent border-none "> 
+                  <summary class="m-1 btn btn-ghost dark:text-slate-100 bg-transparent border-none"> 
                     <a
                       class="hidden-arrow px-0 py-0 flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
                       href="#"
@@ -74,7 +74,7 @@
                   <ul class="p-2 shadow menu dropdown-content z-[1] dark:text-slate-900 bg-base-100 rounded-box w-28">
                     <li>    
                       <a
-                        class="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
+                        class="theme-toggle-light block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
                         href="#"
                       >
                       <div class="pointer-events-none">
@@ -94,8 +94,7 @@
                     </li>
                     <li>  
                       <a
-                        id="theme-switcher"
-                        class="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent  disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
+                        class="theme-toggle-dark block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 focus:bg-gray-200 focus:outline-none active:text-zinc-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent  disabled:text-gray-400 dark:text-gray-500 dark:hover:bg-gray-600 "
                         href="#"
                         >
                         <div class="pointer-events-none">

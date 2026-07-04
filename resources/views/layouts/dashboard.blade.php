@@ -18,19 +18,66 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @vite('resources/js/app.js')
+
+    <!-- Pre-load theme script to prevent layout flashes -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('admin-theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.setAttribute('data-theme', 'cupcake');
+            }
+        })();
+    </script>
 </head>
-<body>
-    <div id="app" data-theme="cupcake">
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div id="app" data-theme="cupcake" class="min-h-screen flex flex-col">
       @include('..components.admin.navbar')
       @include('..components.admin.sidebar')
       @yield('content1')
       @include('..components.admin.footer')
     </div>
  
-    {{-- <script src="{{ mix('js/components/app2.js') }}"></script>
-    <script src="{{ mix('js/components/columnChart.js') }}"></script>
-    <script src="{{ mix('js/components/incrementCounter.js') }}"></script> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script>
+        $(document).ready(function() {
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    $('html').addClass('dark');
+                    $('html').attr('data-theme', 'dark');
+                    $('#app').attr('data-theme', 'dark');
+                    $('.drawer').attr('data-theme', 'dark');
+                } else {
+                    $('html').removeClass('dark');
+                    $('html').attr('data-theme', 'cupcake');
+                    $('#app').attr('data-theme', 'cupcake');
+                    $('.drawer').attr('data-theme', 'cupcake');
+                }
+                localStorage.setItem('admin-theme', theme);
+            }
+
+            // Sync initial state on document ready
+            const currentTheme = localStorage.getItem('admin-theme') || 'light';
+            applyTheme(currentTheme);
+
+            $(document).on('click', '.theme-toggle-light', function(e) {
+                e.preventDefault();
+                applyTheme('light');
+                $('details.dropdown').removeAttr('open');
+            });
+
+            $(document).on('click', '.theme-toggle-dark', function(e) {
+                e.preventDefault();
+                applyTheme('dark');
+                $('details.dropdown').removeAttr('open');
+            });
+        });
+    </script>
+
     @yield('script')
 </body>
 </html>
