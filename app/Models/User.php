@@ -58,4 +58,9 @@ class User extends Authenticatable  implements MustVerifyEmail,LaratrustUser
     {
         return $this->belongsToMany(Product::class, 'product_user', 'user_id', 'product_id','id');
     }
+
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
+    }
 }
