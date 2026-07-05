@@ -8,6 +8,9 @@ import UserSessionRepository from './libs/UserSessionRepository';
 import setupAxios from './libs/ProtectAPI';
 import { SignInVue } from './screens/sign_in';
 import { SignUpVue } from './screens/sign_up';
+import { ForgotPasswordVue } from './screens/forgot_password';
+import { ResetPasswordVue } from './screens/reset_password';
+import { VerifyEmailVue } from './screens/verify_email';
 import { HomeVue } from './screens/home';
 import { AppLayoutVue } from './layouts/app_layout';
 import 'flowbite';
@@ -29,6 +32,9 @@ const app = createApp(App)
 const routes: RouteRecordRaw[] = [
     { path: '/sign-in', component: SignInVue},
     { path: '/sign-up', component: SignUpVue},
+    { path: '/password/reset', component: ForgotPasswordVue},
+    { path: '/password/reset/:token', component: ResetPasswordVue},
+    { path: '/email/verify', component: VerifyEmailVue},
     {
         path: '/',
         name: 'Root',
@@ -52,13 +58,13 @@ const router = createRouter({
     routes,
 });
 
-const UNPROTECTED_ROUTES = [ '/sign-in', '/sign-up'];
+const UNPROTECTED_ROUTES = [ '/sign-in', '/sign-up', '/password/reset', '/email/verify'];
 
 const isLoggedIn = ref(false);
 app.provide('isLoggedIn', isLoggedIn);
 
 router.beforeEach(async (to, from) => {
-    if(!UNPROTECTED_ROUTES.includes(to.path)){
+    if(!UNPROTECTED_ROUTES.includes(to.path) && !to.path.startsWith('/password/reset/')){
         const userSessionRepository = new UserSessionRepository(localStorage);
         const restUserSession = new RestUserSession(axios);
         const access_token = userSessionRepository.getAccessToken();
