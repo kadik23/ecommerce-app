@@ -21,10 +21,12 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        // return view('profile');
-        return response()->json(Auth::user()); 
+        if($request->ajax() || $request->wantsJson()){
+            return response()->json(Auth::user());
+        }
+        return view('profile');
     }
 
     public function profileEdit(Request $request){
@@ -33,14 +35,16 @@ class ProfileController extends Controller
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'tel' => ['integer','max:9223372036854775807'],
+            'tel' => ['nullable','integer','max:9223372036854775807'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
         ]);
         $user_update=User::findOrFail($user->id);     
         $user_update->username = strip_tags($request->input('username'));
         $user_update->email = strip_tags($request->input('email'));
-        $user_update->phone = strip_tags($request->input('tel'));
-        $user_update->city = strip_tags($request->input('city'));
-        $user_update->country = strip_tags($request->input('country'));
+        $user_update->phone = $request->filled('tel') ? strip_tags($request->input('tel')) : null;
+        $user_update->city = $request->filled('city') ? strip_tags($request->input('city')) : null;
+        $user_update->country = $request->filled('country') ? strip_tags($request->input('country')) : null;
         $user_update->save();
     
     return redirect()->route('dash.myprofile');
@@ -62,4 +66,3 @@ class ProfileController extends Controller
         return redirect()->route('dash.myprofile');
     }
 }
-

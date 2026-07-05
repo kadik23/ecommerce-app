@@ -150,8 +150,8 @@
             <details class="dropdown dropdown-end">
               <summary class="dark:text-slate-100 m-1 btn bg-transparent border-none hover:bg-transparent"> <!-- User avatar -->
                 <img
-                  src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                  class="rounded-full  "
+                  src="{{ Auth::check() && Auth::user()->profileImage ? asset('assets/images/profiles/' . Auth::user()->profileImage) : 'https://tecdn.b-cdn.net/img/new/avatars/2.jpg' }}"
+                  class="rounded-full object-cover"
                   style="height: 25px; width: 25px"
                   alt=""
                 />

@@ -24,12 +24,12 @@
                         @csrf
                         @method('PUT')
                         <div>
-                            <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                            <input type="file" name="image" id="image" class="bg-gray-50 border border-regal-brown text-gray-900 text-sm rounded-lg focus:ring-regal-brown focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                         </div>
                         @error('image')
                         {{$message}}  
                         @enderror      
-                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-regal-brown dark:focus:ring-blue-800">Change profile picture</button>          
+                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-regal-brown">Change profile picture</button>          
                     </form>
                 </div>
             </div>
@@ -41,13 +41,13 @@
         <div class="container flex flex-row justify-around ">
 
             <div class="flex flex-col">
-                <div data-theme="light" class="max-w-sm mt-5 flex flex-col items-center   border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-sm mt-5 flex flex-col items-center border border-gray-200 rounded-lg shadow bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white">
                 
-                    <div  onclick="my_modal_2.showModal()" class="relative group overflow-hidden w-32 h-32 rounded-full mt-3 z-0">
+                    <div onclick="my_modal_2.showModal()" class="relative group overflow-hidden w-32 h-32 rounded-full mt-3 z-0">
                         <!-- Modal toggle -->
                         <div class="w-32 h-32 rounded-full overflow-hidden">
                             <img 
-                                src="{{asset('assets/images/profiles/'.Auth::user()->profileImage)}}"
+                                src="{{ Auth::user()->profileImage ? asset('assets/images/profiles/'.Auth::user()->profileImage) : 'https://tecdn.b-cdn.net/img/new/avatars/2.jpg' }}"
                                 alt="Profile Picture"
                                 class="w-full h-full object-cover cursor-pointer"
                             >
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <div  data-theme="light" class="max-w-sm  mt-3  border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-sm mt-3 border border-gray-200 rounded-lg shadow bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white">
                     <div class="py-2 px-5">
                         <div class="flex flex-row  mb-2 ">
                             <span class="material-symbols-outlined pr-1 text-regal-brown">
@@ -111,7 +111,7 @@
             </div>
         
         
-            <div data-theme="light" class=" mt-5  border border-gray-200  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="mt-5 border border-gray-200 rounded-lg shadow bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white">
                 <h1 class="mt-3 mx-5 text-2xl font-bold">My profile details</h1>
                 <form  method="POST" action="{{route('dash.profileEdit')}}" class="flex flex-col p-10">
                     @csrf
@@ -169,7 +169,7 @@
                     </div>
             
                     <div>
-                        <button type="submit" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-amber-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">Update information</button>
+                        <button type="submit" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">Update information</button>
                     </div>
                 </form>
                 
