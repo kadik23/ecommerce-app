@@ -14,10 +14,23 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <!-- Scripts -->
+    
+    <!-- Pre-load theme script to prevent layout flashes -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('admin-theme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.setAttribute('data-theme', 'bumblebee');
+            }
+        })();
+    </script>
 </head>     
-<body>
-    <div id="app" data-theme="bumblebee">  
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 overflow-x-hidden">
+    <div id="app" data-theme="bumblebee" class="flex flex-col bg-gray-50 dark:bg-gray-950">  
         @if((Auth::check()))      
             @if(Auth::user()->hasRole('user')) 
             <nav class="bg-white border-gray-200 dark:bg-gray-900 ">
@@ -75,9 +88,28 @@
             </nav>
             @endif
         @endif
-        <div>
+        <div class="flex-grow">
             @yield('content')
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    $('html').addClass('dark');
+                    $('html').attr('data-theme', 'dark');
+                    $('#app').attr('data-theme', 'dark');
+                } else {
+                    $('html').removeClass('dark');
+                    $('html').attr('data-theme', 'bumblebee');
+                    $('#app').attr('data-theme', 'bumblebee');
+                }
+            }
+            const currentTheme = localStorage.getItem('admin-theme') || 'light';
+            applyTheme(currentTheme);
+        });
+    </script>
 </body>
 </html>

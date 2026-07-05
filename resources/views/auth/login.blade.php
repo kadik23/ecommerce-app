@@ -1,7 +1,7 @@
 @extends('layouts.accounts')
 
 @section('content')
-<div class="w-screen h-screen flex items-center justify-center bg-[#fcf9f6] px-4">
+<div class="w-screen h-screen flex items-center justify-center bg-regal-brown px-4">
     <div class="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-gray-100 flex flex-col justify-center">
         <a href="/" class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img class="mx-auto h-24 rounded-full w-24" src="{{ asset('assets/images/logo.png') }}" alt="Your Company" />
