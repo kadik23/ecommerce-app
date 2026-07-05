@@ -36,6 +36,9 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
     Route::put('/user/  ', [AuthController::class, 'update'])->middleware('auth:sanctum');
+    Route::post('/password/email', [AuthController::class, 'sendPasswordResetLink']);
+    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
+    Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail'])->middleware('auth:sanctum');
 });
 
 // for Client---------------

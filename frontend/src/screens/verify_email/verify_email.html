@@ -1,0 +1,42 @@
+<div class="w-screen lg:h-screen flex flex-col lg:flex-row">
+    <Loading v-if="isLoading" />
+    <!-- Left Section: Verify Email Message -->
+    <div class="h-full w-auto lg:w-1/2 flex flex-1 flex-col justify-center lg:px-8 px-10 lg:pb-0">
+        <router-link to="/" class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-24 rounded-full w-24" :src="logoUrl" alt="Company Logo" />
+            <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight">Verify Your Email Address</h2>
+        </router-link>
+        <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm text-center">
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                Before proceeding, please check your email for a verification link.
+            </p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                If you did not receive the email, we can send you another one.
+            </p>
+            
+            <form @submit.prevent="handleResend" class="space-y-6">
+                <div>
+                    <button type="submit"
+                        class="flex w-full justify-center rounded-md bg-regal-brown px-3 py-1.5 mb-4 lg:mb-4 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                        Request Another Verification Link
+                    </button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-4">
+                <router-link to="/sign-in" class="font-semibold text-regal-brown hover:text-amber-700">
+                    Back to Sign In
+                </router-link>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="lg:h-full w-full lg:w-1/2 flex flex-col">
+        <img :src="backgroundUrl" alt="Background Image" class="object-cover h-full" />
+        <div class="px-8 h-1/2 bg-[#f5ecd9] py-8">
+            <h1 class="text-2xl font-bold mb-2">Check Your Inbox!</h1>
+            <h3 class="mb-4">We sent a verification link to your email. Click it to activate your account.</h3>
+        </div>
+    </div>
+</div>
