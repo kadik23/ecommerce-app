@@ -14,7 +14,7 @@
             </button>
             </form>
             <div class="px-6 py-6 lg:px-8">
-                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new category</h3>
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ t('admin.products.create_category_form') }}</h3>
                 <form method="POST" class="space-y-6" action="{{route('category.store')}}" enctype="multipart/form-data">
                     @csrf
                     @error('message')
@@ -23,22 +23,22 @@
                     </div>
                     @enderror
                     <div>
-                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category name</label>
-                        <input type="text" name="category" id="category" value="{{ old('category') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Category name" required>
+                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.products.category_name') }}</label>
+                        <input type="text" name="category" id="category" value="{{ old('category') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="{{ t('admin.products.category_name') }}" required>
                     </div>
                     @error('category')
                     {{-- print to users error when it exist  --}}
                     {{$message}}  
                     @enderror
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload icon</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">{{ t('admin.products.upload_icon') }}</label>
                         <input type="file" name="icon" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-regal-brown dark:border-gray-600 dark:placeholder-gray-400" id="file_input" >                      
                     </div>
                     @error('icon')
                     {{-- print to users error when it exist  --}}
                     {{$message}}  
                     @enderror
-                    <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Create new category</button>    
+                    <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ t('admin.products.create_category_form') }}</button>    
                 </form>
             </div>
         </div>

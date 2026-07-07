@@ -21,7 +21,7 @@
                 bg-red-500
             @endif"
         >
-            {{$state}}
+            {{ t('admin.cards.' . $state) }}
         </span>
     </div>
     <div class="flex items-center justify-center gap-1">
@@ -41,7 +41,7 @@
                         <span class="material-symbols-outlined">
                             sync_saved_locally
                         </span>
-                        <span class="font-semibold">Confirm</span>
+                        <span class="font-semibold">{{ t('admin.orders.confirm') }}</span>
                     </div>
                 </li>
                 <li>
@@ -49,7 +49,7 @@
                         <span class="material-symbols-outlined">
                             delete_forever
                         </span>
-                        <span class="font-semibold">Cancel</span>
+                        <span class="font-semibold">{{ t('admin.orders.cancel') }}</span>
                     </div>
                 </li>
             </ul>

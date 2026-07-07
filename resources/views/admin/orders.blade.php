@@ -17,21 +17,21 @@
     <div class="m-3 flex flex-col justify-end items-end">
         <div class="">
             <h5 class="mb-3 text-md text-end cursor-default text-gray-600 dark:text-white">
-                Views Orders {{ $orders->count() }}/{{ $orders->total() }}
+                {{ t('admin.orders.views_orders') }} {{ $orders->count() }}/{{ $orders->total() }}
             </h5>
         </div> 
-        <x-Select action="{{ route('dashboard.orders') }}" option="Default Sorting" name="Rating" />
+        <x-Select action="{{ route('dashboard.orders') }}" option="{{ t('admin.orders.default_sorting') }}" name="Rating" />
     </div>
 </div>
 <div class="m-3 px-2 bg-white border border-gray-200 rounded-lg overflow-x-auto shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700">
     <div class="grid grid-cols-7 min-w-[900px] text-xs lg:text-base font-semibold text-center items-center py-4 border-b border-gray-200 dark:border-gray-700">
-        <span class="text-regal-brown">#ORDER</span>
-        <span class="text-regal-brown">PRODUCT</span>
-        <span class="text-regal-brown">CATEGORY</span>
-        <span class="text-regal-brown">PAYMENT METHOD</span>
-        <span class="text-regal-brown">ORDER STATUS</span>
-        <span class="text-regal-brown">RATE</span>
-        <span class="text-regal-brown">ACTIONS</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.order') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.product') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.category') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.payment_method') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.order_status') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.rate') }}</span>
+        <span class="text-regal-brown">{{ t('admin.orders.table.actions') }}</span>
     </div>
     @if(isset($orders))
         @foreach($orders as $order)

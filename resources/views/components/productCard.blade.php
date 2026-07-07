@@ -35,8 +35,8 @@
         <div class="flex flex-col">
             @Auth
             @if(Auth::user()->hasRole('admin')) 
-            <span class="text-green-500 font-bold">Available : {{$quantity}}</span>
-            <span class="text-blue-600 font-bold">Sold : {{$sold}}%</span>
+            <span class="text-green-500 font-bold">{{ t('admin.products.available') }} : {{$quantity}}</span>
+            <span class="text-blue-600 font-bold">{{ t('admin.products.sold_percent') }} : {{$sold}}%</span>
             @endif 
             @endauth
         </div>
@@ -49,7 +49,7 @@
                         favorite
                     </span>
                 </div>
-                <a href="" product_id="{{$id}}" class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Add to cart</a>
+                <a href="" product_id="{{$id}}" class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ t('admin.products.add_to_cart') }}</a>
             @elseif(Auth::user()->hasRole('admin')) 
                 <div class="inline-block bg-transparent" onclick="authentication_modal.showModal()">  
                     <a  data-name="{{$name}}"
@@ -59,9 +59,9 @@
                     href="#" 
                     onclick="targett(this)"
                     id="{{$id}}"
-                    class="text-white mr-3 bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Edit</a>
+                    class="text-white mr-3 bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ t('admin.products.edit') }}</a>
                 </div>
-                <a href="" product_id="{{$id}}"   class="text-red-700 delete_btn my-auto hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2  dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</a>
+                <a href="" product_id="{{$id}}"   class="text-red-700 delete_btn my-auto hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2  dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">{{ t('admin.products.delete') }}</a>
             @endif  
             </div>
         </div>

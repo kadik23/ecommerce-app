@@ -1,4 +1,4 @@
-<div class="drawer z-50">
+<div dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="drawer z-50">
     <input id="my-drawer" type="checkbox" class="drawer-toggle " />
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay"></label>
@@ -158,7 +158,7 @@
             <span class="material-symbols-outlined text-regal-brown">
               dashboard
             </span>
-            <span>Dashboard</span>
+            <span>{{ t('admin.sidebar.dashboard') }}</span>
           </a>
         </li>
         <li>
@@ -169,7 +169,7 @@
             <span class="material-symbols-outlined text-regal-brown">
               production_quantity_limits
             </span>
-            <span>Products</span>
+            <span>{{ t('admin.sidebar.products') }}</span>
           </a>
         </li>  
         <li>
@@ -180,7 +180,7 @@
             <span class="material-symbols-outlined text-regal-brown">
             draft_orders
             </span>
-            <span>Orders</span>
+            <span>{{ t('admin.sidebar.orders') }}</span>
           </a>
         </li>
         <li>
@@ -191,7 +191,7 @@
             <span class="material-symbols-outlined text-regal-brown">
               support_agent
               </span>
-            <span>Customers</span>
+            <span>{{ t('admin.sidebar.customers') }}</span>
           </a>
           </li>
           <hr class="border mt-4 border-gray-300 lg:hidden">
@@ -203,7 +203,7 @@
               <span class="material-symbols-outlined text-regal-brown">
                 settings
                 </span>
-              <span>Settings</span>
+              <span>{{ t('admin.sidebar.settings') }}</span>
             </a>
             </li>
             <li class="lg:hidden">
@@ -217,7 +217,7 @@
                 <span class="material-symbols-outlined text-regal-brown">
                   logout
                 </span>
-                <span>Logout</span>
+                <span>{{ t('admin.sidebar.logout') }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

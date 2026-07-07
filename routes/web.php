@@ -11,6 +11,9 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('welcome');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('verified');
 Route::get('/user', 'App\Http\Controllers\UserController@index')->name('user')->middleware('verified');
 
+// for language
+Route::get('/lang/{lang}', 'App\Http\Controllers\LanguageController@switchLang')->name('lang.switch');
+
 // for profiles--------------
 Route::group(['prefix'=>'dashboard'], function() { 
 Route::get('/myprofile', 'App\Http\Controllers\ProfileController@index')->name('dash.myprofile');

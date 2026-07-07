@@ -1,6 +1,6 @@
 
 
-<div class="navbar fixed left-0 right-0 z-40 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 justify-between py-0 shadow-md border-b border-gray-100 dark:border-gray-700">
+<div dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="navbar fixed left-0 right-0 z-40 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 justify-between py-0 shadow-md border-b border-gray-100 dark:border-gray-700">
     <!-- left elements -->
     <div class="flex flex-wrap items-center  justify-start px-3">
       <!-- Toggler -->
@@ -43,7 +43,7 @@
               class="text-neutral-500  transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
               href="{{  Auth::user()->hasRole('user')  ? route('user') : route('admin') }}"
               
-              >Dashboard</a
+              >{{ t('admin.navbar.dashboard') }}</a
             >
           </li>
         </ul>
@@ -85,7 +85,7 @@
                           d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
                       </svg>
                   </div>
-                  <span >Light</span>
+                  <span >{{ t('admin.navbar.light') }}</span>
                 </div>
                 </a>
               </li>
@@ -110,7 +110,7 @@
                           clip-rule="evenodd" />
                       </svg>
                   </div>
-                  <span data-theme-name="dark">Dark</span>
+                  <span data-theme-name="dark">{{ t('admin.navbar.dark') }}</span>
                   </div>
               </a> 
               </li>
@@ -123,23 +123,28 @@
         <li >  
           <details class="dropdown dropdown-end ">
               <summary class=" dark:text-slate-100 m-1 btn bg-transparent border-none "> <!-- User avatar -->
-                <img width="24" height="24" src="https://img.icons8.com/fluency/48/great-britain-circular.png" alt="great-britain-circular" />
-                <span class="ml-1">English</span> 
+                @if(app()->getLocale() == 'ar')
+                  <img width="24" height="24" src="https://img.icons8.com/fluency/48/saudi-arabia.png" alt="saudi-arabia" />
+                  <span class="ml-1">{{ t('admin.navbar.arabic') }}</span> 
+                @else
+                  <img width="24" height="24" src="https://img.icons8.com/fluency/48/great-britain-circular.png" alt="great-britain-circular" />
+                  <span class="ml-1">{{ t('admin.navbar.english') }}</span> 
+                @endif
               </summary>
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
               <!--profile dropdown menu items  -->
               <li>
-                <router-link :to="{name: 'login'}" href="#">
+                <a href="{{ route('lang.switch', 'en') }}">
                   <img width="24" height="24" src="https://img.icons8.com/fluency/48/great-britain-circular.png" alt="great-britain-circular" />
-                  <span class="ml-1">English</span> 
-                </router-link>
+                  <span class="ml-1">{{ t('admin.navbar.english') }}</span> 
+                </a>
               </li>
               <!-- logout dropdown menu items -->
               <li>
-                <router-link :to="{name: 'login'}" href="#">
+                <a href="{{ route('lang.switch', 'ar') }}">
                   <img width="24" height="24"  src="https://img.icons8.com/fluency/48/saudi-arabia.png" alt="saudi-arabia" />
-                  <span class="ml-1">Arabic</span> 
-                </router-link>
+                  <span class="ml-1">{{ t('admin.navbar.arabic') }}</span> 
+                </a>
               </li>  
             </ul>
             </details>
@@ -166,7 +171,7 @@
                             </svg>
                         </span>
                         <span>
-                          {{ __('Profile') }}
+                          {{ t('admin.navbar.profile') }}
                         </span>                    
                     </a>
               </li>
@@ -186,7 +191,7 @@
                             </svg>
                           </span>
                           <span class="ml-2">
-                          {{ __('Logout') }}
+                          {{ t('admin.navbar.logout') }}
                         </span>
                       </a>
 
