@@ -157,13 +157,13 @@ class UserRepository implements UserRepositoryInterface
     private function getRangeLabel(string $range): string
     {
         switch ($range) {
-            case 'today': return 'Users today';
-            case 'yesterday': return 'Users yesterday';
-            case '30days': return 'Users this month';
-            case '90days': return 'Users last 90 days';
+            case 'today': return t('admin.dashboard.users_today');
+            case 'yesterday': return t('admin.dashboard.users_yesterday');
+            case '30days': return t('admin.dashboard.users_this_month');
+            case '90days': return t('admin.dashboard.users_last_90_days');
             case '7days':
             default:
-                return 'Users this week';
+                return t('admin.dashboard.users_this_week');
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="w-full max-w-screen-xl mx-auto  md:py-8">
         <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"> 
             © 2023
-            <p class="inline-block">Stanissk store</p>. All Rights Reserved.
+            <p class="inline-block">Stanissk store</p>. {{ t('admin.footer.all_rights_reserved') }}
         </span>
     </div>
 </footer>

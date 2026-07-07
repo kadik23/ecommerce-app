@@ -4,8 +4,7 @@
     <div class="bg-white  mt-16 rounded-lg  mx-20 shadow dark:bg-gray-900 ">
         <div style="" class="w-full max-w-screen-xl mx-auto flex justify-center items-end  md:py-2">
             <a href="{{route('product.create')}}"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mt-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create
-                new product</a>
+                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mt-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">{{ t('admin.products.create_new_product') }}</a>
             <!-- Modal toggle -->
             <!-- Open the modal using ID.showModal() method -->
             {{-- <button class="btn">open modal</button> --}}
@@ -20,8 +19,7 @@
             </dialog> --}}
 
             <button onclick="my_modal_1.showModal()"
-                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mt-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Create
-                new category</button>
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mt-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">{{ t('admin.products.create_new_category') }}</button>
             <x-admin.modalCategorie />
             <div class="mt-3">
                 <x-SearchBar :categories="$categories" />
@@ -54,16 +52,16 @@
                     @endphp
                     <img src="{{isset($categoryS) ? $src : asset('assets\images\icons8-categorize-48.png')}}">
                     <h5 class="inline-block text-xl font-semibold cursor-default text-gray-900 dark:text-white">
-                        {{ $categoryS ?? 'All Categories'}} </h5>
+                        {{ $categoryS ?? t('admin.products.all_categories') }} </h5>
                 </div>
             </div>
         </div>
         <div class=" flex flex-col mr-16 items-end">
             <div class="inline-block mt-5 ">
-                <h5 class="inline-block text-md  cursor-default  text-gray-600 dark:text-white">Views products
+                <h5 class="inline-block text-md  cursor-default  text-gray-600 dark:text-white">{{ t('admin.products.views_products') }}
                     {{$products->count()}}/{{$products->total()}} </h5>
             </div>
-            <x-Select option="Default Sorting" name="Price" />
+            <x-Select option="{{ t('admin.products.default_sorting') }}" name="Price" />
         </div>
     </div>
 
@@ -76,8 +74,8 @@
             @endforeach
         @else
             <div>
-                <h1><b> Viewing results for All Categories</b></h1>
-                <p> No results for {{$product}} in <b> {{$categoryS}} </b>categories </p>
+                <h1><b> {{ t('admin.products.viewing_results_for') }}</b></h1>
+                <p> {{ __('admin.products.no_results_for', ['product' => $product, 'category' => $categoryS]) }} </p>
             </div>
         @endif
         <x-Pagination :paginator="$products" />
@@ -96,34 +94,34 @@
                     </button>
                 </form>
                 <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit your product</h3>
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ t('admin.products.edit_your_product') }}</h3>
                     <form id="editProductForm" class="space-y-6" method="POST" action="" enctype="multipart/form-data">
                         @csrf 
                         @method("PUT")
                         <input id="idModal" name="idModal" type="hidden">  
                         <div>
-                            <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product name</label>
+                            <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.products.product_name') }}</label>
                             <input type="text" name="product" id="product" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Product name" required>
                         </div>
                         @error('product')
                             <span class="text-red-500 text-xs">{{$message}}</span>
                         @enderror
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload image</label>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">{{ t('admin.products.upload_image') }}</label>
                             <input name="file_input" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-regal-brown dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                         </div>
                         @error('file_input')
                             <span class="text-red-500 text-xs">{{$message}}</span>
                         @enderror
                         <div>
-                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Price</label>
+                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.products.price') }}</label>
                             <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Price" required>
                         </div>
                         @error('price')
                             <span class="text-red-500 text-xs">{{$message}}</span>
                         @enderror
                         
-                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Edit product</button>
+                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ t('admin.products.edit_product') }}</button>
                     </form>
                 </div>
             </div>

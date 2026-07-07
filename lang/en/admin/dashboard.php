@@ -1,0 +1,21 @@
+<?php
+return [
+    'users_statistic' => 'Users Statistic',
+    'last_7_days' => 'Last 7 days',
+    'yesterday' => 'Yesterday',
+    'today' => 'Today',
+    'last_30_days' => 'Last 30 days',
+    'last_90_days' => 'Last 90 days',
+    'users_report' => 'Users Report',
+    'total_report' => 'Total Report',
+    'total_profits' => 'Total profits',
+    'revenue' => 'Revenue',
+    'latest_customers' => 'Latest Customers',
+    'view_all' => 'View all',
+    'no_customers_found' => 'No customers found.',
+    'users_today' => 'Users today',
+    'users_yesterday' => 'Users yesterday',
+    'users_this_month' => 'Users this month',
+    'users_last_90_days' => 'Users last 90 days',
+    'users_this_week' => 'Users this week',
+];

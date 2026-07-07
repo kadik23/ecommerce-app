@@ -19,7 +19,7 @@
                 </button>
                 </form>
                 <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Profile picture</h3>
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ t('admin.profile.profile_picture') }}</h3>
                     <form method="POST" action="{{route('dash.pictureEdit')}}" class="space-y-6" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -29,7 +29,7 @@
                         @error('image')
                         {{$message}}  
                         @enderror      
-                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-regal-brown">Change profile picture</button>          
+                        <button type="submit" class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-regal-brown">{{ t('admin.profile.change_profile_picture') }}</button>          
                     </form>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                             >
                         </div>
                         <div class="absolute  rounded-bl-full rounded-br-full  inset-0 flex items-center justify-center w-32 h-20 bg-black bg-opacity-40 opacity-0 cursor-pointer  group-hover:opacity-100 transition-opacity" style="top:39%;">
-                            <span  class=" ml-2 text-white text-sm">Change Profile Picture</span>
+                            <span  class=" ml-2 text-white text-sm">{{ t('admin.profile.change_profile_picture') }}</span>
                         </div>
                     </div>
     
@@ -69,7 +69,7 @@
                         @endif
                         </h5>
                         <a href="{{ route('logout') }}" class="inline-flex items-center px-16 py-2 text-sm font-medium text-center text-white bg-regal-brown rounded-lg hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 ">
-                            {{ __('Logout') }}
+                            {{ t('admin.profile.logout') }}
                         </a>
                     </div>
                 </div>
@@ -112,53 +112,53 @@
         
         
             <div class="mt-5 border border-gray-200 rounded-lg shadow bg-white dark:bg-gray-800 dark:border-gray-700 text-gray-900 dark:text-white">
-                <h1 class="mt-3 mx-5 text-2xl font-bold">My profile details</h1>
+                <h1 class="mt-3 mx-5 text-2xl font-bold">{{ t('admin.profile.my_profile_details') }}</h1>
                 <form  method="POST" action="{{route('dash.profileEdit')}}" class="flex flex-col p-10">
                     @csrf
                     @method("PUT")
                     <div class="flex flex-row">
                         <div >
                             <div class="mb-6 mr-10">
-                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your username</label>
+                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_username') }}</label>
                                 <input type="text" name="username" id="username" value="{{ Auth::user()->username  }}" class="bg-gray-50 border pr-32  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" required>
                                 @error('username')
                                 {{$message}}  
                                 @enderror
                             </div>
                             <div class="mb-6 mr-10">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_email') }}</label>
                                 <input type="email" name="email" id="email" value="{{ Auth::user()->email  }}" class="bg-gray-50 border pr-32 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" placeholder="name@flowbite.com" required>
                                 @error('email')
                                 {{$message}}  
                                 @enderror        
                             </div>
                             <div class="mb-6 mr-10">
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_password') }}</label>
                             <input type="password" name="password" id="password" value="adminOruserPass" class="bg-gray-50 border pr-32 mb-2  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" required>
                             @if (Route::has('password.request'))
                             <a class="font-semibold text-regal-brown hover:text-amber-700" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
+                                {{ t('admin.profile.forgot_password') }}
                             </a>
                         @endif
                             </div>
                         </div>
                         <div>
                             <div class="mb-6">
-                                <label for="tel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone number</label>
+                                <label for="tel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_phone_number') }}</label>
                                 <input type="text" name="tel" value="{{Auth::user()->phone}}" id="tel" class="bg-gray-50 border pr-32 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" placeholder="Phone number" >
                                 @error('tel')
                                 {{$message}}  
                                 @enderror
                             </div>
                             <div class="mb-6">
-                                <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your country</label>
+                                <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_country') }}</label>
                                 <input type="text" name="country" id="country" value="{{Auth::user()->country}}" class="bg-gray-50 border pr-20 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" placeholder="Country" >
                                 @error('country')
                                 {{$message}}  
                                 @enderror
                             </div>
                             <div class="mb-6">
-                                <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your city</label>
+                                <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ t('admin.profile.your_city') }}</label>
                                 <input type="text" name="city" value="{{Auth::user()->city}}" id="City" class="bg-gray-50 border pr-20  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700" placeholder="City"  >
                                 @error('city')
                                 {{$message}}  
@@ -169,7 +169,7 @@
                     </div>
             
                     <div>
-                        <button type="submit" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">Update information</button>
+                        <button type="submit" class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">{{ t('admin.profile.update_information') }}</button>
                     </div>
                 </form>
                 
