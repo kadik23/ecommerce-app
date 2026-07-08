@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('accounts.name', 'Laravel') }}</title>
+    <title>{{ config('accounts.name', 'Stanissk Store') }}</title>
     <!-- Styles link-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" >
     @vite('resources/css/app.css')
