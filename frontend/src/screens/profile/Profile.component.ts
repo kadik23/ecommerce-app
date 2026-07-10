@@ -34,10 +34,9 @@ export default defineComponent({
         let toastManager = inject<Ref<IToastsManager>>("toastManager");
         const access_token = userSessionRepository.getAccessToken();
 
-        const profileImage = computed(() => `@/assets/images/profiles/${form.profileImage}`);
+        const profileImage = computed(() => `/assets/images/profiles/${form.profileImage}`);
 
         onMounted(() => {
-            modal.value = document.querySelector('dialog#my_modal_2');
             fetchUserData();
         });
 
@@ -78,12 +77,43 @@ export default defineComponent({
             }
         };
 
+        const handleImageUpload = (event: Event) => {
+            const target = event.target as HTMLInputElement;
+            if (target.files && target.files.length > 0) {
+                image.value = target.files[0];
+            }
+        };
+
         const updateProfilePicture = async () => {
+            if (!image.value) {
+                toastManager?.value?.alertError("Please select an image first.");
+                return;
+            }
             isLoading.value = true;
             try {
-                await uploadImage.UploadImage(image.value as File);
+                const res = await uploadImage.UploadImage(image.value as File);
+                if (res && res.image) {
+                    form.profileImage = res.image;
+                }
+                toastManager?.value?.alertSuccess("Profile picture updated.");
+                closeModal();
             } catch (error) {
                 console.error('Error updating profile picture:', error);
+                toastManager?.value?.alertError("Failed to update profile picture.");
+            } finally {
+                isLoading.value = false;
+            }
+        };
+
+        const logout = async () => {
+            isLoading.value = true;
+            try {
+                await RestUser.logout();
+                userSessionRepository.clear();
+                window.location.href = '/sign-in';
+            } catch (error) {
+                console.error('Error logging out:', error);
+                toastManager?.value?.alertError("Failed to logout.");
             } finally {
                 isLoading.value = false;
             }
@@ -94,10 +124,13 @@ export default defineComponent({
             errors,
             image,
             profileImage,
+            modal,
             showModal,
             closeModal,
             updateProfile,
             updateProfilePicture,
+            handleImageUpload,
+            logout,
             isLoading,
         }
     }

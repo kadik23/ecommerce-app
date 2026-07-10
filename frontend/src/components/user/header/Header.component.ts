@@ -152,32 +152,14 @@ export default {
 
         const setupPusher = () => {
             const channelName = `user.${user_id.value}`;
-            echo.private(channelName).listen('my-event', (data: CartEntity) => {
+            echo.private(channelName).listen('.my-event', (data: any) => {
                 notificationCount.value += 1;
-                carts.value.push(data);
-                const template = `
-                <a href="#" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <div class="w-32 overflow-hidden">
-                    <img class="object-cover h-20" src="/assets/images/products/${data.img}" alt="Product image">
-                    </div>
-                    <div class="w-full pl-3">
-                    <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">${data.name}</span></div>
-                    <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">${data.user_id}</span></div>
-                    <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">${data.price}</div>
-                    </div>
-                </a>
-                <a href="#" product_id="${data.id}" class="delete_cart hover:bg-transparent">
-                    <span class="ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
-                    close
-                    </span>
-                </a>
-                <hr class="opacity-70 p-0">
-                `;
-                const ulElement = document.getElementById('scrollable-container') as HTMLElement;
-                const newLiElement = document.createElement('li');
-                newLiElement.classList.add('flex', 'flex-row', 'items-center');
-                newLiElement.innerHTML = template;
-                ulElement.insertBefore(newLiElement, ulElement.firstChild);
+                carts.value.unshift({
+                    ...data,
+                    name: data.product_name,
+                    price: data.product_price,
+                    user_id: data.user
+                });
             });
         };
 
@@ -201,16 +183,17 @@ export default {
             fetchUserData()
         })
 
-        const deleteCard = (id: any) => {
+        const deleteCard = async (id: any) => {
             try{
                 if (access_token) {
-                    const res = restCarts.Delete(id, access_token)
-                    if (res.data) {
-                        carts.value.map((c: any) => c[0].id !== id)
-                        toastManager?.value.alertSuccess("Cart deleted succefully.");
+                    const res = await restCarts.Delete(id, access_token);
+                    if (res) {
+                        carts.value = carts.value.filter((c: any) => c.id !== id);
+                        notificationCount.value = carts.value.length;
+                        toastManager?.value?.alertSuccess("Cart deleted successfully.");
                     }
                 }else{
-                    toastManager?.value.alertInfo("Please login to your account.");
+                    toastManager?.value?.alertInfo("Please login to your account.");
                 }
             }catch(err){
                 console.log(err)
