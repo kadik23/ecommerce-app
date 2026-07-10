@@ -20,7 +20,7 @@
                     <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Profile picture</h3>
                     <form @submit.prevent="updateProfilePicture" class="space-y-6"
                         enctype="multipart/form-data">
-                        <input type="file" v-on:change="image"
+                        <input type="file" v-on:change="handleImageUpload"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-regal-brown focus:border-regal-brown block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                             required>
                         <span v-if="errors.image">{{ errors.image }}</span>
@@ -58,10 +58,10 @@
                         <h5
                             class="mb-5 text-md inline-block px-3 mx-auto rounded-lg bg-red-400 tracking-tight text-white">
                             User</h5>
-                        <a href="{{ route('logout') }}"
+                        <button @click="logout"
                             class="inline-flex items-center px-16 py-2 text-sm font-medium text-center text-white bg-regal-brown rounded-lg hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300">
                         Logout
-                        </a>
+                        </button>
                     </div>
                 </div>
 

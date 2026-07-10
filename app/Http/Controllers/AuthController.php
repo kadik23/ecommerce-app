@@ -74,17 +74,18 @@ class AuthController extends Controller
         }
 
         if ($request->has('country')) {
-            $user->city = $request->username;
+            $user->country = $request->country;
         }
 
         if ($request->has('email')) {
             $user->email = $request->email;
         }
 
-        // if ($request->has('password')) {
-        //     $user->password = Hash::make($request->password);
-        // }
         if ($request->has('city')) {
+            $user->city = $request->city;
+        }
+
+        if ($request->has('password') && !empty($request->password)) {
             $user->password = Hash::make($request->password);
         }
 
@@ -95,6 +96,30 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['message' => 'User updated successfully']);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = $request->user();
+
+        if ($request->file('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('assets/images/profiles'), $imageName);
+            $user->profileImage = $imageName;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Image uploaded successfully.',
+                'image' => $imageName
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Image upload failed.'], 400);
     }
 
     public function sendPasswordResetLink(Request $request)
