@@ -4,12 +4,15 @@
     <CarouselVue />
 
     <!-- Product Card Section -->
-    <div class="container">
+    <div class="container" v-if="topProducts.length > 0">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Top Products</h1>
         <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
-            <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profile"
+            <ProductCardVue v-for="product in topProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
+        </div>
+        <div class="flex justify-center mt-6 mb-10">
+            <router-link to="/product-by-categroy/All" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">See More</router-link>
         </div>
     </div>
 
@@ -29,12 +32,15 @@
     </section>
 
     <!-- Latest Products Section -->
-    <div class="container">
+    <div class="container" v-if="latestProducts.length > 0">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">Latest</h1>
         <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
-            <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profileImage"
+            <ProductCardVue v-for="product in latestProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
+        </div>
+        <div class="flex justify-center mt-6">
+            <router-link to="/product-by-categroy/All" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">See More</router-link>
         </div>
     </div>
 
@@ -47,32 +53,41 @@
     </div>
 
     <!-- Best Offers Electronics Section -->
-    <div class="container">
+    <div class="container" v-if="electronics.length > 0">
         <h1 id="electronics" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ELECTRONICS</h1>
         <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in electronics" :key="product.id" :name="product.name"
-                :profile="product.profileImage" :id="product.id" :category="product.category" :sold="product.sold"
+                :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''" :id="product.id" :category="product.category" :sold="product.sold"
                 :quantity="product.quantity" :price="product.price" :rating="product.rating" />
+        </div>
+        <div class="flex justify-center mt-6">
+            <router-link to="/product-by-categroy/Electronics" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">See More</router-link>
         </div>
     </div>
 
     <!-- Best Offers Phones Section -->
-    <div class="container">
+    <div class="container" v-if="phones.length > 0">
         <h1 id="phones" class="text-lg lg:text-3xl text-center font-bold my-10 phones">BEST OFFERS HIGH PHONES</h1>
         <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
-            <ProductCardVue v-for="product in phones" :key="product.id" :name="product.name" :profile="product.profileImage"
+            <ProductCardVue v-for="product in phones" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
                 :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
                 :price="product.price" :rating="product.rating" />
+        </div>
+        <div class="flex justify-center mt-6">
+            <router-link to="/product-by-categroy/Phones" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">See More</router-link>
         </div>
     </div>
 
     <!-- Best Offers Accessories Section -->
-    <div class="container">
+    <div class="container" v-if="accessories.length > 0">
         <h1 id="accessories" class="text-lg lg:text-3xl text-center font-bold my-10">BEST OFFERS HIGH ACCESSORIES</h1>
         <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
             <ProductCardVue v-for="product in accessories" :key="product.id" :name="product.name"
-                :profile="product.profileImage" :id="product.id" :category="product.category" :sold="product.sold"
+                :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''" :id="product.id" :category="product.category" :sold="product.sold"
                 :quantity="product.quantity" :price="product.price" :rating="product.rating" />
+        </div>
+        <div class="flex justify-center my-6">
+            <router-link to="/product-by-categroy/Accessories" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">See More</router-link>
         </div>
     </div>
 
