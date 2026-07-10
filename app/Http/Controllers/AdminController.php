@@ -124,13 +124,17 @@ class AdminController extends Controller
             Order::where('state', 'complete')->count(),
             Order::where('state', 'cancel')->count(),
             Order::where('state', 'confirm')->count(),
-            Order::where('state', 'pending')->count(),
+            Order::whereIn('state', ['pending', 'processing'])->count(),
         ];
     
         $query = Order::with('product');
         
         if ($request->filled('status')) {
-            $query->where('state', $request->status);
+            if ($request->status === 'pending') {
+                $query->whereIn('state', ['pending', 'processing']);
+            } else {
+                $query->where('state', $request->status);
+            }
         }
         
         $sort = $request->query('filter');

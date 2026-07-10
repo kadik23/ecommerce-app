@@ -40,13 +40,9 @@ class newPanier implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        // return [
-        //     new PrivateChannel('user.' . $this->user)
-        // ];
-        // return ['user.' . $this->user];
-        return new PrivateChannel('user.' . $this->user);
-
-
+        return [
+            new PrivateChannel('user.' . $this->user)
+        ];
     }
 
     public function broadcastAs()
