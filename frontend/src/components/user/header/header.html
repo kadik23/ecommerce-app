@@ -227,7 +227,7 @@
                                         <li class="flex flex-row">
                                             <router-link to="/carts" class="flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                 <div class="w-32 overflow-hidden">
-                                                    <img :src="`/assets/images/products/${cart.img}`" class="object-cover h-20" alt="image">
+                                                    <img :src="`/assets/images/products/${cart.img || cart.profileImage}`" class="object-cover h-20" alt="image">
                                                 </div>
                                                 <div class="w-full pl-3">
                                                     <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">{{ cart.name }}</span></div>
@@ -235,7 +235,7 @@
                                                     <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{ cart.price }}</div>
                                                 </div>
                                             </router-link>
-                                            <button @click="deleteCard(cart[0].id)" class="delete_cart hover:bg-transparent">
+                                            <button @click="deleteCard(cart.id)" class="delete_cart hover:bg-transparent">
                                                 <span  class="ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
                                                     close
                                                 </span>

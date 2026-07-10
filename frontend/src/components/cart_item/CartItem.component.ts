@@ -39,7 +39,7 @@ export default {
         };
     
         const removeItem = () => {
-            emit('remove', props.quantities);
+            emit('remove', props.id);
         };
     
         return {

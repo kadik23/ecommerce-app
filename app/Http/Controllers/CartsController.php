@@ -58,6 +58,11 @@ class CartsController extends Controller
                     'msg' => 'product has been added to cart',
                     'id' => $id
                 ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'msg' => 'product is already in cart',
+                ]);
             }
         }else {
             // User is not authenticated

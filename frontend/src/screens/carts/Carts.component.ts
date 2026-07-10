@@ -77,23 +77,39 @@ export default defineComponent({
                     // Send the order data
                     const res = await restOrder.sendOrder(orders, access_token);
                     if(res.status === 201){
-                        toastManager?.value.alertSuccess('Order submitted successfully')
+                        toastManager?.value?.alertSuccess('Order submitted successfully')
                         setTimeout(()=>{
                             router.push({ path: 'orders' });
                         },1500)
                     }else{
-                        toastManager?.value.alertError('Something went wrong')
+                        toastManager?.value?.alertError('Something went wrong')
                     }
                 } else {
-                    toastManager?.value.alertInfo('No items in cart or missing access token')
+                    toastManager?.value?.alertInfo('No items in cart or missing access token')
                 }
             } catch (err) {
                 console.log('Error submitting order:', err);
-                toastManager?.value.alertError('Error submitting order')
+                toastManager?.value?.alertError('Error submitting order')
             } finally {
                 isLoading.value = false;
             }
         };        
+
+        const removeItem = async (id: string) => {
+            if (!access_token) return;
+            try {
+                isLoading.value = true;
+                await restCarts.Delete(id, access_token);
+                carts.value = carts.value.filter(cart => cart.id !== id);
+                delete quantities.value[id];
+                toastManager?.value?.alertSuccess('Item removed from cart.');
+            } catch (err) {
+                console.log('Error removing item:', err);
+                toastManager?.value?.alertError('Failed to remove item.');
+            } finally {
+                isLoading.value = false;
+            }
+        };
 
         onMounted(fetchCarts);
 
@@ -103,6 +119,7 @@ export default defineComponent({
             totalPrice,
             incrementQuantity,
             decrementQuantity,
+            removeItem,
             submitOrder,
             isLoading
         };

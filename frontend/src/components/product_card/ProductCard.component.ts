@@ -96,16 +96,17 @@ export default defineComponent({
             try {
                 if (access_token) {
                     const data = await restCarts.Create(props.id, access_token);
-                    if (data){
-                        console.log(data)
-                        toastManager?.value.alertSuccess("Cart added successfuly.");
+                    if (data && data.status) {
+                        toastManager?.value?.alertSuccess("Cart added successfully.");
+                    } else if (data && !data.status) {
+                        toastManager?.value?.alertInfo(data.msg || "Already in cart.");
                     }
-                }else{
-                    toastManager?.value.alertInfo("Please login to your account.");
+                } else {
+                    toastManager?.value?.alertInfo("Please login to your account.");
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error);
-                toastManager?.value.alertError("Cart added failed.");
+                console.error('Error adding to cart:', error);
+                toastManager?.value?.alertError("Cart added failed.");
             } 
         }
 
