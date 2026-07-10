@@ -25,11 +25,11 @@ export default defineComponent({
         const changeCurrentState = (newState: Istate) => {
             currentStatus.value = newState
             if(newState == 'Processing'){
-                filteredOrders.value = orders.value.filter(or => or.state == 'confirm' || or.state == 'pending')
+                filteredOrders.value = orders.value.filter(or => or.state == 'processing' || or.state == 'pending')
             }else if(newState == 'Shipped'){
-                filteredOrders.value = orders.value.filter(or => or.state == 'complete' )
+                filteredOrders.value = orders.value.filter(or => or.state == 'confirm' )
             }else{
-                filteredOrders.value = orders.value.filter(or => or.state == 'canceled' )
+                filteredOrders.value = orders.value.filter(or => or.state == 'complete' || or.state == 'delivered')
             }
         }
 
@@ -39,7 +39,8 @@ export default defineComponent({
                 if(access_token){
                     const response: any = await restOrders.getAll(access_token)
                     orders.value = response.data
-                    filteredOrders.value = orders.value.filter(or => or.state == 'confirm' || or.state == 'complete')
+                    // Initialize with Processing tab's condition
+                    filteredOrders.value = orders.value.filter(or => or.state == 'processing' || or.state == 'pending')
                 }
             } catch (err) {
                 console.log(err)

@@ -11,7 +11,7 @@
     <span>{{$paymentMethod}}</span>
     <div class="flex justify-center">
         <span id="order-status-{{$id}}" class="text-xs lg:text-sm px-3 py-1.5 capitalize border-none text-white text-center rounded-full font-medium inline-block
-            @if($state === 'pending')
+            @if($state === 'pending' || $state === 'processing')
                 bg-gray-500
             @elseif($state === 'confirm' || $state === 'confirmed')
                 bg-orange-500
