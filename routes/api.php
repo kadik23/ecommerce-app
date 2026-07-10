@@ -35,7 +35,8 @@ Route::group([
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
-    Route::put('/user/  ', [AuthController::class, 'update'])->middleware('auth:sanctum');
+    Route::put('/user/update', [AuthController::class, 'update'])->middleware('auth:sanctum');
+    Route::post('/upload_images', [AuthController::class, 'uploadImage'])->middleware('auth:sanctum');
     Route::post('/password/email', [AuthController::class, 'sendPasswordResetLink']);
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail'])->middleware('auth:sanctum');
