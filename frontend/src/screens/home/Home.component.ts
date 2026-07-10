@@ -19,7 +19,8 @@ export default defineComponent({
     },
     props: {},
     setup() {
-        const products = ref<ProductEntity[]>([]);
+        const topProducts = ref<ProductEntity[]>([]);
+        const latestProducts = ref<ProductEntity[]>([]);
         const electronics = ref<ProductEntity[]>([]);
         const phones = ref<ProductEntity[]>([]);
         const accessories = ref<ProductEntity[]>([]);
@@ -34,11 +35,17 @@ export default defineComponent({
             try {
                 const data: any = await restProducts.getAll();
                 let productsRes: ProductEntity[] = data.products
-                products.value = productsRes;
-                console.log(products.value )
-                electronics.value = productsRes.filter((product: ProductEntity) => product.category === "Electronics");
-                phones.value = productsRes.filter((product: ProductEntity) => product.category === "Phones");
-                accessories.value = productsRes.filter((product: ProductEntity) => product.category === "Accessories");                categories.value = data.categories;
+                
+                // Top Products sorted by sold count
+                topProducts.value = [...productsRes].sort((a, b) => (b.sold || 0) - (a.sold || 0)).slice(0, 4);
+                
+                // Latest Products sorted by creation date
+                latestProducts.value = [...productsRes].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 4);
+                
+                electronics.value = productsRes.filter((product: ProductEntity) => product.category === "Electronics").slice(0, 4);
+                phones.value = productsRes.filter((product: ProductEntity) => product.category === "Phones").slice(0, 4);
+                accessories.value = productsRes.filter((product: ProductEntity) => product.category === "Accessories").slice(0, 4);
+                categories.value = data.categories;
                 carts.value = data.carts;
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -50,7 +57,8 @@ export default defineComponent({
         onMounted(fetchProducts);
 
         return {
-            products,
+            topProducts,
+            latestProducts,
             electronics,
             phones,
             accessories,

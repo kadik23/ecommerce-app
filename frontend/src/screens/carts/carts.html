@@ -28,7 +28,7 @@
         </ol>
     </nav>
 
-    <div class="flex flex-wrap lg:flex-row">
+    <div class="flex flex-wrap lg:flex-row" v-if="carts.length > 0">
         <div class="flex flex-col md:w-2/3 w-full">
             <CartItemVue v-for="cart in carts" :key="cart.id" :id="cart.id" :productName="cart.name" sold="23"
                 price_sold="5900" :price="cart.price" :description="cart.description" size="13" :img="cart.profileImage"
@@ -48,6 +48,13 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div v-else class="flex flex-col items-center justify-center w-full my-20">
+        <svg class="w-24 h-24 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <p class="text-xl text-gray-500 font-semibold">Your cart is empty</p>
+        <router-link to="/" class="mt-4 btn bg-regal-brown text-white">Start Shopping</router-link>
     </div>
     <div class="m-4 flex items-center justify-end">
         <router-link to="/orders" class="btn bg-regal-brown text-white">My orders</router-link>
