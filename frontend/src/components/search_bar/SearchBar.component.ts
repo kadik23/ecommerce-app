@@ -14,15 +14,18 @@ export default {
         const router = useRouter();
         const isAdmin = inject('isAdmin', false);
         const handleSubmit = () => {
-            const action = isAdmin ? `/product/show/${selectedCategory.value}` : '/user/product/show';
+            let cat = selectedCategory.value;
+            if (cat === 'All categories') {
+                cat = 'All';
+            }
+            const action = isAdmin ? `/product/show/${cat}` : `/product-by-categroy/${cat}`;
             formAction.value = action;
             const params = {
-                category: selectedCategory.value,
                 search: searchQuery.value,
             };
             router.push({ path: formAction.value, query: params });
         };
 
-        return{formMethod, handleSubmit, selectedCategory}
+        return{formMethod, handleSubmit, selectedCategory, searchQuery}
     }
 }

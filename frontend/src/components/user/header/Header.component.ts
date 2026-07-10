@@ -9,7 +9,7 @@ import RestProducts from '@/libs/RestProducts';
 import RestCarts from '@/libs/RestCarts';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import echo from '@/libs/Pusher';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
     components: {
@@ -71,11 +71,23 @@ export default {
             });
         }
 
-        function scrollTo(view: HTMLElement | null) {
-            if (view && view.scrollIntoView) {
-                view.scrollIntoView({ behavior: 'smooth' });
+        const router = useRouter();
+
+        const scrollTo = (sectionId: string) => {
+            if (route.path !== '/') {
+                router.push({ path: '/', hash: `#${sectionId}` }).then(() => {
+                    setTimeout(() => {
+                        const view = document.getElementById(sectionId);
+                        if (view) {
+                            view.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 500);
+                });
             } else {
-                console.warn('Element not found or not scrollable:', view);
+                const view = document.getElementById(sectionId);
+                if (view) {
+                    view.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         }
 
@@ -100,8 +112,11 @@ export default {
         const fetchProducts = async () => {
             try {
                 const data: any = await restProducts.getAll();
-                let productsRes: ProductEntity[] = data.products
+                let productsRes: ProductEntity[] = data.products;
                 products.value = productsRes;
+                if (data.categories && Array.isArray(data.categories)) {
+                    categoriesLinks.value = data.categories.map((c: any) => c.name || c);
+                }
                 countFavorites();
             } catch (error) {
                 console.error('Error fetching products:', error);

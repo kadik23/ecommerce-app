@@ -35,6 +35,14 @@ export default defineComponent({
                 } else {
                     allProducts.value = productsRes.filter((product: ProductEntity) => product.category === category);
                 }
+                
+                const searchQuery = route.query.search as string;
+                if (searchQuery) {
+                    const query = searchQuery.toLowerCase();
+                    allProducts.value = allProducts.value.filter((p: ProductEntity) => 
+                        p.name.toLowerCase().includes(query)
+                    );
+                }
                 products.value = allProducts.value.slice(0, perPage);
             } catch (error) {
                 console.error('Error fetching products:', error);
