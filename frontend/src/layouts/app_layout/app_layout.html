@@ -1,7 +1,7 @@
 <div>
     <HeaderVue />
     <main>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
     </main>
     <FooterVue />
 </div>
