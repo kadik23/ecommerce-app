@@ -15,51 +15,49 @@
                 </label>
             </div>
             <div class="flex items-center">
-                <p class="mr-6 text-xs lg:text-sm flex items-center text-gray-500 dark:text-white">
+                <p class="me-6 text-xs lg:text-sm flex items-center text-gray-500 dark:text-white">
                     <span class="material-symbols-outlined text-regal-brown"
                         style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">call</span>
-                    <span>Free Support</span> (213) 0798816073
+                    <span>{{ $t('header.free_support') }}</span> (213) 0798816073
                 </p>
             </div>
             <div class="md:flex items-center hidden">
-                <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" label="My account" :links="linksLoggedIn" />
-                <DropDownVue v-else :items="itemsLoggedOut" label="My account" :links="linksLoggedOut" />
+                <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" :label="$t('nav.my_account')" :links="linksLoggedIn" />
+                <DropDownVue v-else :items="itemsLoggedOut" :label="$t('nav.my_account')" :links="linksLoggedOut" />
                 <div class="dropdown" style="background-color: transparent">
                     <label tabindex="0"
                         class="btn text-nowrap lg:text-sm text-xs hover:text-regal-brown py-0 font-normal m-1"
                         style="background-color: transparent; border:none;">
-                        Languages<span class="material-symbols-outlined">arrow_drop_down</span>
+                        {{ $t('nav.language') }}<span class="material-symbols-outlined">arrow_drop_down</span>
                     </label>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a href="#">English</a></li>
-                        <li><a href="#">Arabic</a></li>
+                        <li><a href="#" @click.prevent="changeLanguage('en')">English</a></li>
+                        <li><a href="#" @click.prevent="changeLanguage('ar')">العربية</a></li>
                     </ul>
                 </div>
                 <router-link to="/contact"
-                    class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact
-                    Us</router-link>
+                    class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">{{ $t('nav.contact') }}</router-link>
             </div>
         </div>
     </div>
     <div class="drawer-side">
         <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 min-h-full w-80 p-4">
-            <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" label="My account" :links="linksLoggedIn" />
-            <DropDownVue v-else :items="itemsLoggedOut" label="My account" :links="linksLoggedOut" />
+            <DropDownVue v-if="isLoggedIn" :items="itemsLoggedIn" :label="$t('nav.my_account')" :links="linksLoggedIn" />
+            <DropDownVue v-else :items="itemsLoggedOut" :label="$t('nav.my_account')" :links="linksLoggedOut" />
             <div class="dropdown" style="background-color: transparent">
                 <label tabindex="0"
                     class="btn text-nowrap lg:text-sm text-xs hover:text-regal-brown py-0 font-normal m-1"
                     style="background-color: transparent; border:none;">
-                    Languages<span class="material-symbols-outlined">arrow_drop_down</span>
+                    {{ $t('nav.language') }}<span class="material-symbols-outlined">arrow_drop_down</span>
                 </label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a href="#">English</a></li>
-                    <li><a href="#">Arabic</a></li>
+                    <li><a href="#" @click.prevent="changeLanguage('en')">English</a></li>
+                    <li><a href="#" @click.prevent="changeLanguage('ar')">العربية</a></li>
                 </ul>
             </div>
             <router-link to="/contact"
-            class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">Contact
-            Us</router-link>
+            class="text-xs mx-2 lg:text-sm hover:text-regal-brown transition-all duration-500 py-0">{{ $t('nav.contact') }}</router-link>
         </ul>
     </div>
 </div>
@@ -70,7 +68,7 @@
         <div class="flex w-full justify-between md:w-fit md:block">
             <router-link to="/" class="flex items-center">
                 <img src="@/assets/images/logo.png"
-                    class="h-8 mr-3 hover:scale-150 transition-all duration-500 rounded-full" alt="Flowbite Logo" />
+                    class="h-8 me-3 hover:scale-150 transition-all duration-500 rounded-full" alt="Flowbite Logo" />
                 <span
                     class="self-center opacity-75 text-sm lg:text-xl font-semibold whitespace-nowrap dark:text-white">Stanissk
                     Store</span>
@@ -78,34 +76,34 @@
             <DrawerVue DrawerId='navbar2' />
         </div>
         <div class="items-center hidden lg:flex" id="categories" v-if="searchBarHidden">
-            <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
+            <ul class="flex flex-row font-medium mt-0 me-6 space-x-8 text-sm">
                 <li><router-link to="/"
                         class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category"
-                        aria-current="page">Home</router-link></li>
+                        aria-current="page">{{ $t('nav.home') }}</router-link></li>
                 <li @click="scrollTo('phones')"><button id="phone_btn"
-                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Phones</button>
+                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">{{ $t('header.phones') }}</button>
                 </li>
                 <li @click="scrollTo('accessories')"><button id="accessory_btn"
-                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Accessories</button>
+                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">{{ $t('header.accessories') }}</button>
                 </li>
                 <li @click="scrollTo('electronics')"><button id="electronic_btn"
-                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">Electronics</button>
+                        class="text-gray-900 dark:text-white hover:text-regal-brown transition-all duration-500 category">{{ $t('header.electronics') }}</button>
                 </li>
             </ul>
         </div>
         <div class="items-center flex-wrap md:flex-nowrap hidden md:flex" id="searchBar" v-else>
             <SearchBarVue :categories="categoriesLinks" />
             <span @click="toggleSearch"
-                class="material-symbols-outlined text-3xl ml-10 hover:text-regal-brown transition-all duration-500 cursor-pointer"
+                class="material-symbols-outlined text-3xl ms-10 hover:text-regal-brown transition-all duration-500 cursor-pointer"
                 id="close">close</span>
         </div>
         <div class="flex items-center gap-2">
             <div class="flex items-center" id="buttons">
-                <ul class="flex flex-row font-medium mt-0 mr-6 space-x-8 text-sm">
+                <ul class="flex flex-row font-medium mt-0 me-6 space-x-8 text-sm">
                     <li>
                         <label for="voice-search" class="sr-only">Search</label>
                         <button id="searchbtn" type="button"
-                            class="inline-flex ml-2 text-sm bg-transparent rounded-lg focus:outline-none dark:bg-regal-brown dark:hover:bg-regal-700brown dark:focus:ring-amber-700">
+                            class="inline-flex ms-2 text-sm bg-transparent rounded-lg focus:outline-none dark:bg-regal-brown dark:hover:bg-regal-700brown dark:focus:ring-amber-700">
                             <span @click="toggleSearch"
                                 class="material-symbols-outlined cursor-pointer hover:text-regal-brown transition-all duration-500"
                                 style="font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">search</span>
@@ -116,7 +114,7 @@
                             <div tabindex="0" class="relative inline-block"
                                 style="background-color: transparent; border:none;">
                                 <div v-if="false"
-                                    class="w-4 h-4 cursor-pointer bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
+                                    class="w-4 h-4 cursor-pointer bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -end-1">
                                     4</div>
                                 <span
                                     class="material-symbols-outlined cursor-pointer hover:text-regal-brown transition-all duration-500"
@@ -126,12 +124,12 @@
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80">
                                 <div
                                     class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    Notifications</div>
+                                    {{ $t('header.notifications') }}</div>
                                 <li class="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
                                     <svg class="w-12 h-12 mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                                     </svg>
-                                    <p class="text-sm font-medium">No new notifications</p>
+                                    <p class="text-sm font-medium">{{ $t('header.no_notifications') }}</p>
                                 </li>
                             </ul>
                         </div>
@@ -140,7 +138,7 @@
                         <div class="dropdown dropdown-end bg-transparent">
                             <div tabindex="0" class="relative inline-block bg-transparent border-none">
                                 <div
-                                    class="w-4 h-4 cursor-pointer bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
+                                    class="w-4 h-4 cursor-pointer bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -end-1">
                                     {{favoriteNbr}}
                                 </div>
                                 <span
@@ -153,7 +151,7 @@
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80">
                                 <div
                                     class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    Favorite
+                                    {{ $t('header.favorite') }}
                                 </div>
                                 <template v-if="favoriteProducts.length > 0">
                                     <div v-for="product in favoriteProducts" :key="product.id">
@@ -162,7 +160,7 @@
                                                 <div class="w-32 overflow-hidden">
                                                     <img class="object-cover h-20" :src="product.image" alt="Product image">
                                                 </div>
-                                                <div class="w-full pl-3">
+                                                <div class="w-full ps-3">
                                                     <div class="text-gray-500 text-md mb-1 dark:text-gray-400">
                                                         <span class="font-bold text-gray-900 dark:text-white">{{
                                                             product.name }}</span>
@@ -184,17 +182,17 @@
                                     <svg class="w-12 h-12 mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                     </svg>
-                                    <p class="text-sm font-medium">Your wishlist is empty</p>
+                                    <p class="text-sm font-medium">{{ $t('header.wishlist_empty') }}</p>
                                 </div>
                                 <a href="#"
                                     class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
                                     <div class="inline-flex items-center">
-                                        <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
                                             <path
                                                 d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
                                         </svg>
-                                        View all
+                                        {{ $t('header.view_all') }}
                                     </div>
                                 </a>
                             </ul>
@@ -206,7 +204,7 @@
                             <div tabindex="0" @click="resetToZero" data-toggle="collapse"
                                 class="relative border-none bg-transparent inline-block">
                                 <div 
-                                    class="w-4 h-4 notif-count cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -right-1">
+                                    class="w-4 h-4 notif-count cursor-pointer  bg-regal-brown text-white rounded-full flex items-center justify-center text-xs font-semibold absolute -top-1 -end-1">
                                     {{ notificationCount }}
                                 </div>
                                 <span
@@ -220,7 +218,7 @@
                                 class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[380px]">
                                 <div
                                     class="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
-                                    Cart
+                                    {{ $t('header.cart') }}
                                 </div>
                                 <template v-if="carts.length > 0">
                                     <template v-for="cart in carts" :key="cart.id">
@@ -229,14 +227,14 @@
                                                 <div class="w-32 overflow-hidden">
                                                     <img :src="`/assets/images/products/${cart.img || cart.profileImage}`" class="object-cover h-20" alt="image">
                                                 </div>
-                                                <div class="w-full pl-3">
+                                                <div class="w-full ps-3">
                                                     <div class="text-gray-500 text-md mb-1 dark:text-gray-400"><span class="font-bold text-gray-900 dark:text-white">{{ cart.name }}</span></div>
                                                     <div class="text-gray-500 text-sm mb-1 dark:text-gray-400"><span class="opacity-80 text-gray-900 dark:text-white">{{ cart.user_id }}</span></div>
                                                     <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{ cart.price }}</div>
                                                 </div>
                                             </router-link>
                                             <button @click="deleteCard(cart.id)" class="delete_cart hover:bg-transparent">
-                                                <span  class="ml-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
+                                                <span  class="ms-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
                                                     close
                                                 </span>
                                             </button>
@@ -248,19 +246,19 @@
                                     <svg class="w-12 h-12 mb-2 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
-                                    <p class="text-sm font-medium">Your cart is empty</p>
+                                    <p class="text-sm font-medium">{{ $t('header.cart_empty') }}</p>
                                 </div>
                                 <li>
                                     <router-link to="/carts"
                                         class="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
                                         <div class="inline-flex items-center ">
-                                            <svg class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"
+                                            <svg class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400"
                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                 fill="currentColor" viewBox="0 0 20 14">
                                                 <path
                                                     d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
                                             </svg>
-                                            View all
+                                            {{ $t('header.view_all') }}
                                         </div>
                                     </router-link>
                                 </li>

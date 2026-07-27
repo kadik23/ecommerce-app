@@ -200,6 +200,21 @@ export default {
             }
         }
 
+        const changeLanguage = async (lang: string) => {
+            if (isLoggedIn.value) {
+                try {
+                    await restUserSession.updateUserInfo({ lang } as any);
+                } catch (error) {
+                    console.error('Failed to update language on backend', error);
+                }
+            }
+            import('@/i18n').then(module => {
+                const i18n = module.default;
+                i18n.global.locale.value = lang;
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            });
+        };
+
         return {
             logo, isShow, isShow2, logout,
             isLoggedIn,
@@ -220,7 +235,8 @@ export default {
             resetToZero,
             deleteCard,
             notificationCount,
-            currentPath
+            currentPath,
+            changeLanguage
         }
     }
 }

@@ -7,7 +7,7 @@
     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
       <li v-for="(item, index) in items" :key="index">
         <router-link :to="links[index]" @click.prevent="handleItemClick(links[index], item)">
-          {{ item }}
+          {{ $t('nav.' + item.toLowerCase()) }}
         </router-link>
       </li>
     </ul>

@@ -93,6 +93,10 @@ class AuthController extends Controller
             $user->phone = $request->phone;
         }
 
+        if ($request->has('lang')) {
+            $user->lang = $request->lang;
+        }
+
         $user->save();
 
         return response()->json(['message' => 'User updated successfully']);

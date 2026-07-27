@@ -17,7 +17,7 @@
                     </button>
                 </form>
                 <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Profile picture</h3>
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ $t('profile.picture_title') }}</h3>
                     <form @submit.prevent="updateProfilePicture" class="space-y-6"
                         enctype="multipart/form-data">
                         <input type="file" v-on:change="handleImageUpload"
@@ -25,8 +25,7 @@
                             required>
                         <span v-if="errors.image">{{ errors.image }}</span>
                         <button type="submit"
-                            class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-regal-brown dark:focus:ring-blue-800">Change
-                            profile picture</button>
+                            class="w-full text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-regal-brown dark:focus:ring-blue-800">{{ $t('profile.change_picture') }}</button>
                     </form>
                 </div>
             </div>
@@ -48,7 +47,7 @@
                         </div>
                         <div class="absolute rounded-bl-full rounded-br-full inset-0 flex items-center justify-center w-32 h-20 bg-black bg-opacity-40 opacity-0 cursor-pointer group-hover:opacity-100 transition-opacity"
                             style="top:39%;">
-                            <span class="ml-2 text-white text-sm">Change Profile Picture</span>
+                            <span class="ml-2 text-white text-sm">{{ $t('profile.change_picture') }}</span>
                         </div>
                     </div>
 
@@ -57,10 +56,10 @@
                             form.username }}</h2>
                         <h5
                             class="mb-5 text-md inline-block px-3 mx-auto rounded-lg bg-red-400 tracking-tight text-white">
-                            User</h5>
+                            {{ $t('profile.user_label') }}</h5>
                         <button @click="logout"
                             class="inline-flex items-center px-16 py-2 text-sm font-medium text-center text-white bg-regal-brown rounded-lg hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300">
-                        Logout
+                        {{ $t('profile.logout') }}
                         </button>
                     </div>
                 </div>
@@ -96,23 +95,21 @@
 
             <div data-theme="light"
                 class="mt-5 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <h1 class="mt-3 mx-5 text-2xl font-bold">My profile details</h1>
+                <h1 class="mt-3 mx-5 text-2xl font-bold">{{ $t('profile.details_title') }}</h1>
                 <form @submit.prevent="updateProfile" class="flex flex-col p-10">
                     <div class="flex flex-col lg:flex-row">
                         <div>
                             <div class="mb-6 lg:mr-10 mr-0">
                                 <label for="username"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    username</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.username') }}</label>
                                 <input type="text" v-model="form.username"
                                     class="bg-gray-50 border pr-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
-                                    required placeholder="Username">
+                                    required :placeholder="$t('profile.placeholder_username')">
                                 <span v-if="errors.username">{{ errors.username }}</span>
                             </div>
                             <div class="mb-6 lg:mr-10 mr-0">
                                 <label for="email"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    email</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.email') }}</label>
                                 <input type="email" v-model="form.email"
                                     class="bg-gray-50 border pr-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
                                     placeholder="example@email.com" required>
@@ -120,43 +117,39 @@
                             </div>
                             <div class="mb-6 lg:mr-10 mr-0">
                                 <label for="password"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    password</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.password') }}</label>
                                 <input type="password" v-model="form.password"
                                     class="bg-gray-50 border pr-4 mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
                                 >
                                 <router-link class="font-semibold text-regal-brown hover:text-amber-700 mb-4 lg:mb-0 lg:float-right float-left"
                                     to='/password/reset'>
-                                    Forgot Your Password?
+                                    {{ $t('profile.forgot_password') }}
                                 </router-link>
                             </div>
                         </div>
                         <div>
                             <div class="mb-6">
                                 <label for="tel"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    phone number</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.phone') }}</label>
                                     <input type="text" v-model="form.phone"
                                     class="bg-gray-50 border pr-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
-                                    placeholder="Phone number">                             
+                                    :placeholder="$t('profile.placeholder_phone')">                             
                                 <span v-if="errors.phone">{{ errors.phone }}</span>
                             </div>
                             <div class="mb-6">
                                 <label for="country"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    country</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.country') }}</label>
                                 <input type="text" v-model="form.country"
                                     class="bg-gray-50 border pr-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
-                                    placeholder="Country">
+                                    :placeholder="$t('profile.placeholder_country')">
                                 <span v-if="errors.country">{{ errors.country }}</span>
                             </div>
                             <div class="mb-6">
                                 <label for="city"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">Your
-                                    city</label>
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white float-left">{{ $t('profile.city') }}</label>
                                 <input type="text" v-model="form.city"
                                     class="bg-gray-50 border pr-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-700 focus:border-amber-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-700 dark:focus:border-amber-700"
-                                    placeholder="City">
+                                    :placeholder="$t('profile.placeholder_city')">
                                 <span v-if="errors.city">{{ errors.city }}</span>
                             </div>
                         </div>
@@ -164,8 +157,7 @@
 
                     <div>
                         <button type="submit"
-                            class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center float-right dark:bg-amber-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">Update
-                            information</button>
+                            class="text-white bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-regal-brown font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center float-right dark:bg-amber-brown dark:hover:bg-amber-700 dark:focus:ring-regal-brown">{{ $t('profile.update') }}</button>
                     </div>
                 </form>
             </div>

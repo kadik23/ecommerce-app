@@ -1,0 +1,141 @@
+{
+  "nav": {
+    "home": "Home",
+    "search": "Search",
+    "contact": "Contact",
+    "edit_profile": "Edit Profile",
+    "carts": "Carts",
+    "orders": "Orders",
+    "products": "Products",
+    "language": "Language",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "my_account": "My account",
+    "profile": "Profile"
+  },
+  "home": {
+    "featured": "Featured Products",
+    "latest": "Latest Arrivals",
+    "top_products": "Top Products",
+    "see_more": "See More",
+    "welcome_msg": "Welcome to Stanissk Store, where shopping meets convenience and quality. With a wide range of products to choose from, we're your one-stop destination for all your shopping needs.",
+    "shop_now": "SHOP NOW",
+    "shop_by_brand": "SHOP BY BRAND",
+    "best_offers_electronics": "BEST OFFERS HIGH ELECTRONICS",
+    "best_offers_phones": "BEST OFFERS HIGH PHONES",
+    "best_offers_accessories": "BEST OFFERS HIGH ACCESSORIES",
+    "our_partners": "OUR PARTNERS"
+  },
+  "contact": {
+    "title": "Contact sales",
+    "description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "company": "Company",
+    "email": "Email",
+    "phone_number": "Phone number",
+    "message": "Message",
+    "privacy_policy_agree": "By selecting this, you agree to our",
+    "privacy_policy": "privacy policy",
+    "submit": "Let's talk"
+  },
+  "profile": {
+    "picture_title": "Profile picture",
+    "change_picture": "Change profile picture",
+    "user_label": "User",
+    "logout": "Logout",
+    "details_title": "My profile details",
+    "username": "Your username",
+    "email": "Your email",
+    "password": "Your password",
+    "forgot_password": "Forgot Your Password?",
+    "phone": "Your phone number",
+    "country": "Your country",
+    "city": "Your city",
+    "update": "Update information",
+    "placeholder_username": "Username",
+    "placeholder_country": "Country",
+    "placeholder_city": "City",
+    "placeholder_phone": "Phone number"
+  },
+  "cart": {
+    "title": "Cart :",
+    "breadcrumb": "Carts",
+    "summary": "CART SUMMARY",
+    "fast_delivery": "Fast delivery - 24 hours to major cities",
+    "order_btn": "Order",
+    "empty": "Your cart is empty",
+    "start_shopping": "Start Shopping",
+    "my_orders": "My orders"
+  },
+  "order": {
+    "title": "My order :",
+    "processing": "Processing",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "empty": "You have no orders here"
+  },
+  "order_preview": {
+    "order_text": "Order",
+    "order_info": "Order info",
+    "status": "Status",
+    "product_name": "Product name",
+    "quantity": "Quantity",
+    "delivery_method": "Delivery method",
+    "go_to_payment": "Go to payment",
+    "complete_delivery": "Complete the delivery process",
+    "sent": "Order sent",
+    "confirmed": "Order confirmed",
+    "paid": "Order paid",
+    "delivered": "Order delivered"
+  },
+  "category": {
+    "sort_by": "Sort By",
+    "popularity": "Popularity",
+    "rating": "Rating",
+    "price_low_high": "Price: Low to High",
+    "price_high_low": "Price: High to Low",
+    "category": "Category"
+  },
+  "footer": {
+    "contact_us": "Contact Us",
+    "follow_us": "Follow us",
+    "legal": "Legal",
+    "privacy_policy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "rights_reserved": "All Rights Reserved",
+    "facebook": "Facebook page",
+    "discord": "Discord community",
+    "twitter": "Twitter page",
+    "github": "GitHub account"
+  },
+  "header": {
+    "free_support": "Free Support",
+    "phones": "Phones",
+    "accessories": "Accessories",
+    "electronics": "Electronics",
+    "notifications": "Notifications",
+    "no_notifications": "No new notifications",
+    "favorite": "Favorite",
+    "wishlist_empty": "Your wishlist is empty",
+    "view_all": "View all",
+    "cart": "Cart",
+    "cart_empty": "Your cart is empty"
+  },
+  "cart_item": {
+    "description": "Description :",
+    "size": "size:"
+  },
+  "product_card": {
+    "available": "Available",
+    "sold": "Sold",
+    "add_to_cart": "Add to cart",
+    "edit": "Edit",
+    "delete": "Delete",
+    "rate_product": "Rate our product!",
+    "rate_question": "How would you love this product",
+    "submit": "Submit",
+    "close_msg": "Press ESC key or click on ✕ button to close"
+  }
+}
