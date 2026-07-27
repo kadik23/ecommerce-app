@@ -25,6 +25,7 @@ import { OrderPreviewVue } from './screens/orders/preview';
 import { ContactVue } from './screens/contact';
 import { ProductByCategoryVue } from './screens/products_by_category';
 import { PaymentVue } from './screens/payment';
+import i18n from './i18n';
 
 gsap.registerPlugin(ScrollToPlugin);
 const app = createApp(App)
@@ -79,6 +80,12 @@ router.beforeEach(async (to, from) => {
                 userSessionRepository.clear();
                 return { path: 'sign-in' };
             }
+            
+            if (response.lang) {
+                i18n.global.locale.value = response.lang;
+                document.documentElement.dir = response.lang === 'ar' ? 'rtl' : 'ltr';
+            }
+
             isLoggedIn.value = true;
             app.provide('axios', setupAxios(access_token));
         } catch (error) {
@@ -90,5 +97,6 @@ router.beforeEach(async (to, from) => {
 app.component("Loading", LoadingVue);
 app.component("Toast", ToastVue);
 
+app.use(i18n);
 app.use(router);
 app.mount('#app');

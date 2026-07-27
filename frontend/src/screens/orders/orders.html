@@ -1,10 +1,10 @@
 <div class="container flex flex-col items-start">
     <Loading v-if="isLoading" />
-    <div class="font-bold mt-10 opacity-80 md:px-16 px-4 text-3xl float-left">My order :</div>
+    <div class="font-bold mt-10 opacity-80 md:px-16 px-4 text-3xl float-left">{{ $t('order.title') }}</div>
     <div class="flex flex-wrap md:px-10 mt-5 ml-5">
-        <TagVue @recievedCurrentState="changeCurrentState" tagname="Processing" :isCurrentState="currentStatus == 'Processing'"/>
-        <TagVue @recievedCurrentState="changeCurrentState" tagname="Shipped" :isCurrentState="currentStatus == 'Shipped'"/>
-        <TagVue @recievedCurrentState="changeCurrentState" tagname="Delivered" :isCurrentState="currentStatus == 'Delivered'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.processing')" :isCurrentState="currentStatus == $t('order.processing') || currentStatus == 'Processing'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.shipped')" :isCurrentState="currentStatus == $t('order.shipped') || currentStatus == 'Shipped'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.delivered')" :isCurrentState="currentStatus == $t('order.delivered') || currentStatus == 'Delivered'"/>
     </div>
     <div class="flex flex-wrap md:px-10 w-full" v-if="filteredOrders?.length > 0">
         <Loading v-if="isLoading" />
@@ -14,6 +14,6 @@
         <svg class="w-24 h-24 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
         </svg>
-        <p class="text-xl text-gray-500 font-semibold">You have no orders here</p>
+        <p class="text-xl text-gray-500 font-semibold">{{ $t('order.empty') }}</p>
     </div>
 </div>

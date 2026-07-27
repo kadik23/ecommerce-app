@@ -13,7 +13,7 @@
         </div>
         <div @click="()=>RateModal.showModal()" class="flex items-center mt-2.5 mb-5 cursor-pointer">
             <template v-for="i in 5">
-                <svg v-if="i <= rating" class="w-4 h-4 text-yellow-300 mr-1" xmlns="http://www.w3.org/2000/svg"
+                <svg v-if="i <= rating" class="w-4 h-4 text-yellow-300 me-1" xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 22 20" :key="'star-' + i">
                     <path
                         d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
@@ -25,13 +25,13 @@
                 </svg>
             </template>
             <span
-                class="bg-amber-100 text-regal-brown text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-amber-200 dark:text-regal-brown ml-3">
+                class="bg-amber-100 text-regal-brown text-xs font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-amber-200 dark:text-regal-brown ms-3">
                 {{ rating ? rating : '0.00' }}
             </span>
         </div>
         <div class="flex flex-col">
-            <span v-if="isAdmin" class="text-green-500 font-bold">Available: {{ quantity }}</span>
-            <span v-if="isAdmin" class="text-blue-600 font-bold">Sold: {{ sold }}%</span>
+            <span v-if="isAdmin" class="text-green-500 font-bold">{{ $t('product_card.available') }}: {{ quantity }}</span>
+            <span v-if="isAdmin" class="text-blue-600 font-bold">{{ $t('product_card.sold') }}: {{ sold }}%</span>
         </div>
         <div class="flex items-center justify-between">
             <span class="text-xl font-bold text-gray-900 dark:text-white">${{ price }}</span>
@@ -42,15 +42,14 @@
                     <span :class="['material-symbols-outlined', 'text-regal-brown', isFavorite ? 'fill' : '']">favorite</span>
                 </div>
                 <button v-if="!isAdmin" :product_id="id" @click="addToCart"
-                    class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Add
-                    to cart</button>
+                    class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ $t('product_card.add_to_cart') }}</button>
                 <div v-else class="inline-block bg-transparent" @click="showModal">
                     <a :data-name="name" :data-image="profile" :data-price="price" :data-id="id" href="#"
                         @click.prevent="editProduct" :id="id"
-                        class="text-white mr-3 bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">Edit</a>
+                        class="text-white me-3 bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ $t('product_card.edit') }}</a>
                 </div>
                 <a v-if="isAdmin" href="#" :product_id="id"
-                    class="text-red-700 delete_btn my-auto hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</a>
+                    class="text-red-700 delete_btn my-auto hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">{{ $t('product_card.delete') }}</a>
             </div>
         </div>
     </div>
@@ -58,8 +57,8 @@
     <!-- Modal for rating -->
     <dialog id="my_modal_3" class="modal" ref="RateModal">
         <div class="modal-box flex flex-col gap-2 items-center">
-            <h3 class="text-lg font-bold">Rate our product!</h3>
-            <h3 class="text-sm font-semibold">How would you love this product</h3>
+            <h3 class="text-lg font-bold">{{ $t('product_card.rate_product') }}</h3>
+            <h3 class="text-sm font-semibold">{{ $t('product_card.rate_question') }}</h3>
             <div class="rating">
                 <input type="radio" name="rating" :value="1" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
                 <input type="radio" name="rating" :value="2" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
@@ -67,11 +66,11 @@
                 <input type="radio" name="rating" :value="4" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
                 <input type="radio" name="rating" :value="5" class="mask mask-star-2 bg-orange-400" v-model="userRating" />
             </div>
-            <button @click="rateProduct" class="btn bg-regal-brown text-white btn-primary">Submit</button>
+            <button @click="rateProduct" class="btn bg-regal-brown text-white btn-primary">{{ $t('product_card.submit') }}</button>
             <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button class="btn btn-sm btn-circle btn-ghost absolute end-2 top-2">✕</button>
             </form>
-            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+            <p class="py-4">{{ $t('product_card.close_msg') }}</p>
         </div>
     </dialog>
 </div>
