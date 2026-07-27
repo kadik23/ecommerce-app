@@ -24,6 +24,7 @@ import { ToastVue } from './components/toast';
 import { OrderPreviewVue } from './screens/orders/preview';
 import { ContactVue } from './screens/contact';
 import { ProductByCategoryVue } from './screens/products_by_category';
+import { WishlistVue } from './screens/wishlist';
 import { PaymentVue } from './screens/payment';
 import i18n from './i18n';
 
@@ -48,6 +49,7 @@ const routes: RouteRecordRaw[] = [
             { path: '/orders', component: OrdersVue },
             { path: '/order-preview/:id', component: OrderPreviewVue },
             { path: '/contact', component: ContactVue },
+            { path: '/wishlist', component: WishlistVue },
             { path: '/product-by-categroy/:category', component: ProductByCategoryVue },
             { path: '/payment-method/:id', component: PaymentVue }
         ]
