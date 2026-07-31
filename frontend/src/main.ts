@@ -26,6 +26,7 @@ import { ContactVue } from './screens/contact';
 import { ProductByCategoryVue } from './screens/products_by_category';
 import { WishlistVue } from './screens/wishlist';
 import { PaymentVue } from './screens/payment';
+import { NotFoundVue } from './screens/not_found';
 import i18n from './i18n';
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -51,7 +52,8 @@ const routes: RouteRecordRaw[] = [
             { path: '/contact', component: ContactVue },
             { path: '/wishlist', component: WishlistVue },
             { path: '/product-by-categroy/:category', component: ProductByCategoryVue },
-            { path: '/payment-method/:id', component: PaymentVue }
+            { path: '/payment-method/:id', component: PaymentVue },
+            { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundVue }
         ]
     },
 ];
@@ -102,7 +104,7 @@ router.beforeEach(async (to) => {
         isLoggedIn.value = false;
     }
 
-    if (!isPublicRoute(to.path)) {
+    if (to.name !== 'NotFound' && !isPublicRoute(to.path)) {
         return { path: '/sign-in' };
     }
 });

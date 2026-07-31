@@ -39,3 +39,7 @@ Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], fun
     Route::resource('/product',ProductsController::class);
     Route::resource('/category',App\Http\Controllers\CategoriesController::class);
 });
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

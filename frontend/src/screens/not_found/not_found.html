@@ -1,0 +1,20 @@
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
+    <div class="max-w-md w-full text-center bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl p-8 shadow-xl">
+        <div class="inline-flex items-center justify-center w-24 h-24 bg-amber-50 dark:bg-amber-900/30 text-regal-brown dark:text-amber-400 rounded-full mb-6">
+            <span class="material-symbols-outlined text-5xl">search_off</span>
+        </div>
+
+        <h1 class="text-6xl font-black text-regal-brown dark:text-amber-400 mb-2">404</h1>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            {{ $t('not_found.title') }}
+        </h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+            {{ $t('not_found.description') }}
+        </p>
+
+        <router-link to="/" class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-regal-brown hover:bg-amber-700 rounded-xl shadow-md transition-colors cursor-pointer">
+            <span class="material-symbols-outlined me-2 text-lg">home</span>
+            {{ $t('not_found.back_home') }}
+        </router-link>
+    </div>
+</div>
