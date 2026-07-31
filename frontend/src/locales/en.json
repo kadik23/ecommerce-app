@@ -28,17 +28,20 @@
     "our_partners": "OUR PARTNERS"
   },
   "contact": {
-    "title": "Contact sales",
-    "description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
+    "title": "Contact Us",
+    "description": "Have a question or feedback? Fill out the form below to get in touch with us.",
     "first_name": "First name",
     "last_name": "Last name",
-    "company": "Company",
     "email": "Email",
     "phone_number": "Phone number",
+    "country": "Country",
     "message": "Message",
     "privacy_policy_agree": "By selecting this, you agree to our",
     "privacy_policy": "privacy policy",
-    "submit": "Let's talk"
+    "submit": "Send message",
+    "sending": "Sending...",
+    "success_msg": "Message sent successfully!",
+    "error_msg": "Failed to send message. Please try again."
   },
   "profile": {
     "picture_title": "Profile picture",

@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], fun
     Route::post('/order/{id}/update-status', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     Route::get('/orders', 'App\Http\Controllers\AdminController@orders')->name('dashboard.orders');
     Route::get('/customers', 'App\Http\Controllers\AdminController@customers')->name('dashboard.Customers');
+    Route::get('/contact-messages', 'App\Http\Controllers\AdminController@contactMessages')->name('dashboard.contactMessages');
+    Route::post('/contact-messages/{id}/toggle-status', 'App\Http\Controllers\AdminController@toggleContactStatus')->name('admin.contactMessages.toggleStatus');
     Route::get('/user-stats', 'App\Http\Controllers\AdminController@userStats')->name('admin.userStats');
     Route::get('/users-report', 'App\Http\Controllers\AdminController@usersReport')->name('admin.usersReport');
     Route::get('/product/filter', [ProductsController::class,'filter'])->name('product.filter');
