@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\WalletTransaction;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\ContactMessageRepositoryInterface;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +17,15 @@ use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {   
     private UserRepositoryInterface $userRepository;
+    private ContactMessageRepositoryInterface $contactMessageRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        ContactMessageRepositoryInterface $contactMessageRepository
+    ) {
         $this->middleware('role:admin');
         $this->userRepository = $userRepository;
+        $this->contactMessageRepository = $contactMessageRepository;
     }
 
     public function index(Request $request)
@@ -229,6 +235,24 @@ class AdminController extends Controller
 
         return view('admin.Customers',compact('customersTitle','iconCard','nbr','cardName','conversionRateData', 'customers'));
     }
-    
 
+    public function contactMessages(Request $request)
+    {
+        $contactTitle = 'Contact Messages';
+        $counts = $this->contactMessageRepository->getCounts();
+        $totalCount = $counts['totalCount'];
+        $unresolvedCount = $counts['unresolvedCount'];
+        $resolvedCount = $counts['resolvedCount'];
+
+        $messages = $this->contactMessageRepository->getPaginatedMessages($request->query('status'), 15);
+
+        return view('admin.contact_messages', compact('contactTitle', 'totalCount', 'unresolvedCount', 'resolvedCount', 'messages'));
+    }
+
+    public function toggleContactStatus($id)
+    {
+        $this->contactMessageRepository->toggleStatus($id);
+
+        return redirect()->back()->with('success', 'Contact message status updated successfully.');
+    }
 }

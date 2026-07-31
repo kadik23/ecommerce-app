@@ -8,9 +8,13 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
 
+use App\Http\Controllers\ContactMessageController;
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/contact', [ContactMessageController::class, 'store']);
 
 Route::get('/info',function (Request $request) {
     return response()->json([
