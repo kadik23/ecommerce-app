@@ -29,6 +29,10 @@ return [
         ],
         'confirm' => 'تأكيد',
         'cancel' => 'إلغاء',
+        'confirm_order_title' => 'تأكيد الطلب',
+        'confirm_order_msg' => 'هل أنت متأكد من أنك تريد تأكيد هذا الطلب؟',
+        'cancel_order_title' => 'إلغاء الطلب',
+        'cancel_order_msg' => 'هل أنت متأكد من أنك تريد إلغاء هذا الطلب؟',
     ],
     'dashboard' => [
         'users_statistic' => 'إحصائيات المستخدمين',
@@ -91,6 +95,8 @@ return [
         'status_unresolved' => 'غير معالجة',
         'mark_resolved' => 'تحديد كمعالجة',
         'mark_unresolved' => 'تحديد كغير معالجة',
+        'confirm_mark_resolved' => 'هل أنت متأكد من أنك تريد تحديد هذه الرسالة كمعالجة؟',
+        'confirm_mark_unresolved' => 'هل أنت متأكد من أنك تريد تحديد هذه الرسالة كغير معالجة؟',
         'no_messages' => 'لم يتم العثور على رسائل تواصل.',
     ],
     'sliders' => [
@@ -147,6 +153,8 @@ return [
         'add_to_cart' => 'أضف إلى السلة',
         'edit' => 'تعديل',
         'delete' => 'حذف',
+        'confirm_delete_title' => 'حذف المنتج',
+        'confirm_delete_msg' => 'هل أنت متأكد من أنك تريد حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء.',
         'search' => 'بحث',
         'search_placeholder' => 'ابحث عن الهواتف، الإكسسوارات، الإلكترونيات...',
         'create_category_form' => 'إنشاء فئة جديدة',

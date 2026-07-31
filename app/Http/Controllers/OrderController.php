@@ -102,9 +102,17 @@ class OrderController extends Controller
             $order->state = $request->status;
             $order->save();
 
-            return response()->json(['success' => true, 'message' => 'Order status updated successfully']);
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => true, 'message' => 'Order status updated successfully']);
+            }
+
+            return redirect()->back()->with('success', 'Order status updated successfully');
         }
 
-        return response()->json(['success' => false, 'message' => 'Order not found'], 404);
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => false, 'message' => 'Order not found'], 404);
+        }
+
+        return redirect()->back()->with('error', 'Order not found');
     }
 }

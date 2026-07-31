@@ -35,24 +35,50 @@
     <div class="flex justify-center items-center">
         <div class="dropdown">
             <div tabindex="0" role="button" class="material-symbols-outlined cursor-pointer text-regal-brown">more_vert</div>
-            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-48 p-2 shadow">
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 dark:bg-gray-800 rounded-box z-[1] w-48 p-2 shadow">
                 <li>
-                    <div class="flex items-center gap-2 text-regal-brown cursor-pointer confirm-order" data-id="{{$id}}">
-                        <span class="material-symbols-outlined">
-                            sync_saved_locally
-                        </span>
+                    <div onclick="document.getElementById('confirm_order_modal_{{ $id }}').showModal()" class="flex items-center gap-2 text-regal-brown cursor-pointer">
+                        <span class="material-symbols-outlined">sync_saved_locally</span>
                         <span class="font-semibold">{{ t('admin.orders.confirm') }}</span>
                     </div>
                 </li>
                 <li>
-                    <div class="flex items-center gap-2 text-regal-brown cursor-pointer cancel-order" data-id="{{$id}}">
-                        <span class="material-symbols-outlined">
-                            delete_forever
-                        </span>
+                    <div onclick="document.getElementById('cancel_order_modal_{{ $id }}').showModal()" class="flex items-center gap-2 text-red-600 cursor-pointer">
+                        <span class="material-symbols-outlined">delete_forever</span>
                         <span class="font-semibold">{{ t('admin.orders.cancel') }}</span>
                     </div>
                 </li>
             </ul>
         </div>
+
+        <!-- Confirm Order Popconfirm -->
+        <x-popconfirm 
+            :id="'confirm_order_modal_' . $id"
+            :title="t('admin.orders.confirm_order_title')"
+            :message="t('admin.orders.confirm_order_msg')"
+            :action="route('order.updateStatus', $id)"
+            method="POST"
+            :confirmText="t('admin.orders.confirm')"
+            :cancelText="t('admin.sliders.cancel')"
+            confirmClass="bg-orange-600 hover:bg-orange-700 text-white"
+            icon="check_circle"
+        >
+            <input type="hidden" name="status" value="confirm" />
+        </x-popconfirm>
+
+        <!-- Cancel Order Popconfirm -->
+        <x-popconfirm 
+            :id="'cancel_order_modal_' . $id"
+            :title="t('admin.orders.cancel_order_title')"
+            :message="t('admin.orders.cancel_order_msg')"
+            :action="route('order.updateStatus', $id)"
+            method="POST"
+            :confirmText="t('admin.orders.cancel')"
+            :cancelText="t('admin.sliders.cancel')"
+            confirmClass="bg-red-600 hover:bg-red-700 text-white"
+            icon="cancel"
+        >
+            <input type="hidden" name="status" value="cancel" />
+        </x-popconfirm>
     </div>
 </div>
