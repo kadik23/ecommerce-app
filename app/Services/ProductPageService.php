@@ -4,18 +4,22 @@ namespace App\Services;
 
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\SliderRepositoryInterface;
 
 class ProductPageService
 {
     protected $productRepository;
     protected $categoryRepository;
+    protected $sliderRepository;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        CategoryRepositoryInterface $categoryRepository
+        CategoryRepositoryInterface $categoryRepository,
+        SliderRepositoryInterface $sliderRepository
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->sliderRepository = $sliderRepository;
     }
 
     public function getProductPageData()
@@ -23,6 +27,7 @@ class ProductPageService
         return [
             'products' => $this->productRepository->all(),
             'categories' => $this->categoryRepository->All(),
+            'sliders' => $this->sliderRepository->all(),
         ];
     }
 
