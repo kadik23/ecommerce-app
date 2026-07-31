@@ -9,6 +9,8 @@ import electronicsImage from '@/assets/images/categories/umberto-jXd2FSvcRr8-uns
 import CardAnimation from '@/components/CardAnimation.component';
 import type { AxiosInstance } from 'axios';
 
+import { ProductSkeletonVue } from '@/components/skeleton';
+
 export default defineComponent({
     name: 'HomeVue',
     components: {
@@ -16,6 +18,7 @@ export default defineComponent({
         ProductCardVue,
         CategoryCardVue,
         CardAnimation,
+        ProductSkeletonVue
     },
     props: {},
     setup() {

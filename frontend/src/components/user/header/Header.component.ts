@@ -11,19 +11,22 @@ import UserSessionRepository from '@/libs/UserSessionRepository';
 import echo from '@/libs/Pusher';
 import { useRoute, useRouter } from 'vue-router';
 
+import { PopconfirmModalVue } from '@/components/popconfirm';
+
 export default {
     components: {
         DropDownVue,
         SearchBarVue,
-        DrawerVue
+        DrawerVue,
+        PopconfirmModalVue
     },
     setup() {
         const isLoggedIn = inject<any>("isLoggedIn");
         const searchBarHidden = ref<boolean>(true);
         const itemsLoggedIn = ['Profile', 'Logout'];
-        const linksLoggedIn = ['profile', 'sign-out'];
+        const linksLoggedIn = ['/profile', '/sign-out'];
         const itemsLoggedOut = ['Login', 'Register'];
-        const linksLoggedOut = ['sign-in', 'sign-up'];
+        const linksLoggedOut = ['/sign-in', '/sign-up'];
         const categoriesLinks = ref(['Phones', 'Accessories', 'Electronics']);
         const toastManager = inject<Ref<IToastsManager>>("toastManager");
         let isShow = ref(false)
@@ -196,6 +199,24 @@ export default {
             }
         });
 
+        const pendingDeleteCartId = ref<any>(null);
+        const deleteCartHeaderModal = ref<any>(null);
+
+        const confirmDeleteCart = (id: any) => {
+            pendingDeleteCartId.value = id;
+            if (deleteCartHeaderModal.value) {
+                deleteCartHeaderModal.value.showModal();
+            }
+        };
+
+        const executeDeleteCart = async () => {
+            if (pendingDeleteCartId.value !== null) {
+                const idToDelete = pendingDeleteCartId.value;
+                pendingDeleteCartId.value = null;
+                await deleteCard(idToDelete);
+            }
+        };
+
         const deleteCard = async (id: any) => {
             try{
                 const token = userSessionRepository.getAccessToken();
@@ -248,6 +269,9 @@ export default {
             carts,
             resetToZero,
             deleteCard,
+            confirmDeleteCart,
+            executeDeleteCart,
+            deleteCartHeaderModal,
             notificationCount,
             currentPath,
             changeLanguage

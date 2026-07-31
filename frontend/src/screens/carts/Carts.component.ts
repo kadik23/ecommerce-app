@@ -1,4 +1,6 @@
 import { CartItemVue } from '@/components/cart_item';
+import { PopconfirmModalVue } from '@/components/popconfirm';
+import { CartSkeletonVue } from '@/components/skeleton';
 import RestCarts from '@/libs/RestCarts';
 import RestOrders from '@/libs/RestOrders';
 import RestUserSession from '@/libs/RestUserSession';
@@ -11,7 +13,9 @@ export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
     name: 'Cart',
     components: {
-        CartItemVue// Lazy-load the component
+        CartItemVue,
+        PopconfirmModalVue,
+        CartSkeletonVue
     },
     setup() {
         const carts = ref<CartEntity[]>([]);
@@ -111,6 +115,35 @@ export default defineComponent({
             }
         };
 
+        const confirmOrderModal = ref<any>(null);
+        const removeItemModal = ref<any>(null);
+        const pendingRemoveItemId = ref<string | null>(null);
+
+        const openConfirmOrderModal = () => {
+            if (confirmOrderModal.value) {
+                confirmOrderModal.value.showModal();
+            }
+        };
+
+        const executeSubmitOrder = async () => {
+            await submitOrder();
+        };
+
+        const confirmRemoveItem = (id: string) => {
+            pendingRemoveItemId.value = id;
+            if (removeItemModal.value) {
+                removeItemModal.value.showModal();
+            }
+        };
+
+        const executeRemoveItem = async () => {
+            if (pendingRemoveItemId.value) {
+                const idToRemove = pendingRemoveItemId.value;
+                pendingRemoveItemId.value = null;
+                await removeItem(idToRemove);
+            }
+        };
+
         onMounted(fetchCarts);
 
         return {
@@ -121,6 +154,12 @@ export default defineComponent({
             decrementQuantity,
             removeItem,
             submitOrder,
+            openConfirmOrderModal,
+            executeSubmitOrder,
+            confirmRemoveItem,
+            executeRemoveItem,
+            confirmOrderModal,
+            removeItemModal,
             isLoading
         };
     }

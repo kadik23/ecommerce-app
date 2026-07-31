@@ -93,8 +93,11 @@ export default defineComponent({
             localStorage.setItem(`favorite-${props.id}`, isFavorite.value? 'true': 'false');
         };
 
+        const isCartLoading = ref<boolean>(false);
+
         const addToCart = async () => {
             try {
+                isCartLoading.value = true;
                 const access_token = userSessionRepository.getAccessToken();
                 if (access_token && isLoggedIn?.value) {
                     const data: any = await restCarts.Create(props.id, access_token);
@@ -110,7 +113,9 @@ export default defineComponent({
             } catch (error) {
                 console.error('Error adding to cart:', error);
                 toastManager?.value?.alertError("Cart added failed.");
-            } 
+            } finally {
+                isCartLoading.value = false;
+            }
         }
 
         const rateProduct = async () => {
@@ -150,7 +155,8 @@ export default defineComponent({
             RateModal,
             userRating,
             rateProduct,
-            isLoading
+            isLoading,
+            isCartLoading
         };
     }
 });

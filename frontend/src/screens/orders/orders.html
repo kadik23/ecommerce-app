@@ -1,13 +1,15 @@
 <div class="container flex flex-col items-start">
-    <Loading v-if="isLoading" />
     <div class="font-bold mt-10 opacity-80 md:px-16 px-4 text-3xl float-left">{{ $t('order.title') }}</div>
     <div class="flex flex-wrap md:px-10 mt-5 ml-5">
         <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.processing')" :isCurrentState="currentStatus == $t('order.processing') || currentStatus == 'Processing'"/>
         <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.shipped')" :isCurrentState="currentStatus == $t('order.shipped') || currentStatus == 'Shipped'"/>
         <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.delivered')" :isCurrentState="currentStatus == $t('order.delivered') || currentStatus == 'Delivered'"/>
     </div>
-    <div class="flex flex-wrap md:px-10 w-full" v-if="filteredOrders?.length > 0">
-        <Loading v-if="isLoading" />
+    
+    <div class="flex flex-wrap md:px-10 w-full" v-if="isLoading">
+        <OrderSkeletonVue v-for="i in 4" :key="'order-skel-' + i" />
+    </div>
+    <div class="flex flex-wrap md:px-10 w-full" v-else-if="filteredOrders && filteredOrders.length > 0">
         <ProcessCardVue v-for="order in filteredOrders" :key="order.id" :data="order" />
     </div>
     <div v-else class="flex flex-col items-center justify-center w-full my-20">

@@ -1,13 +1,15 @@
 import { ProductCardVue } from "@/components/product_card";
+import { ProductSkeletonVue } from "@/components/skeleton";
 import RestProducts from "@/libs/RestProducts";
 import type { AxiosInstance } from "axios";
 import { computed, defineComponent, inject, onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
-    name: 'Cart',
+    name: 'ProductByCategory',
     components: {
-        ProductCardVue
+        ProductCardVue,
+        ProductSkeletonVue
     },
     props:{
         products:{

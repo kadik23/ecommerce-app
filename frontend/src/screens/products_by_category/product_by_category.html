@@ -1,9 +1,14 @@
 <div>
-    <Loading v-if="isLoading" />
-    <div class="text-2xl mt-4"><span class="font-semibold">{{ $t('category.category') }}:</span> {{category}}</div>
+    <div class="text-2xl mt-4 ms-8"><span class="font-semibold">{{ $t('category.category') }}:</span> {{category}}</div>
     <div class="p-4 flex flex-wrap justify-center md:justify-start">
-        <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
-        :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
-        :price="product.price" :rating="product.rating" />
+        <template v-if="isLoading && products.length === 0">
+            <ProductSkeletonVue v-for="i in 8" :key="'skel-' + i" />
+        </template>
+        <template v-else>
+            <ProductCardVue v-for="product in products" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
+            :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
+            :price="product.price" :rating="product.rating" />
+            <ProductSkeletonVue v-if="isLoading" v-for="i in 4" :key="'more-skel-' + i" />
+        </template>
     </div>
 </div>
