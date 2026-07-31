@@ -34,6 +34,7 @@
                 @if(strtoupper($method) !== 'POST')
                     @method($method)
                 @endif
+                {{ $slot }}
                 <button type="submit" class="px-4 py-2 text-xs font-medium rounded-lg transition-colors {{ $confirmClass }}">
                     {{ $confirmText }}
                 </button>

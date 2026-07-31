@@ -102,18 +102,37 @@
                         @endif
                     </td>
                     <td class="px-4 py-4 text-center whitespace-nowrap">
-                        <form action="{{ route('admin.contactMessages.toggleStatus', $msg->id) }}" method="POST" class="inline-block">
-                            @csrf
-                            @if($msg->status === 'resolved')
-                                <button type="submit" class="px-3 py-1 text-xs font-medium text-amber-700 bg-amber-100 rounded-md hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:hover:bg-amber-900/60 transition-colors">
-                                    {{ t('admin.contact_messages.mark_unresolved') }}
-                                </button>
-                            @else
-                                <button type="submit" class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-md hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/60 transition-colors">
-                                    {{ t('admin.contact_messages.mark_resolved') }}
-                                </button>
-                            @endif
-                        </form>
+                        @if($msg->status === 'resolved')
+                            <button type="button" onclick="document.getElementById('toggle_status_modal_{{ $msg->id }}').showModal()" class="px-3 py-1 text-xs font-medium text-amber-700 bg-amber-100 rounded-md hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:hover:bg-amber-900/60 transition-colors">
+                                {{ t('admin.contact_messages.mark_unresolved') }}
+                            </button>
+                            <x-popconfirm 
+                                :id="'toggle_status_modal_' . $msg->id"
+                                :title="t('admin.contact_messages.mark_unresolved')"
+                                :message="t('admin.contact_messages.confirm_mark_unresolved')"
+                                :action="route('admin.contactMessages.toggleStatus', $msg->id)"
+                                method="POST"
+                                :confirmText="t('admin.contact_messages.mark_unresolved')"
+                                :cancelText="t('admin.sliders.cancel')"
+                                confirmClass="bg-amber-600 hover:bg-amber-700 text-white"
+                                icon="help"
+                            />
+                        @else
+                            <button type="button" onclick="document.getElementById('toggle_status_modal_{{ $msg->id }}').showModal()" class="px-3 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-md hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/60 transition-colors">
+                                {{ t('admin.contact_messages.mark_resolved') }}
+                            </button>
+                            <x-popconfirm 
+                                :id="'toggle_status_modal_' . $msg->id"
+                                :title="t('admin.contact_messages.mark_resolved')"
+                                :message="t('admin.contact_messages.confirm_mark_resolved')"
+                                :action="route('admin.contactMessages.toggleStatus', $msg->id)"
+                                method="POST"
+                                :confirmText="t('admin.contact_messages.mark_resolved')"
+                                :cancelText="t('admin.sliders.cancel')"
+                                confirmClass="bg-green-600 hover:bg-green-700 text-white"
+                                icon="task_alt"
+                            />
+                        @endif
                     </td>
                 </tr>
             @empty

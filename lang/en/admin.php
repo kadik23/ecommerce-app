@@ -29,6 +29,10 @@ return [
         ],
         'confirm' => 'Confirm',
         'cancel' => 'Cancel',
+        'confirm_order_title' => 'Confirm Order',
+        'confirm_order_msg' => 'Are you sure you want to confirm this order?',
+        'cancel_order_title' => 'Cancel Order',
+        'cancel_order_msg' => 'Are you sure you want to cancel this order?',
     ],
     'dashboard' => [
         'users_statistic' => 'Users Statistic',
@@ -91,6 +95,8 @@ return [
         'status_unresolved' => 'Unresolved',
         'mark_resolved' => 'Mark Resolved',
         'mark_unresolved' => 'Mark Unresolved',
+        'confirm_mark_resolved' => 'Are you sure you want to mark this message as resolved?',
+        'confirm_mark_unresolved' => 'Are you sure you want to mark this message as unresolved?',
         'no_messages' => 'No contact messages found.',
     ],
     'sliders' => [
@@ -147,6 +153,8 @@ return [
         'add_to_cart' => 'Add to cart',
         'edit' => 'Edit',
         'delete' => 'Delete',
+        'confirm_delete_title' => 'Delete Product',
+        'confirm_delete_msg' => 'Are you sure you want to delete this product?',
         'search' => 'Search',
         'search_placeholder' => 'Search Phones, Accesoires, Electronics ...',
         'create_category_form' => 'Create new category',

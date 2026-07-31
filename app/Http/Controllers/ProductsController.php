@@ -139,11 +139,16 @@ class ProductsController extends Controller
     public function destroy(Request $request, string $id)
     {
         $this->productsRepository->delete($id);
-        return response()->json([
-            'status' => true,
-            'msg' => 'Product has been deleted successfully',
-            'id' => $request->id
-        ]);
+        
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'msg' => 'Product has been deleted successfully',
+                'id' => $request->id ?: $id
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product has been deleted successfully');
     }
 
     public function filter(Request $request)
