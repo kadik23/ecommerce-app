@@ -41,8 +41,11 @@
                     class="p-1 mx-3 cursor-pointer hover:bg-amber-50 flex justify-center items-center border-2 border-regal-brown rounded-full">
                     <span :class="['material-symbols-outlined', 'text-regal-brown', isFavorite ? 'fill' : '']">favorite</span>
                 </div>
-                <button v-if="!isAdmin" :product_id="id" @click="addToCart"
-                    class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700">{{ $t('product_card.add_to_cart') }}</button>
+                <button v-if="!isAdmin" :product_id="id" @click="addToCart" :disabled="isCartLoading"
+                    class="text-white addToCart bg-regal-brown hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-500 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:bg-regal-brown dark:hover:bg-regal-brown dark:focus:ring-amber-700 flex items-center justify-center min-w-[110px]">
+                    <span v-if="isCartLoading" class="loading loading-spinner loading-xs me-1"></span>
+                    <span v-else>{{ $t('product_card.add_to_cart') }}</span>
+                </button>
                 <div v-else class="inline-block bg-transparent" @click="showModal">
                     <a :data-name="name" :data-image="profile" :data-price="price" :data-id="id" href="#"
                         @click.prevent="editProduct" :id="id"

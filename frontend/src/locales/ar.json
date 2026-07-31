@@ -70,7 +70,13 @@
     "order_btn": "طلب",
     "empty": "سلة المشتريات فارغة",
     "start_shopping": "ابدأ التسوق",
-    "my_orders": "طلباتي"
+    "my_orders": "طلباتي",
+    "remove_confirm_title": "إزالة العنصر",
+    "remove_confirm_msg": "هل أنت متأكد من أنك تريد إزالة هذا العنصر من السلة؟",
+    "order_confirm_title": "تأكيد الطلب",
+    "order_confirm_msg": "هل أنت متأكد من أنك تريد إرسال هذا الطلب؟",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد"
   },
   "order": {
     "title": "طلبي :",

@@ -233,7 +233,7 @@
                                                     <div class="text-lg text-bold text-regal-brown dark:text-regal-amber-700">{{ cart.price }}</div>
                                                 </div>
                                             </router-link>
-                                            <button @click="deleteCard(cart.id)" class="delete_cart hover:bg-transparent">
+                                            <button @click="confirmDeleteCart(cart.id)" class="delete_cart hover:bg-transparent">
                                                 <span  class="ms-2 material-symbols-outlined cursor-pointer text-regal-brown hover:bg-transparent hover:text-amber-700">
                                                     close
                                                 </span>
@@ -269,4 +269,15 @@
             </div>
         </div>
     </div>
+    <!-- Delete Cart Confirmation Modal -->
+    <PopconfirmModalVue 
+        id="delete_cart_header_modal"
+        ref="deleteCartHeaderModal"
+        :title="$t('cart.remove_confirm_title')"
+        :message="$t('cart.remove_confirm_msg')"
+        :confirmText="$t('product_card.delete')"
+        confirmClass="bg-red-600 hover:bg-red-700 text-white"
+        icon="warning"
+        @confirm="executeDeleteCart"
+    />
 </nav>

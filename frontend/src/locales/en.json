@@ -70,7 +70,13 @@
     "order_btn": "Order",
     "empty": "Your cart is empty",
     "start_shopping": "Start Shopping",
-    "my_orders": "My orders"
+    "my_orders": "My orders",
+    "remove_confirm_title": "Remove Item",
+    "remove_confirm_msg": "Are you sure you want to remove this item from your cart?",
+    "order_confirm_title": "Confirm Order",
+    "order_confirm_msg": "Are you sure you want to place this order?",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "order": {
     "title": "My order :",

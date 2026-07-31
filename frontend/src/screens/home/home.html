@@ -1,15 +1,19 @@
 <div>
-    <Loading v-if="isLoading" />
     <!-- Slider -->
     <CarouselVue />
 
     <!-- Product Card Section -->
-    <div class="container" v-if="topProducts.length > 0">
+    <div class="container">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">{{ $t('home.top_products') }}</h1>
-        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
-            <ProductCardVue v-for="product in topProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
-                :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
-                :price="product.price" :rating="product.rating" />
+        <div id="productList" class="flex md:ml-9 flex-wrap justify-center md:justify-start dark:bg-gray-900">
+            <template v-if="isLoading">
+                <ProductSkeletonVue v-for="i in 4" :key="'top-skel-' + i" />
+            </template>
+            <template v-else-if="topProducts.length > 0">
+                <ProductCardVue v-for="product in topProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
+                    :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
+                    :price="product.price" :rating="product.rating" />
+            </template>
         </div>
         <div class="flex justify-center mt-6 mb-10">
             <router-link to="/product-by-categroy/All" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">{{ $t('home.see_more') }}</router-link>
@@ -30,12 +34,17 @@
     </section>
 
     <!-- Latest Products Section -->
-    <div class="container" v-if="latestProducts.length > 0">
+    <div class="container">
         <h1 class="text-lg lg:text-3xl text-center font-bold my-10">{{ $t('home.latest') }}</h1>
-        <div id="productList" class="flex md:ml-9 flex-wrap dark:bg-gray-900">
-            <ProductCardVue v-for="product in latestProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
-                :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
-                :price="product.price" :rating="product.rating" />
+        <div id="productList" class="flex md:ml-9 flex-wrap justify-center md:justify-start dark:bg-gray-900">
+            <template v-if="isLoading">
+                <ProductSkeletonVue v-for="i in 4" :key="'latest-skel-' + i" />
+            </template>
+            <template v-else-if="latestProducts.length > 0">
+                <ProductCardVue v-for="product in latestProducts" :key="product.id" :name="product.name" :profile="product.profileImage ? '/assets/images/products/' + product.profileImage : ''"
+                    :id="product.id" :category="product.category" :sold="product.sold" :quantity="product.quantity"
+                    :price="product.price" :rating="product.rating" />
+            </template>
         </div>
         <div class="flex justify-center mt-6">
             <router-link to="/product-by-categroy/All" class="bg-regal-brown text-white px-6 py-2 rounded-md hover:bg-amber-700 transition">{{ $t('home.see_more') }}</router-link>

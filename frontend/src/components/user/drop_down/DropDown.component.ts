@@ -13,10 +13,11 @@ export default defineComponent({
         const hasLogoutItem = computed(() => props.items.includes('Logout'));
         const restUserSession = new RestUserSession(axios)
         const handleItemClick = (link: string, item: string) => {
-            if (item === 'Logout') {
+            if (item === 'Logout' || item === 'sign-out') {
                 submitLogoutForm();
             } else {
-                window.location.href = link;
+                const targetLink = link.startsWith('/') ? link : '/' + link;
+                window.location.href = targetLink;
             }
         };
 

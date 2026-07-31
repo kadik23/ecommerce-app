@@ -1,5 +1,6 @@
 import { ProcessCardVue } from '@/components/orders_components/process_card';
 import { TagVue } from '@/components/orders_components/tag';
+import { OrderSkeletonVue } from '@/components/skeleton';
 import RestOrders from '@/libs/RestOrders';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import { type AxiosInstance } from 'axios';
@@ -12,6 +13,7 @@ export default defineComponent({
     components: {
         TagVue,
         ProcessCardVue,
+        OrderSkeletonVue
     },
     setup() {
         const orders = ref<OrderEntity[]>([]);
