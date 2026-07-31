@@ -61,38 +61,49 @@ const router = createRouter({
     routes,
 });
 
-const UNPROTECTED_ROUTES = [ '/sign-in', '/sign-up', '/password/reset', '/email/verify'];
+const isPublicRoute = (path: string) => {
+    const UNPROTECTED_ROUTES = ['/', '/sign-in', '/sign-up', '/password/reset', '/email/verify', '/contact'];
+    return UNPROTECTED_ROUTES.includes(path) || 
+           path.startsWith('/password/reset/') || 
+           path.startsWith('/product-by-categroy/');
+};
 
 const isLoggedIn = ref(false);
 app.provide('isLoggedIn', isLoggedIn);
+app.provide('axios', axios);
 
-router.beforeEach(async (to, from) => {
-    if(!UNPROTECTED_ROUTES.includes(to.path) && !to.path.startsWith('/password/reset/')){
-        const userSessionRepository = new UserSessionRepository(localStorage);
-        const restUserSession = new RestUserSession(axios);
-        const access_token = userSessionRepository.getAccessToken();
-        
-        if(!access_token){
-            return { path: '/sign-in' };
-        }
+router.beforeEach(async (to) => {
+    const userSessionRepository = new UserSessionRepository(localStorage);
+    const restUserSession = new RestUserSession(axios);
+    const access_token = userSessionRepository.getAccessToken();
 
+    if (access_token) {
         try {
             const response = await restUserSession.getCurrentUser(access_token);
-            if(response.error){
+            if(response && !response.error) {
+                if (response.lang) {
+                    (i18n.global.locale as any).value = response.lang;
+                    document.documentElement.dir = response.lang === 'ar' ? 'rtl' : 'ltr';
+                }
+                isLoggedIn.value = true;
+                setupAxios(access_token);
+                return;
+            } else {
                 userSessionRepository.clear();
-                return { path: 'sign-in' };
+                delete axios.defaults.headers.common['Authorization'];
+                isLoggedIn.value = false;
             }
-            
-            if (response.lang) {
-                i18n.global.locale.value = response.lang;
-                document.documentElement.dir = response.lang === 'ar' ? 'rtl' : 'ltr';
-            }
-
-            isLoggedIn.value = true;
-            app.provide('axios', setupAxios(access_token));
         } catch (error) {
             console.log(error);
+            isLoggedIn.value = false;
         }
+    } else {
+        delete axios.defaults.headers.common['Authorization'];
+        isLoggedIn.value = false;
+    }
+
+    if (!isPublicRoute(to.path)) {
+        return { path: '/sign-in' };
     }
 });
 
