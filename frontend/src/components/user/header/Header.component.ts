@@ -1,6 +1,6 @@
 import logo from '@/assets/images/logo.png';
 import RestUserSession from "@/libs/RestUserSession";
-import { ref, inject, type Ref, onMounted, computed } from 'vue'
+import { ref, inject, type Ref, onMounted, computed, watch } from 'vue'
 import axios from "axios";
 import { DropDownVue } from '../drop_down';
 import { SearchBarVue } from '@/components/search_bar';
@@ -41,7 +41,6 @@ export default {
         const favoriteProducts = ref<ProductEntity[]>([]);
         const restCarts: IRestCarts = new RestCarts(axios);
         const userSessionRepository = new UserSessionRepository(localStorage);
-        const access_token = userSessionRepository.getAccessToken();
         const carts = ref<any[]>([])
         const sectionRefElectronics = ref<HTMLElement | null>(null);
         const sectionRefPhones = ref<HTMLElement | null>(null);
@@ -125,12 +124,13 @@ export default {
 
         const fetchCarts = async () => {
             try {
-                if (access_token) {
-                    const data: any = await restCarts.getAll(access_token);
-                    carts.value = data.Carts as CartEntity[]
-                    console.log(carts.value.length)
-                    notificationCount.value = carts.value.length
-                    console.log(data)
+                const token = userSessionRepository.getAccessToken();
+                if (token && isLoggedIn?.value) {
+                    const data: any = await restCarts.getAll(token);
+                    if (data && data.Carts) {
+                        carts.value = data.Carts as CartEntity[];
+                        notificationCount.value = carts.value.length;
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -139,11 +139,11 @@ export default {
 
         const fetchUserData = async () => {
             try {
-                if (access_token) {
-                    const data = await restUser.getCurrentUser(access_token);
+                const token = userSessionRepository.getAccessToken();
+                if (token && isLoggedIn?.value) {
+                    const data = await restUser.getCurrentUser(token);
                     user_id.value = data.id;
-                    console.log(user_id.value)
-                    setupPusher()
+                    setupPusher();
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -167,9 +167,10 @@ export default {
             if(notificationCount.value === 0){
                 return;
             }
-            if (access_token) {
+            const token = userSessionRepository.getAccessToken();
+            if (token && isLoggedIn?.value) {
                 const unReadCarts = carts.value.filter(carts => !carts.isRead)
-                await restCarts.markItRead(unReadCarts, access_token)
+                await restCarts.markItRead(unReadCarts, token)
                 notificationCount.value = 0;
             }
         };
@@ -178,15 +179,28 @@ export default {
             sectionRefAccessories.value = document.getElementById('accessories');
             sectionRefElectronics.value = document.getElementById('electronics');
             sectionRefPhones.value = document.getElementById('phones');
-            fetchProducts()
-            fetchCarts()
-            fetchUserData()
-        })
+            fetchProducts();
+            if (isLoggedIn?.value) {
+                fetchCarts();
+                fetchUserData();
+            }
+        });
+
+        watch(isLoggedIn, (newVal) => {
+            if (newVal) {
+                fetchCarts();
+                fetchUserData();
+            } else {
+                carts.value = [];
+                notificationCount.value = 0;
+            }
+        });
 
         const deleteCard = async (id: any) => {
             try{
-                if (access_token) {
-                    const res = await restCarts.Delete(id, access_token);
+                const token = userSessionRepository.getAccessToken();
+                if (token && isLoggedIn?.value) {
+                    const res = await restCarts.Delete(id, token);
                     if (res) {
                         carts.value = carts.value.filter((c: any) => c.id !== id);
                         notificationCount.value = carts.value.length;
@@ -210,7 +224,7 @@ export default {
             }
             import('@/i18n').then(module => {
                 const i18n = module.default;
-                i18n.global.locale.value = lang;
+                (i18n.global.locale as any).value = lang;
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             });
         };

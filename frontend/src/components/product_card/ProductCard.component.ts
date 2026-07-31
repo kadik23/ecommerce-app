@@ -1,9 +1,9 @@
 import RestCarts from '@/libs/RestCarts';
 import RestRates from '@/libs/RestRates';
-import RestUserSession from '@/libs/RestUserSession';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import axios from 'axios';
 import { defineComponent, inject, onMounted, ref, type Ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     props: {
@@ -53,8 +53,9 @@ export default defineComponent({
         const isLoading = ref<boolean>(false);
         const restCarts: IRestCarts = new RestCarts(axios);
         const userSessionRepository = new UserSessionRepository(localStorage);
-        const access_token = userSessionRepository.getAccessToken();
         const toastManager = inject<Ref<IToastsManager>>("toastManager");
+        const isLoggedIn = inject<Ref<boolean>>("isLoggedIn");
+        const router = useRouter();
         const RateModal = ref();
         const restRate: IRestRates  = new RestRates(axios)
         const userRating =ref(null)
@@ -94,8 +95,9 @@ export default defineComponent({
 
         const addToCart = async () => {
             try {
-                if (access_token) {
-                    const data = await restCarts.Create(props.id, access_token);
+                const access_token = userSessionRepository.getAccessToken();
+                if (access_token && isLoggedIn?.value) {
+                    const data: any = await restCarts.Create(props.id, access_token);
                     if (data && data.status) {
                         toastManager?.value?.alertSuccess("Cart added successfully.");
                     } else if (data && !data.status) {
@@ -103,6 +105,7 @@ export default defineComponent({
                     }
                 } else {
                     toastManager?.value?.alertInfo("Please login to your account.");
+                    router.push('/sign-in');
                 }
             } catch (error) {
                 console.error('Error adding to cart:', error);
@@ -112,19 +115,21 @@ export default defineComponent({
 
         const rateProduct = async () => {
             try {
-                isLoading.value = true
-                if(access_token){
-                    const res = await restRate.rateProduct({productId: props.id,rating: userRating.value})
+                isLoading.value = true;
+                const access_token = userSessionRepository.getAccessToken();
+                if(access_token && isLoggedIn?.value) {
+                    const res = await restRate.rateProduct({productId: props.id, rating: userRating.value});
                     if(res.message){
-                        toastManager?.value.alertSuccess("Rate added successfuly.");
+                        toastManager?.value?.alertSuccess("Rate added successfuly.");
                     }
                 }
-                else{
-                    toastManager?.value.alertInfo("Please login to your account.");
+                 else{
+                    toastManager?.value?.alertInfo("Please login to your account.");
+                    router.push('/sign-in');
                 }
             }catch (error) {
-                console.log(error)
-                toastManager?.value.alertError("Rate added failed.");
+                console.log(error);
+                toastManager?.value?.alertError("Rate added failed.");
             }finally{
                 isLoading.value = false
             }
