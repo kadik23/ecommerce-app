@@ -192,4 +192,10 @@ return [
         'unresolved' => 'Unresolved',
         'resolved' => 'Resolved',
     ],
+    'errors' => [
+        'page_not_found' => 'Page Not Found',
+        'page_not_found_desc' => 'Sorry, the page you are looking for does not exist or has been moved.',
+        'back_to_dashboard' => 'Back to Dashboard',
+        'back_to_home' => 'Back to Home',
+    ],
 ];

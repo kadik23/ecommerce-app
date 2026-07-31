@@ -140,5 +140,10 @@
     "rate_question": "How would you love this product",
     "submit": "Submit",
     "close_msg": "Press ESC key or click on ✕ button to close"
+  },
+  "not_found": {
+    "title": "404 - Page Not Found",
+    "description": "Oops! The page you are looking for doesn't exist or has been moved.",
+    "back_home": "Back to Home"
   }
 }
