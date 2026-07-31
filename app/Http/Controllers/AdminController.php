@@ -10,6 +10,7 @@ use App\Models\WalletTransaction;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\ContactMessageRepositoryInterface;
+use App\Repositories\SliderRepositoryInterface;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -18,14 +19,17 @@ class AdminController extends Controller
 {   
     private UserRepositoryInterface $userRepository;
     private ContactMessageRepositoryInterface $contactMessageRepository;
+    private SliderRepositoryInterface $sliderRepository;
 
     public function __construct(
         UserRepositoryInterface $userRepository,
-        ContactMessageRepositoryInterface $contactMessageRepository
+        ContactMessageRepositoryInterface $contactMessageRepository,
+        SliderRepositoryInterface $sliderRepository
     ) {
         $this->middleware('role:admin');
         $this->userRepository = $userRepository;
         $this->contactMessageRepository = $contactMessageRepository;
+        $this->sliderRepository = $sliderRepository;
     }
 
     public function index(Request $request)
@@ -254,5 +258,44 @@ class AdminController extends Controller
         $this->contactMessageRepository->toggleStatus($id);
 
         return redirect()->back()->with('success', 'Contact message status updated successfully.');
+    }
+
+    public function sliders()
+    {
+        $sliderTitle = 'Sliders';
+        $sliders = $this->sliderRepository->all();
+
+        return view('admin.sliders', compact('sliderTitle', 'sliders'));
+    }
+
+    public function storeSlider(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
+            'title' => 'nullable|string|max:255',
+            'link'  => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/slider'), $filename);
+
+            $this->sliderRepository->create([
+                'image'     => $filename,
+                'title'     => $request->title,
+                'link'      => $request->link,
+                'createdBy' => auth()->id(),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Slider image uploaded successfully.');
+    }
+
+    public function deleteSlider($id)
+    {
+        $this->sliderRepository->delete($id);
+
+        return redirect()->back()->with('success', 'Slider deleted successfully.');
     }
 }

@@ -30,6 +30,9 @@ Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], fun
     Route::get('/customers', 'App\Http\Controllers\AdminController@customers')->name('dashboard.Customers');
     Route::get('/contact-messages', 'App\Http\Controllers\AdminController@contactMessages')->name('dashboard.contactMessages');
     Route::post('/contact-messages/{id}/toggle-status', 'App\Http\Controllers\AdminController@toggleContactStatus')->name('admin.contactMessages.toggleStatus');
+    Route::get('/sliders', 'App\Http\Controllers\AdminController@sliders')->name('dashboard.sliders');
+    Route::post('/sliders', 'App\Http\Controllers\AdminController@storeSlider')->name('admin.sliders.store');
+    Route::delete('/sliders/{id}', 'App\Http\Controllers\AdminController@deleteSlider')->name('admin.sliders.delete');
     Route::get('/user-stats', 'App\Http\Controllers\AdminController@userStats')->name('admin.userStats');
     Route::get('/users-report', 'App\Http\Controllers\AdminController@usersReport')->name('admin.usersReport');
     Route::get('/product/filter', [ProductsController::class,'filter'])->name('product.filter');

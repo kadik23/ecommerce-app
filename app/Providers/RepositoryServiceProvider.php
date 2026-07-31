@@ -11,6 +11,8 @@ use App\Repositories\UserRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\ContactMessageRepositoryInterface;
 use App\Repositories\ContactMessageRepository;
+use App\Repositories\SliderRepositoryInterface;
+use App\Repositories\SliderRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -20,5 +22,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(ContactMessageRepositoryInterface::class, ContactMessageRepository::class);
+        $this->app->bind(SliderRepositoryInterface::class, SliderRepository::class);
     }
 }

@@ -9,12 +9,16 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
 
 use App\Http\Controllers\ContactMessageController;
+use App\Models\Slider;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::post('/contact', [ContactMessageController::class, 'store']);
+Route::get('/sliders', function () {
+    return response()->json(Slider::orderBy('created_at', 'desc')->get());
+});
 
 Route::get('/info',function (Request $request) {
     return response()->json([

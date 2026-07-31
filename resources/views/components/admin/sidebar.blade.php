@@ -119,6 +119,12 @@
                     'label' => t('admin.sidebar.contact_messages'),
                     'routeName' => 'dashboard.contactMessages',
                 ],
+                [
+                    'route' => route('dashboard.sliders'),
+                    'icon' => 'view_carousel',
+                    'label' => t('admin.sidebar.sliders'),
+                    'routeName' => 'dashboard.sliders',
+                ],
             ];
         @endphp
 
