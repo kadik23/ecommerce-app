@@ -1,8 +1,43 @@
-<div class="bg-regal-brown rounded-md w-56 m-5 pb-0 shadow-sm hover:shadow-regal-brown p-5 transition-shadow transi duration-300 ">
-    <div>
-        <h1 class="font-medium text-lg text-white">{{data.product.name}}</h1>
-        <h1 class="font-medium text-lg mb-5 text-white">${{data.product.price}}</h1>
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-950 via-[#b17b4f] to-amber-900 text-white p-5 shadow-lg border border-amber-700/40 hover:shadow-xl hover:shadow-amber-900/30 transition-all duration-300 w-full sm:w-64 m-3 flex flex-col justify-between group">
+    <!-- Decorative Background Glow -->
+    <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-400/20 rounded-full blur-xl pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+
+    <div class="relative z-10 flex flex-col gap-3">
+        <!-- Top Row: Icon Badge & Status -->
+        <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-amber-300 shadow-inner">
+                <span class="material-symbols-outlined text-xl">shopping_bag</span>
+            </div>
+            <span v-if="data.state" class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/15 backdrop-blur-md border border-white/20 text-amber-200">
+                {{ data.state }}
+            </span>
+        </div>
+
+        <!-- Product Name & Price -->
+        <div>
+            <h1 class="font-bold text-lg text-white line-clamp-1 group-hover:text-amber-200 transition-colors">
+                {{ data.product ? data.product.name : '' }}
+            </h1>
+            <div class="text-xl font-extrabold font-mono text-amber-300 mt-1">
+                ${{ data.product ? data.product.price : '' }}
+            </div>
+        </div>
+
+        <!-- Date Tag -->
+        <div class="text-xs text-amber-100/80 flex items-center gap-1.5 font-medium">
+            <span class="material-symbols-outlined text-sm text-amber-300/90">schedule</span>
+            <span>{{ date }} {{ time }}</span>
+        </div>
     </div>
-    <div class="text-white mb-2">On {{date}} {{time}}</div>
-    <router-link :to="'order-preview/' + data.id" type="button"  class="py-2.5 inline-block px-5 mr-2 mb-2 text-sm font-medium text-regal-brown focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-amber-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">View orders details</router-link>
+
+    <!-- View Order Details Button -->
+    <div class="relative z-10 mt-5 pt-3 border-t border-white/15">
+        <router-link
+            :to="'/order-preview/' + data.id"
+            class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-4 text-xs font-bold text-amber-950 bg-white hover:bg-amber-100 rounded-xl shadow-sm transition-all duration-200 active:scale-95 text-center"
+        >
+            <span>{{ $t('order.view_details') }}</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </router-link>
+    </div>
 </div>

@@ -5,8 +5,9 @@ import RestOrders from '@/libs/RestOrders';
 import UserSessionRepository from '@/libs/UserSessionRepository';
 import { type AxiosInstance } from 'axios';
 import { defineComponent, inject, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-type Istate = 'Processing' | 'Shipped' | 'Delivered'
+type Istate = 'Processing' | 'Confirmed' | 'Paid' | 'Delivered' | string;
 
 export default defineComponent({
     name: 'Orders',
@@ -16,24 +17,32 @@ export default defineComponent({
         OrderSkeletonVue
     },
     setup() {
+        const { t } = useI18n();
         const orders = ref<OrderEntity[]>([]);
         const isLoading = ref<Boolean>(false)
         const axios = inject<AxiosInstance>('axios')
         const userSessionRepository = new UserSessionRepository(localStorage);
         const access_token = userSessionRepository.getAccessToken();
-        const restOrders: IRestOrders =new RestOrders(axios as AxiosInstance)
-        const currentStatus =ref<Istate>("Processing")
+        const restOrders: IRestOrders = new RestOrders(axios as AxiosInstance)
+        const currentStatus = ref<Istate>("Processing")
         const filteredOrders = ref<null | OrderEntity[]>(null)
+
         const changeCurrentState = (newState: Istate) => {
-            currentStatus.value = newState
-            if(newState == 'Processing'){
-                filteredOrders.value = orders.value.filter(or => or.state == 'processing' || or.state == 'pending')
-            }else if(newState == 'Shipped'){
-                filteredOrders.value = orders.value.filter(or => or.state == 'confirm' )
-            }else{
-                filteredOrders.value = orders.value.filter(or => or.state == 'complete' || or.state == 'delivered')
+            currentStatus.value = newState;
+            const stateStr = String(newState).toLowerCase();
+
+            if (stateStr === 'processing' || stateStr === t('order.processing').toLowerCase()) {
+                filteredOrders.value = orders.value.filter(or => or.state === 'processing' || or.state === 'pending');
+            } else if (stateStr === 'confirmed' || stateStr === t('order.confirmed').toLowerCase()) {
+                filteredOrders.value = orders.value.filter(or => or.state === 'confirm');
+            } else if (stateStr === 'paid' || stateStr === t('order.paid').toLowerCase()) {
+                filteredOrders.value = orders.value.filter(or => or.state === 'complete');
+            } else if (stateStr === 'delivered' || stateStr === t('order.delivered').toLowerCase()) {
+                filteredOrders.value = orders.value.filter(or => or.state === 'delivered');
+            } else {
+                filteredOrders.value = orders.value;
             }
-        }
+        };
 
         const fetchOrders =async () => {
             try {

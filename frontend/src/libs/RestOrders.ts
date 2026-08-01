@@ -31,4 +31,10 @@ export default class RestOrders implements IRestOrders {
             headers: { Authorization: `Bearer ${access_token}` }
         }).then((response: any) => response.data);
     }
+
+    async confirmDelivery(id: string, access_token: string) {
+        return this.axiosInstance.put(`/api/user/order/${id}`, { state: 'delivered' }, {
+            headers: { Authorization: `Bearer ${access_token}` }
+        }).then((response: any) => response.data);
+    }
 };
