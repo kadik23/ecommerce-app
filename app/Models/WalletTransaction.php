@@ -15,6 +15,11 @@ class WalletTransaction extends Model
         'amount',
         'type',
         'idempotency_key',
+        'payment_info',
+    ];
+
+    protected $casts = [
+        'payment_info' => 'array',
     ];
 
     public function user()

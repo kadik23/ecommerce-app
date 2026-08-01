@@ -99,6 +99,27 @@
     "paid": "Order paid",
     "delivered": "Order delivered"
   },
+  "payment": {
+    "title": "Secure Checkout",
+    "gateway_title": "Stanissk Store Gateway",
+    "ssl_text": "256-Bit SSL Encrypted & PCI-DSS Compliant",
+    "total_amount": "Total Amount",
+    "payment_method_details": "Payment Method Details",
+    "test_mode": "Test Mode",
+    "pay": "Pay",
+    "processing": "Processing Payment...",
+    "retry_payment": "Retry Payment",
+    "already_paid": "This order has already been paid!",
+    "payment_succeeded": "Payment succeeded! Updating order status...",
+    "payment_processing": "Payment is processing. We will notify you once completed.",
+    "session_expired": "User authentication session expired. Please sign in again.",
+    "order_not_found": "Order not found.",
+    "gateway_sdk_error": "Failed to load Stripe payment gateway SDK.",
+    "init_failed": "Failed to initialize payment gateway intent.",
+    "not_initialized": "Stripe payment gateway is not initialized.",
+    "payment_failed_default": "Payment attempt failed. Please check card info and retry.",
+    "unexpected_error": "An unexpected error occurred processing payment. Please retry."
+  },
   "category": {
     "sort_by": "Sort By",
     "popularity": "Popularity",

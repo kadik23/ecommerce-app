@@ -19,4 +19,16 @@ export default class RestOrders implements IRestOrders {
             headers: { Authorization: `Bearer ${access_token}` }
         }).then((response: any) => response.data);
     }
+
+    async createPaymentIntent(order_id: string, access_token: string) {
+        return this.axiosInstance.post(`/api/user/payments/create-intent`, { order_id }, {
+            headers: { Authorization: `Bearer ${access_token}` }
+        }).then((response: any) => response.data);
+    }
+
+    async confirmPaymentStatus(payment_intent_id: string, access_token: string) {
+        return this.axiosInstance.post(`/api/user/payments/confirm-status`, { payment_intent_id }, {
+            headers: { Authorization: `Bearer ${access_token}` }
+        }).then((response: any) => response.data);
+    }
 };
