@@ -6,6 +6,8 @@ interface OrderEntity {
     deliveryMethod?: string;
     orderBy: number;
     Product: string;
+    product?: ProductEntity;
+    productOrdered?: string;
     deleted_at?: Date;
     created_at: Date;
     updated_at: Date;

@@ -9,7 +9,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RateController;
 
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Slider;
+
+Route::post('/payments/webhook', [PaymentController::class, 'webhook']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -59,6 +62,8 @@ Route::group([
     Route::resource('/cart', CartsController::class)->middleware('auth:sanctum');
     Route::resource('/order', OrderController::class)->middleware('auth:sanctum');
     Route::resource('/rate', RateController::class)->middleware('auth:sanctum');
+    Route::post('/payments/create-intent', [PaymentController::class, 'createIntent'])->middleware('auth:sanctum');
+    Route::post('/payments/confirm-status', [PaymentController::class, 'confirmStatus'])->middleware('auth:sanctum');
 });
 
 Route::get('/byCategory',action: 'App\Http\Controllers\Api\ProductController@byCategory')->name('user.product.show');
