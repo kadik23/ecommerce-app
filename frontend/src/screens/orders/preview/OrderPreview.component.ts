@@ -83,8 +83,27 @@ export default defineComponent({
             }
         };
 
+        const getCurrentStepKey = computed(() => {
+            if (!order.value || !order.value.state) return 'sent';
+            const s = order.value.state.toLowerCase();
+            if (s === 'delivered') return 'delivered';
+            if (s === 'complete') return 'paid';
+            if (s === 'confirm' || s === 'processing') return 'confirmed';
+            return 'sent';
+        });
+
+        const isCurrentStep = (stepState: 'sent' | 'confirmed' | 'paid' | 'delivered') => {
+            return getCurrentStepKey.value === stepState && order.value?.state?.toLowerCase() !== 'delivered';
+        };
+
         const getStepDataContent = (stepState: 'sent' | 'confirmed' | 'paid' | 'delivered') => {
-            return isStepActive(stepState) ? '✓' : undefined;
+            if (isCurrentStep(stepState)) {
+                return '⟳';
+            }
+            if (isStepActive(stepState)) {
+                return '✓';
+            }
+            return undefined;
         };
 
         const stateBadgeClass = computed(() => {
@@ -104,6 +123,27 @@ export default defineComponent({
             { key: 'delivered', labelKey: 'order_preview.delivered' },
         ];
 
+        const isConfirmingDelivery = ref<boolean>(false);
+
+        const confirmDelivery = async () => {
+            if (!order.value || !order.value.id || !access_token) return;
+            try {
+                isConfirmingDelivery.value = true;
+                const response = await restOrders.confirmDelivery(order.value.id, access_token);
+                if (response) {
+                    if (response.data) {
+                        order.value = response.data;
+                    } else if (order.value) {
+                        order.value.state = 'delivered';
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                isConfirmingDelivery.value = false;
+            }
+        };
+
         onMounted(fetchOrderById);
 
         return {
@@ -112,9 +152,12 @@ export default defineComponent({
             formatDate,
             formatTime,
             isStepActive,
+            isCurrentStep,
             getStepDataContent,
             stateBadgeClass,
             timelineSteps,
+            isConfirmingDelivery,
+            confirmDelivery,
         };
     }
 });

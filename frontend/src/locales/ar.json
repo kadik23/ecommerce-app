@@ -79,11 +79,13 @@
     "confirm": "تأكيد"
   },
   "order": {
-    "title": "طلبي :",
-    "processing": "جاري التجهيز",
-    "shipped": "تم الشحن",
+    "title": "طلباتي :",
+    "processing": "قيد المعالجة",
+    "confirmed": "مؤكد",
+    "paid": "مدفوع",
     "delivered": "تم التوصيل",
-    "empty": "ليس لديك طلبات هنا"
+    "empty": "ليس لديك طلبات هنا",
+    "view_details": "عرض تفاصيل الطلب"
   },
   "order_preview": {
     "order_text": "الطلب",
@@ -93,7 +95,7 @@
     "quantity": "الكمية",
     "delivery_method": "طريقة التوصيل",
     "go_to_payment": "الذهاب للدفع",
-    "complete_delivery": "أكمل عملية التوصيل",
+    "confirm_delivery": "تأكيد الاستلام",
     "sent": "تم إرسال الطلب",
     "confirmed": "تم تأكيد الطلب",
     "paid": "تم الدفع",

@@ -2,7 +2,8 @@
     <div class="font-bold mt-10 opacity-80 md:px-16 px-4 text-3xl float-left">{{ $t('order.title') }}</div>
     <div class="flex flex-wrap md:px-10 mt-5 ml-5">
         <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.processing')" :isCurrentState="currentStatus == $t('order.processing') || currentStatus == 'Processing'"/>
-        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.shipped')" :isCurrentState="currentStatus == $t('order.shipped') || currentStatus == 'Shipped'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.confirmed')" :isCurrentState="currentStatus == $t('order.confirmed') || currentStatus == 'Confirmed'"/>
+        <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.paid')" :isCurrentState="currentStatus == $t('order.paid') || currentStatus == 'Paid'"/>
         <TagVue @recievedCurrentState="changeCurrentState" :tagname="$t('order.delivered')" :isCurrentState="currentStatus == $t('order.delivered') || currentStatus == 'Delivered'"/>
     </div>
     

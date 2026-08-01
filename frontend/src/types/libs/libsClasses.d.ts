@@ -32,6 +32,7 @@ interface IRestOrders {
     getOrderById(id:string, access_token:string): Promise<any>;
     createPaymentIntent(order_id: string, access_token: string): Promise<any>;
     confirmPaymentStatus(payment_intent_id: string, access_token: string): Promise<any>;
+    confirmDelivery(id: string, access_token: string): Promise<any>;
 }
 
 interface IRestCarts {

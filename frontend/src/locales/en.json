@@ -79,11 +79,13 @@
     "confirm": "Confirm"
   },
   "order": {
-    "title": "My order :",
+    "title": "My orders :",
     "processing": "Processing",
-    "shipped": "Shipped",
+    "confirmed": "Confirmed",
+    "paid": "Paid",
     "delivered": "Delivered",
-    "empty": "You have no orders here"
+    "empty": "You have no orders here",
+    "view_details": "View order details"
   },
   "order_preview": {
     "order_text": "Order",
@@ -93,7 +95,7 @@
     "quantity": "Quantity",
     "delivery_method": "Delivery method",
     "go_to_payment": "Go to payment",
-    "complete_delivery": "Complete the delivery process",
+    "confirm_delivery": "Confirm delivery",
     "sent": "Order sent",
     "confirmed": "Order confirmed",
     "paid": "Order paid",
