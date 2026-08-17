@@ -1,4 +1,4 @@
-# ecommerce-app
+# stanissk store
 An ecommerce web application is online store with payments methods using laravel and mysql for backend and tailwindcss for styling <br>
 ## How to start
 First install all necessary composer dependencies by running
