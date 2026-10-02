@@ -36,17 +36,21 @@ class StoreSeeder extends Seeder
             );
         }
 
+        $adminEmail = env('ADMIN_EMAIL', 'admin@app.com');
+        $adminPassword = env('ADMIN_PASSWORD', 'password');
+        $adminUsername = env('ADMIN_USERNAME', 'admin');
+
         $admin = User::whereHas('roles', function ($q) {
             $q->where('name', 'admin');
         })->first();
 
         if (!$admin) {
-            $this->command->info('Creating default admin user...');
+            $this->command->info("Creating default admin user ({$adminEmail})...");
             $admin = User::firstOrCreate(
-                ['email' => 'admin@app.com'],
+                ['email' => $adminEmail],
                 [
-                    'username' => 'admin',
-                    'password' => bcrypt('password'),
+                    'username' => $adminUsername,
+                    'password' => bcrypt($adminPassword),
                     'fullName' => 'Admin User',
                     'phone' => 123456789,
                     'city' => 'Algiers',
@@ -59,6 +63,10 @@ class StoreSeeder extends Seeder
             if ($adminRole && !$admin->hasRole('admin')) {
                 $admin->addRole($adminRole);
             }
+        } elseif (env('ADMIN_PASSWORD')) {
+            // Update password if specified in env
+            $admin->password = bcrypt($adminPassword);
+            $admin->save();
         }
 
         $this->command->info('Seeding client users...');

@@ -19,10 +19,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         $this->hideSensitiveRequestDetails();
 
-        $isLocal = $this->app->environment('local');
+        $recordAll = $this->app->environment('local') || env('TELESCOPE_RECORD_ALL', true);
 
-        Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
+        Telescope::filter(function (IncomingEntry $entry) use ($recordAll) {
+            return $recordAll ||
                    $entry->isReportableException() ||
                    $entry->isFailedRequest() ||
                    $entry->isFailedJob() ||
@@ -57,9 +57,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     protected function gate(): void
     {
         Gate::define('viewTelescope', function (User $user) {
-            return in_array($user->email, [
-                //
-            ]);
+            $defaultEmail = env('ADMIN_EMAIL', 'admin@app.com');
+            $allowedEmails = array_filter(array_map('trim', explode(',', env('TELESCOPE_ALLOWED_EMAILS', $defaultEmail))));
+
+            return in_array($user->email, $allowedEmails) || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
         });
     }
 }
