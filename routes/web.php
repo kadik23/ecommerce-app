@@ -40,6 +40,22 @@ Route::group(['middleware' => ['auth', 'role:admin'],'prefix'=>'dashboard'], fun
     Route::resource('/category',App\Http\Controllers\CategoriesController::class);
 });
 
+// Health check endpoint for external cron jobs and Render health checks
+Route::get('/healthz', function () {
+    try {
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbStatus = 'connected';
+    } catch (\Throwable $e) {
+        $dbStatus = 'disconnected';
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'database' => $dbStatus,
+        'timestamp' => now()->toIso8601String(),
+    ]);
+})->name('healthz');
+
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });

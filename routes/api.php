@@ -68,3 +68,19 @@ Route::group([
 
 Route::get('/byCategory',action: 'App\Http\Controllers\Api\ProductController@byCategory')->name('user.product.show');
 Route::get('/categories',[App\Http\Controllers\CategoriesController::class, 'index']);
+
+// Health check endpoint for external monitoring and cron jobs
+Route::get('/health', function () {
+    try {
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $dbStatus = 'connected';
+    } catch (\Throwable $e) {
+        $dbStatus = 'disconnected';
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'database' => $dbStatus,
+        'timestamp' => now()->toIso8601String(),
+    ]);
+});

@@ -17,9 +17,5 @@ if [ "$SEED_DATABASE" = "true" ] || [ "$RUN_SEEDERS" = "true" ]; then
     php artisan db:seed --force
 fi
 
-echo "# Building frontend assets..."
-npm install
-npm run build
-npm run dev &
 echo "# Starting the PHP application..."
 php artisan serve --host=0.0.0.0 --port="${PORT:-8000}"
