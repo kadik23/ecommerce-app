@@ -77,10 +77,22 @@ class UserRepository implements UserRepositoryInterface
         }
         $percentage = round($percentage, 1);
 
+        // Format date expression according to database driver
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'pgsql') {
+            $format = ($days === 1) ? 'HH24:00' : 'YYYY-MM-DD';
+            $dateExpr = "TO_CHAR(created_at, '{$format}')";
+        } elseif ($driver === 'sqlite') {
+            $format = ($days === 1) ? '%H:00' : '%Y-%m-%d';
+            $dateExpr = "strftime('{$format}', created_at)";
+        } else {
+            $dateExpr = "DATE_FORMAT(created_at, '{$groupByFormat}')";
+        }
+
         // Fetch grouped registrations for the chart
         $registrations = User::where('created_at', '>=', $startDate)
-            ->select(DB::raw("DATE_FORMAT(created_at, '{$groupByFormat}') as date_label"), DB::raw('count(*) as aggregate'))
-            ->groupBy('date_label')
+            ->select(DB::raw("{$dateExpr} as date_label"), DB::raw('count(*) as aggregate'))
+            ->groupBy(DB::raw($dateExpr))
             ->orderBy('date_label', 'asc')
             ->pluck('aggregate', 'date_label')
             ->toArray();

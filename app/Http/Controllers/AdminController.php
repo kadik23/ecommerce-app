@@ -196,17 +196,26 @@ class AdminController extends Controller
 
         // Conversion Rate stats by Year
         $currentYear = date('Y');
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'pgsql') {
+            $yearExpr = 'EXTRACT(YEAR FROM created_at)::integer';
+        } elseif ($driver === 'sqlite') {
+            $yearExpr = "strftime('%Y', created_at)";
+        } else {
+            $yearExpr = 'YEAR(created_at)';
+        }
+
         $customerYearly = User::whereDoesntHave('roles', function($q) {
             $q->where('name', 'admin');
         })
-            ->select(DB::raw('YEAR(created_at) as year'), DB::raw('count(*) as count'))
-            ->groupBy('year')
+            ->select(DB::raw("{$yearExpr} as year"), DB::raw('count(*) as count'))
+            ->groupBy(DB::raw($yearExpr))
             ->pluck('count', 'year')
             ->toArray();
             
         $revenueYearly = WalletTransaction::where('type', 'order_payment')
-            ->select(DB::raw('YEAR(created_at) as year'), DB::raw('sum(amount) as revenue'))
-            ->groupBy('year')
+            ->select(DB::raw("{$yearExpr} as year"), DB::raw('sum(amount) as revenue'))
+            ->groupBy(DB::raw($yearExpr))
             ->pluck('revenue', 'year')
             ->toArray();
 
