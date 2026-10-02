@@ -6,9 +6,6 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate --force
 fi
 
-echo "# Generating JWT secret..."
-php artisan jwt:secret --force
-
 echo "# Linking storage..."
 php artisan storage:link
 
