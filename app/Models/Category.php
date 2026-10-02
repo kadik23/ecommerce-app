@@ -9,10 +9,14 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'name';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = ['name', 'icon'];
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category', 'name');
     }
 }

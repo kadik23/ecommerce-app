@@ -16,8 +16,6 @@ RUN composer install
 
 # Laravel setup commands
 RUN php artisan key:generate
-RUN php artisan migrate:fresh
-RUN php artisan db:seed
 
 # Expose the Laravel port
 ENV PORT 8000

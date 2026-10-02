@@ -1,13 +1,28 @@
 #!/bin/bash
+set -e
+
+if [ -z "$APP_KEY" ]; then
+    echo "# Generating APP key..."
+    php artisan key:generate --force
+fi
 
 echo "# Generating JWT secret..."
-php artisan jwt:secret
+php artisan jwt:secret --force
 
 echo "# Linking storage..."
 php artisan storage:link
+
+echo "# Running database migrations..."
+php artisan migrate --force
+
+if [ "$SEED_DATABASE" = "true" ] || [ "$RUN_SEEDERS" = "true" ]; then
+    echo "# Seeding database..."
+    php artisan db:seed --force
+fi
+
 echo "# Building frontend assets..."
 npm install
 npm run build
 npm run dev &
 echo "# Starting the PHP application..."
-php artisan serve --host=0.0.0.0 --port=8000
+php artisan serve --host=0.0.0.0 --port="${PORT:-8000}"

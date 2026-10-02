@@ -42,19 +42,21 @@ class StoreSeeder extends Seeder
 
         if (!$admin) {
             $this->command->info('Creating default admin user...');
-            $admin = User::create([
-                'username' => 'admin',
-                'email' => 'admin@app.com',
-                'password' => bcrypt('password'),
-                'fullName' => 'Admin User',
-                'phone' => 123456789,
-                'city' => 'Algiers',
-                'address' => '123 Admin St',
-                'country' => 'Algeria',
-                'email_verified_at' => now(),
-            ]);
+            $admin = User::firstOrCreate(
+                ['email' => 'admin@app.com'],
+                [
+                    'username' => 'admin',
+                    'password' => bcrypt('password'),
+                    'fullName' => 'Admin User',
+                    'phone' => 123456789,
+                    'city' => 'Algiers',
+                    'address' => '123 Admin St',
+                    'country' => 'Algeria',
+                    'email_verified_at' => now(),
+                ]
+            );
             $adminRole = \App\Models\Role::where('name', 'admin')->first();
-            if ($adminRole) {
+            if ($adminRole && !$admin->hasRole('admin')) {
                 $admin->addRole($adminRole);
             }
         }
