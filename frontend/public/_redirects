@@ -1,0 +1,3 @@
+/api/*          https://ecommerce-app-laravel.onrender.com/api/:splat           200!
+/assets/images/* https://ecommerce-app-laravel.onrender.com/assets/images/:splat 200!
+/*              /index.html                                                     200
