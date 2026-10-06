@@ -101,6 +101,9 @@ class StoreSeeder extends Seeder
             }
         }
 
+        $this->command->info('Synchronizing product images and categories...');
+        \Illuminate\Support\Facades\Artisan::call('products:sync-real-images');
+
         $this->command->info('Database seeding completed successfully!');
     }
 }

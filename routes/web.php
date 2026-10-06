@@ -56,6 +56,36 @@ Route::get('/healthz', function () {
     ]);
 })->name('healthz');
 
+// Fallback asset route for product images to guarantee no 404s
+Route::get('/assets/images/products/{filename}', function ($filename) {
+    $path = public_path('assets/images/products/' . $filename);
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    $rootPath = base_path('assets/images/products/' . $filename);
+    if (file_exists($rootPath)) {
+        return response()->file($rootPath);
+    }
+    $default = public_path('assets/images/products/default_product.jpg');
+    if (file_exists($default)) {
+        return response()->file($default);
+    }
+    abort(404);
+})->where('filename', '.*');
+
+// Fallback asset route for category icons to prevent 404s
+Route::get('/assets/images/categories/{filename}', function ($filename) {
+    $path = public_path('assets/images/categories/' . $filename);
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+    $default = public_path('assets/images/categories/1783098856.svg');
+    if (file_exists($default)) {
+        return response()->file($default);
+    }
+    abort(404);
+})->where('filename', '.*');
+
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });

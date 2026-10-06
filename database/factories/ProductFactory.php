@@ -18,22 +18,35 @@ class ProductFactory extends Factory
             $q->where('name', 'admin');
         })->first() ?? User::first();
 
-        $category = !empty($categories) ? fake()->randomElement($categories) : 'Electronics';
-
-        $productNames = [
-            'Wireless Mouse', 'Gaming Keyboard', 'Bluetooth Speaker', 'HD Monitor',
-            'Smart Watch', 'Running Shoes', 'Leather Wallet', 'Coffee Maker',
-            'Kitchen Blender', 'Yoga Mat', 'Backpack', 'Sunglasses',
-            'Desk Lamp', 'Phone Charger', 'Water Bottle', 'Wireless Earbuds'
+        $catalog = [
+            ['name' => 'Wireless Mouse', 'category' => 'Electronics', 'image' => 'mouse.jpg'],
+            ['name' => 'Gaming Keyboard', 'category' => 'Electronics', 'image' => 'keyboard.jpg'],
+            ['name' => 'Bluetooth Speaker', 'category' => 'Electronics', 'image' => 'speaker.jpg'],
+            ['name' => 'HD Monitor', 'category' => 'Electronics', 'image' => 'monitor.jpg'],
+            ['name' => 'Smart Watch', 'category' => 'Electronics', 'image' => 'smartwatch.jpg'],
+            ['name' => 'Running Shoes', 'category' => 'Sports & Outdoors', 'image' => 'shoes.jpg'],
+            ['name' => 'Leather Wallet', 'category' => 'Fashion', 'image' => 'wallet.jpg'],
+            ['name' => 'Coffee Maker', 'category' => 'Home & Kitchen', 'image' => 'coffee_maker.jpg'],
+            ['name' => 'Kitchen Blender', 'category' => 'Home & Kitchen', 'image' => 'blender.jpg'],
+            ['name' => 'Yoga Mat', 'category' => 'Sports & Outdoors', 'image' => 'yoga_mat.jpg'],
+            ['name' => 'Travel Backpack', 'category' => 'Fashion', 'image' => 'backpack.jpg'],
+            ['name' => 'Classic Sunglasses', 'category' => 'Fashion', 'image' => 'sunglasses.jpg'],
+            ['name' => 'Desk Lamp', 'category' => 'Home & Kitchen', 'image' => 'desk_lamp.jpg'],
+            ['name' => 'Fast Phone Charger', 'category' => 'Electronics', 'image' => 'charger.jpg'],
+            ['name' => 'Sports Water Bottle', 'category' => 'Sports & Outdoors', 'image' => 'water_bottle.jpg'],
+            ['name' => 'Wireless Earbuds', 'category' => 'Electronics', 'image' => 'earbuds.jpg'],
         ];
 
+        $item = fake()->randomElement($catalog);
+        $name = substr($item['name'] . ' ' . fake()->word(), 0, 20);
+
         return [
-            'name' => substr(fake()->randomElement($productNames) . ' ' . fake()->word(), 0, 20),
-            'price' => fake()->numberBetween(10, 1000),
+            'name' => $name,
+            'price' => fake()->numberBetween(15, 600),
             'description' => fake()->paragraph(),
-            'profileImage' => 'product_' . fake()->numberBetween(1, 10) . '.jpg',
-            'category' => $category,
-            'rating' => fake()->randomFloat(2, 1, 5),
+            'profileImage' => $item['image'],
+            'category' => $item['category'],
+            'rating' => fake()->randomFloat(2, 3, 5),
             'quantity' => fake()->numberBetween(5, 100),
             'sold' => fake()->numberBetween(0, 100),
             'createdBy' => $admin ? $admin->id : null,
