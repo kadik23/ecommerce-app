@@ -15,7 +15,15 @@ class StripeService
 {
     public function __construct()
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
+        $apiKey = config('services.stripe.secret')
+            ?: env('STRIPE_SECRET')
+            ?: getenv('STRIPE_SECRET');
+
+        if (!$apiKey) {
+            \Illuminate\Support\Facades\Log::error('Stripe API Key is not configured. Please set STRIPE_SECRET in environment.');
+        }
+
+        Stripe::setApiKey($apiKey ?? '');
     }
 
     /**

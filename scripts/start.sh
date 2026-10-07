@@ -9,6 +9,10 @@ fi
 echo "# Linking storage..."
 php artisan storage:link
 
+echo "# Clearing stale cached configurations..."
+php artisan config:clear
+php artisan cache:clear
+
 echo "# Running database migrations..."
 php artisan migrate --force
 
