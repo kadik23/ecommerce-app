@@ -1,17 +1,20 @@
 #!/bin/bash
 set -e
 
+echo "# Ensuring storage and cache permissions..."
+mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs bootstrap/cache
+chmod -R 777 storage bootstrap/cache 2>/dev/null || true
+
 if [ -z "$APP_KEY" ]; then
     echo "# Generating APP key..."
     php artisan key:generate --force
 fi
 
 echo "# Linking storage..."
-php artisan storage:link
+php artisan storage:link 2>/dev/null || true
 
 echo "# Clearing stale cached configurations..."
-php artisan config:clear
-php artisan cache:clear
+php artisan config:clear || true
 
 echo "# Running database migrations..."
 php artisan migrate --force

@@ -28,6 +28,8 @@ RUN npm run build
 RUN rm -rf node_modules
 
 # Laravel setup commands
+RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache/data storage/logs bootstrap/cache \
+    && chmod -R 777 storage bootstrap/cache
 RUN php artisan key:generate
 
 # Expose the Laravel port
