@@ -11,6 +11,7 @@ RUN apt-get update -y && apt-get install -y \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN docker-php-ext-install pdo pdo_pgsql
+RUN echo "variables_order = \"EGPCS\"" > /usr/local/etc/php/conf.d/docker-php-ext-env.ini
 
 # Set the working directory
 WORKDIR /app
