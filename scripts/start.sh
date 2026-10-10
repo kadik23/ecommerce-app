@@ -7,6 +7,14 @@ chmod -R 777 storage bootstrap/cache 2>/dev/null || true
 
 echo "# Syncing Render environment variables into .env..."
 php -r '
+function formatEnvValue($v) {
+    if ($v === "") return "";
+    if (in_array(strtolower($v), ["true", "false", "null"], true)) return $v;
+    if (is_numeric($v) && !str_starts_with($v, "0")) return $v;
+    $escaped = str_replace(["\\", "\""], ["\\\\", "\\\""], $v);
+    return "\"" . $escaped . "\"";
+}
+
 $envFile = ".env";
 $lines = file_exists($envFile) ? file($envFile, FILE_IGNORE_NEW_LINES) : [];
 $keys = [];
@@ -16,12 +24,16 @@ foreach ($lines as $i => $line) {
     [$key] = explode("=", $line, 2);
     $keys[trim($key)] = $i;
 }
+
+$ignoreKeys = ["_", "PWD", "SHLVL", "PHP_VERSION", "PHP_INI_DIR", "PHP_CFLAGS", "PHP_CPPFLAGS", "PHP_LDFLAGS", "COMPOSER_ALLOW_SUPERUSER", "TERM", "PAGER", "LESS", "LS_COLORS"];
+
 foreach ($_SERVER as $k => $v) {
-    if ($v === "" || !is_string($v) || preg_match("/[^A-Za-z0-9_]/", $k)) continue;
+    if ($v === "" || !is_string($v) || preg_match("/[^A-Za-z0-9_]/", $k) || in_array($k, $ignoreKeys, true)) continue;
+    $formatted = "$k=" . formatEnvValue($v);
     if (isset($keys[$k])) {
-        $lines[$keys[$k]] = "$k=$v";
+        $lines[$keys[$k]] = $formatted;
     } else {
-        $lines[] = "$k=$v";
+        $lines[] = $formatted;
     }
 }
 file_put_contents($envFile, implode("\n", $lines) . "\n");
